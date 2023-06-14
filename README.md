@@ -7,4 +7,4 @@ Watch this space as we're planning on releasing more documentation in the future
 ## Entities
 From Piglins invading the overworld to allays gathering resources, all of the Minecraft Legends gameplay comes from entities. You can think of them as things that have behaviour and may or may not have a visual representation. They are defined in JSON files and split across Behaviour packs and Resource packs.
 
-More documentation can be found on the [entities page](entities.md).
+More documentation can be found on the [entities page](Entities.md).
