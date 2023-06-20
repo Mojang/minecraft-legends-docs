@@ -11,3 +11,6 @@ More documentation can be found on the [entities page](Entities.md).
 
 ## Village Generation
 Villages and Bases are key components to the campaign mode in Minecraft Legends. These locations are procedurally generated using the deck system which draws actions cards to create the final set of structures. This system is described on the [village generation page](VillageGeneration.md).
+
+## Geology Service
+[The Geology Service](GeologyService.md) is a system that lets us place special “geology” textures in the world. It allows us to generate terrain features that we could not easily achieve with our standard procedural terrain generation.
