@@ -1,4 +1,3 @@
-![Minecraft Legends Logo](images/minecraftlegends_logo.jpg)
 # Minecraft Legends Documentation
 This repository houses the documentation for Minecraft Legends. It will help you understand how the data is laid out and how to make your own mods for the game.
 
