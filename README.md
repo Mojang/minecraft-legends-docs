@@ -8,14 +8,20 @@ From Piglins invading the overworld to allays gathering resources, all of the Mi
 
 More documentation can be found on the [entities page](Entities.md).
 
-## Village Generation
+### Event Triggers
+[Event Triggers](EventTriggers.md) give entities life by allowing them to react to changes in gameplay state. Things like animations, audio, particles are driven through event triggers.
+
+## World Generation
+All of the [biomes](Biomes.md) and interesting things in the world use locations determined by the [World Placement](WorldPlacement.md) system. It is the core of the procedural world generation system in Minecraft Legends and is the starting place for creating the whole world. These rules drive the placement of [blocks](Blocks.md) in the voxel world.
+
+### Village Generation
 Villages and Bases are key components to the campaign mode in Minecraft Legends. These locations are procedurally generated using the deck system which draws actions cards to create the final set of structures. This system is described on the [village generation page](VillageGeneration.md).
 
-## Geology Service
+### Geology Service
 [The Geology Service](GeologyService.md) is a system that lets us place special “geology” textures in the world. It allows us to generate terrain features that we could not easily achieve with our standard procedural terrain generation.
 
-## World Placement
-All of the biomes and interesting things in the world use locations determined by the [World Placement](WorldPlacement.md) system. It is the core of the procedural world generation system in Minecraft Legends and is the starting place for creating the whole world.
+## Barrier Blocks
+Structures in Minecraft Legends can use special variations of [barrier blocks](BarrierBlocks.md) to control how entities collide with them.
 
 ## BSharp
 The bulk of the heavy lifting in the campaign mode is accomplished through our scripting language called BSharp. It is built on JavaScript and can do quite a lot of powerful things in the game. Check out the [BSharp Reference Sheet](BSharpReferenceSheet.md) for more information.
