@@ -42,7 +42,7 @@ Used in the defend horde boss battle. The block is generated above all lava area
 ### block_village_solid_air
 Player is able to pass through. Stops mobs from leaving village houses through windows. (Only used in village houses)
       
-Used in the medium village house. The blocks are placed in the areas we don't want to the mobs traveling. Forcing them to use the door but still allowing the player to pass through. 
+Used in the medium village house. The blocks are placed in the areas we don't want the mobs traveling. Forcing them to use the door but still allowing the player to pass through. 
 
 ![](images/barrier_blocks/image05.png)
 
