@@ -12,9 +12,7 @@ More documentation can be found on the [entities page](Entities.md).
 [Event Triggers](EventTriggers.md) give entities life by allowing them to react to changes in gameplay state. Things like animations, audio, particles are driven through event triggers.
 
 ## Blockbench
-A tool for creating models and animations referenced by entities in the game world. This tool will export models and animations as JSON files to be placed inside Minecraft Legends Resource Packs and referenced in Entity JSON files (Behavior Pack and Resource Pack) as well as animation and render controllers (Resource Pack only).
-
-More documentation can be found on the [Blockbench page](BlockBench.md)
+[Blockbench](BlockBench.md) is a tool for creating models and animations referenced by entities in the game world. With the new Minecraft Legends plugin, this tool will be able to export models and animations as JSON files to be placed inside Minecraft Legends Resource Packs and referenced in Entity JSON files (Behavior Pack and Resource Pack) as well as animation and render controllers (Resource Pack only).
 
 ## World Generation
 All of the [biomes](Biomes.md) and interesting things in the world use locations determined by the [World Placement](WorldPlacement.md) system. It is the core of the procedural world generation system in Minecraft Legends and is the starting place for creating the whole world. These rules drive the placement of [blocks](Blocks.md) in the voxel world.

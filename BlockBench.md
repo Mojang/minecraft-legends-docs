@@ -11,9 +11,9 @@ Be sure to only use the Bedrock Entity Project type when creating projects as th
 ```
 
 In this Article you will learn the following:
-•	How to install Blockbench
-•	How to install the plugin
-•	How to export models, animations and textures
+* How to install Blockbench
+* How to install the plugin
+* How to export models, animations and textures
 
 
 # Minecraft Legends Exporter Overview
@@ -22,7 +22,7 @@ Minecraft Legends Exporter is a plugin for Blockbench to help with exporting mod
 
 # Download Blockbench
 
-To use this plugin, you need Blockbench. download it from [here](https://www.blockbench.net/downloads)
+To use this plugin, you need [Blockbench](https://www.blockbench.net/downloads)
 
 # Installing the plugin
 
@@ -57,25 +57,25 @@ It will open a dialog box called **Export Options**:
 ![](images/blockbench_doc/image06.png)
 
 You have three controls within the Export Options dialog:
-•	**Model export Scale**: This is the scale to which the model will be exported.  By default, the scale is set to 1 and the model will be exported to the normal Minecraft legends scale.
-•	**Alpha Test**: This check box determines if the material will interpret the alpha channel of the texture as transparency. If not checked, all texels will be opaque.
-•	**Export Animations**: If this is checked when you press confirm it will open a secondary dialog where you can select which animations to export.
+* **Model export Scale**: This is the scale to which the model will be exported.  By default, the scale is set to 1 and the model will be exported to the normal Minecraft legends scale.
+* **Alpha Test**: This check box determines if the material will interpret the alpha channel of the texture as transparency. If not checked, all texels will be opaque.
+* **Export Animations**: If this is checked when you press confirm it will open a secondary dialog where you can select which animations to export.
 
 ![](images/blockbench_doc/image07.png)
 
 When you have set your Export Options it will open a folder selection menu where you can select where the files will be exported. You have now successfully exported the following files:
-•	model
-•	texture
-•	material
-•	animations (if export animations were selected)
+* model
+* texture
+* material
+* animations (if export animations were selected)
 
 To be able to spawn the model in the game you need to create an entire Minecraft legends entity. The following files are required for a Minecraft legends entity:
 **Behavior pack files**:
-•	Entity.json
+* Entity.json
 **Resource Pack Files**:
-•	Entity.json
-•	Animation_controllers.json
-•	Render_controllers.json
+* Entity.json
+* Animation_controllers.json
+* Render_controllers.json
 Creation of the behavior and resource pack files, however, is outside of the scope of this article.
 
 # Best Practices
@@ -89,11 +89,11 @@ Here are a couple of suggestions when creating the model to avoid any unforeseen
 
 **Naming conventions**:
 Make sure to only use 
-•	letters 
-•	numbers
-•	. (period)
-•	- (dash)
-•	_ (underline) 
+* letters 
+* numbers
+* . (period)
+* - (dash)
+* _ (underline) 
 When creating identifiers and names for files, textures and animations. Otherwise, issues could arise when exporting models or when trying to import them into your project.
 
 ![](images/blockbench_doc/image10.png)
@@ -105,9 +105,3 @@ It is recommended that every model starts with a root bone that is the parent of
 
 **Single Texture**:
 Try to use a single texture for the entire model, so that your material gets exported. If you want to use multiple textures, you will need to edit the material file to contain multiple textures.
-
-# What’s Next
-[TODO - links to next section or suggestions on where to go next, might contain multiple suggestions]
-
-# Recommended Content
-[TODO - links to content that might be of interest to people reading this article]
