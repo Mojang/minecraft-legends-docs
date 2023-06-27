@@ -1,4 +1,4 @@
-# Blockbench To Badger
+# Blockbench To Minecraft Legends
 This article will walk you through how to add custom models and textures to Minecraft Legends using the popular free software Blockbench. Adding custom art content is essential to make your experience stand out and look different from the base game. For more information on using blockbench please visit the following link:
 
 https://www.blockbench.net/quickstart
