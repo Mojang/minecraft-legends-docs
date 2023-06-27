@@ -22,7 +22,7 @@ Minecraft Legends Exporter is a plugin for Blockbench to help with exporting mod
 
 # Download Blockbench
 
-To use this plugin, you need Blockbench. download it from [here] (https://www.blockbench.net/downloads)
+To use this plugin, you need Blockbench. download it from [here](https://www.blockbench.net/downloads)
 
 # Installing the plugin
 
