@@ -1,7 +1,10 @@
 # Wolverine: Structure Converter
 Structure files allow creators to save pre-constructed sections of blocks for reuse.  Building larger structures inside of Minecraft Legends is as convenient as Minecraft: Bedrock and Minecraft: Java, with their mature creative workflows. To improve the structure creation process, the Wolverine tool was created.  
+
 Wolverine allows creators to convert Minecraft: Bedrock (.mcstructure) files, Minecraft: Java (.nbt) structure files, and community (.schematic) files to the Minecraft Legends (.mcstructure) structure format. This enables creators to use familiar tools to create new content, as well as importing previously created content into Minecraft Legends.
+
 To use this tool effectively, we recommend being familiar with data blocks as a concept and the specific properties contained within the data blocks in both Minecraft and Minecraft Legends.
+
 In this article covers the following topics:
 
 * How to install Wolverine
