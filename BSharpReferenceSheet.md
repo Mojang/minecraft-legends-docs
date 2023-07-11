@@ -233,3 +233,12 @@ Due to the massive open world nature of Minecraft Legends, we’ve had to introd
 | NonPopCappedEntityDestroyed | Yes | Yes | Non pop cap entities (entities that can only be destroyed while unsuspended). Eg. Structures and bosses. | When you want to do critical work based off an entity that was destroyed. (eg. progression beats) |
 | PopCappedEntityDestroyed | No | Yes | Any entity. | When you want to do non-critical work abased off an entity that was destroyed. (eg. play effects) |
 | EntitiesAmountDestroyed | Yes | No | Any entity. | When you care about amount of entities destroyed OR need to guarantee your snippet triggers. |
+
+### Random Number Generation
+
+Avoid the standard library's `Math.random()` as it is not deterministic between instances of the game. Stick to `QUERY_RandomNumber` and `QUERY_RandomNumberGroup`.
+
+The `Number` returned by `QUERY_RandomNumber` and `QUERY_RandomNumberGroup` is an integer and can immediately be used as an array index. 
+
+Consider using `QUERY_RandomNumberGroup` for consistent randomness that you do not want to be affected by other areas of the game (eg: the player affecting the state of the game world).
+
