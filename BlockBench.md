@@ -29,16 +29,17 @@ To use this plugin, you need [Blockbench](https://www.blockbench.net/downloads)
 
 # Installing the plugin
 
-1.	Open Blockbench and using the menu bar select **File** > **Plugins**
+1.  Download the [Minecraft: Legends plugin](https://github.com/Mojang/legends-blockbench-plugin/blob/main/minecraftLegendsExporter.js)
+2.	Open Blockbench and using the menu bar select **File** > **Plugins**
 
 ![](images/blockbench_doc/image01.png)
 
-2.	Select the load plugin icon (the icon between “Plugins” and the cloud icon). This will open a file dialog. From the file dialog, navigate to where you saved the downloaded plugin, select the plugin, and then select Open. 
+3.	Select the load plugin icon (the icon between “Plugins” and the cloud icon). This will open a file dialog. From the file dialog, navigate to where you saved the downloaded plugin, select the plugin, and then select Open. 
 
 ![](images/blockbench_doc/image02.png)
 ![](images/blockbench_doc/image03.png)
 
-3.	There will be a popup that displays the following prompt: ”Do you want to allow this plugin to make changes to your PC? Only load plugins from authors you trust.”  Select Ok and the plugin will be loaded.
+4.	There will be a popup that displays the following prompt: ”Do you want to allow this plugin to make changes to your PC? Only load plugins from authors you trust.”  Select Ok and the plugin will be loaded.
 
 ![](images/blockbench_doc/image04.png)
 
