@@ -29,7 +29,7 @@ To use this plugin, you need [Blockbench](https://www.blockbench.net/downloads)
 
 # Installing the plugin
 
-1.  Download the [Minecraft: Legends plugin](https://github.com/Mojang/legends-blockbench-plugin/blob/main/minecraftLegendsExporter.js)
+1.  Download the [Minecraft: Legends plugin](https://github.com/Mojang/legends-blockbench-plugin/releases)
 2.	Open Blockbench and using the menu bar select **File** > **Plugins**
 
 ![](images/blockbench_doc/image01.png)
