@@ -74,6 +74,7 @@ When you have set your Export Options it will open a folder selection menu where
 * animations (if export animations were selected)
 
 To be able to spawn the model in the game you need to create an entire Minecraft legends entity. The following files are required for a Minecraft legends entity:
+
 **Behavior pack files**:
 * Entity.json
 
