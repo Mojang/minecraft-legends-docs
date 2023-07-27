@@ -72,13 +72,16 @@ When you have set your Export Options it will open a folder selection menu where
 * texture
 * material
 * animations (if export animations were selected)
+
 To be able to spawn the model in the game you need to create an entire Minecraft legends entity. The following files are required for a Minecraft legends entity:
 **Behavior pack files**:
 * Entity.json
+
 **Resource Pack Files**:
 * Entity.json
 * Animation_controllers.json
 * Render_controllers.json
+
 Creation of the behavior and resource pack files, however, is outside of the scope of this article.
 
 # Best Practices
@@ -97,6 +100,7 @@ Make sure to only use
 * ```.``` (period)
 * ```-``` (dash)
 * ```_``` (underline) 
+
 When creating identifiers and names for files, textures and animations. Otherwise, issues could arise when exporting models or when trying to import them into your project.
 
 ![](images/blockbench_doc/image10.png)
