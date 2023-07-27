@@ -13,9 +13,7 @@ Be sure to only use the Bedrock Entity Project type when creating projects as th
 In this Article you will learn the following:
 
 * How to install Blockbench
-
 * How to install the plugin
-
 * How to export models, animations and textures
 
 
@@ -70,15 +68,10 @@ You have three controls within the Export Options dialog:
 ![](images/blockbench_doc/image07.png)
 
 When you have set your Export Options it will open a folder selection menu where you can select where the files will be exported. You have now successfully exported the following files:
-
 * model
-
 * texture
-
 * material
-
 * animations (if export animations were selected)
-
 To be able to spawn the model in the game you need to create an entire Minecraft legends entity. The following files are required for a Minecraft legends entity:
 **Behavior pack files**:
 * Entity.json
@@ -99,13 +92,11 @@ Here are a couple of suggestions when creating the model to avoid any unforeseen
 
 **Naming conventions**:
 Make sure to only use 
-
 * letters 
 * numbers
 * ```.``` (period)
 * ```-``` (dash)
 * ```_``` (underline) 
-
 When creating identifiers and names for files, textures and animations. Otherwise, issues could arise when exporting models or when trying to import them into your project.
 
 ![](images/blockbench_doc/image10.png)
