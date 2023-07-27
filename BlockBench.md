@@ -101,14 +101,10 @@ Here are a couple of suggestions when creating the model to avoid any unforeseen
 Make sure to only use 
 
 * letters 
-
 * numbers
-
-* . (period)
-
-* - (dash)
-
-* _ (underline) 
+* ```.``` (period)
+* ```-``` (dash)
+* ```_``` (underline) 
 
 When creating identifiers and names for files, textures and animations. Otherwise, issues could arise when exporting models or when trying to import them into your project.
 
