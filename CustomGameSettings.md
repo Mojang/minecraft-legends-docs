@@ -48,7 +48,7 @@ The main categories are the names of the Tabs in the custom settings screen and 
 
 Add the setting to an existing category/subcategory. May choose to create a new category or subcategory, this will create a new tab or sub header respectively.
 
-// TODO: Add image of tabs
+![](images/custom_game_settings/tabs.png)
 
 #### "id"
 
