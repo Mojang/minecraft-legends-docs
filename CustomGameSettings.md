@@ -44,35 +44,45 @@ The main categories are the names of the Tabs in the custom settings screen and 
 }
 ```
 
+---
+
 #### Property: Category ("mainCategory" from example) & Sub Category ("subCategory" from example)
 
-**required**
+(**required**)
 
 Add the setting to an existing category/subcategory. May choose to create a new category or subcategory, this will create a new tab or sub header respectively.
 
 ![](images/custom_game_settings/tabs.png)
 
+---
+
 #### Property: "id"
 
-**required**
+(**required**)
 
 This will be the identifier for the setting, and how it will be referenced when connecting the value to the gameplay system.
 
+---
+
 #### Property: "backend_type"
 
-**required**
+(**required**)
 
 _possible values_: "customgame" (always)
 
+---
+
 #### Property: "value_type"
 
-**required**
+(**required**)
 
 _possible values_: "int", "float" or "string"
 
+---
+
 #### Property: "ui_type"
 
-**required**
+(**required**)
 
 _possible values_:
 
@@ -86,23 +96,29 @@ _possible values_:
 | Radio Group | ![](images/custom_game_settings/radiogroup.png) | "radiogroup"            | "string"       | [{"label": option name}, {} ....] |
 | Toggles     | ![](images/custom_game_settings/toggles.png)    | "toggles"               | "int"          |                                   |
 
+---
+
 #### Property: "is_editable"
 
-**optional**
+(**optional**)
 
 Dictates if the setting can be edited when loading a saved custom game.
 _possible values_: true or false
 
+---
+
 #### Property: "save_last_used_value"
 
-**optional**
+(**optional**)
 
 _possible values_: true or false
 Defaults to _true_
 
+---
+
 #### Property: "enable_requirements"
 
-**optional**
+(**optional**)
 
 What conditions are required for the setting to be enabled (meaning visible)
 
@@ -118,32 +134,40 @@ _possible values_:
 | "platform_not_nx"       | If not Switch platform     |
 | "platform_not_steam"    | If not Steam platform      |
 
+---
+
 #### Property: "game_mode_type"
 
-**optional**
+(**optional**)
 
 Dictates which game mode the setting will appear in
 
 _possible values_: "allmodes", "campaign" or "pvp"
 
+---
+
 #### Property: slider_convert_to_percent
 
-**optional**
+(**optional**)
 
 For slider settings only. Setting this to _true_ will convert the value to a percent visually in the menu. It will not affect the actual value used by the gameplay system.
 
 _possible values_: true or false
 Defaults to _false_
 
+---
+
 #### Property: "slider_step_incremenet"
 
-**optional**
+(**optional**)
 
 For slider settings only. Numeric value to be used as the slider value increment. (Sliders default to 1)
 
 _possible values_: any whole number (preferably a number that will divide the full range of the slider evenly)
 
 ![](images/custom_game_settings/sliderSteps.png)
+
+---
 
 ### Using Custom Settings
 
