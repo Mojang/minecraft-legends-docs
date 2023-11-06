@@ -44,25 +44,37 @@ The main categories are the names of the Tabs in the custom settings screen and 
 }
 ```
 
-#### Category ("mainCategory" from example) & Sub Category ("subCategory" from example)
+#### Property: Category ("mainCategory" from example) & Sub Category ("subCategory" from example)
+
+**required**
 
 Add the setting to an existing category/subcategory. May choose to create a new category or subcategory, this will create a new tab or sub header respectively.
 
 ![](images/custom_game_settings/tabs.png)
 
-#### "id"
+#### Property: "id"
+
+**required**
 
 This will be the identifier for the setting, and how it will be referenced when connecting the value to the gameplay system.
 
-#### "backend_type"
+#### Property: "backend_type"
 
-"customgame" (always)
+**required**
 
-#### "value_type"
+_possible values_: "customgame" (always)
 
-"int", "float" or "string"
+#### Property: "value_type"
 
-#### "ui_type"
+**required**
+
+_possible values_: "int", "float" or "string"
+
+#### Property: "ui_type"
+
+**required**
+
+_possible values_:
 
 | Type        | Visual                                          | "uiType"                | "valueType"    | "options"                         |
 | ----------- | ----------------------------------------------- | ----------------------- | -------------- | --------------------------------- |
@@ -74,17 +86,27 @@ This will be the identifier for the setting, and how it will be referenced when 
 | Radio Group | ![](images/custom_game_settings/radiogroup.png) | "radiogroup"            | "string"       | [{"label": option name}, {} ....] |
 | Toggles     | ![](images/custom_game_settings/toggles.png)    | "toggles"               | "int"          |                                   |
 
-#### "is_editable"
+#### Property: "is_editable"
+
+**optional**
 
 Dictates if the setting can be edited when loading a saved custom game.
+_possible values_: true or false
 
-#### "save_last_used_value"
+#### Property: "save_last_used_value"
 
-Default should be _true_
+**optional**
 
-#### "enable_requirements"
+_possible values_: true or false
+Defaults to _true_
+
+#### Property: "enable_requirements"
+
+**optional**
 
 What conditions are required for the setting to be enabled (meaning visible)
+
+_possible values_:
 
 | Requirement             | Description                |
 | ----------------------- | -------------------------- |
@@ -96,19 +118,31 @@ What conditions are required for the setting to be enabled (meaning visible)
 | "platform_not_nx"       | If not Switch platform     |
 | "platform_not_steam"    | If not Steam platform      |
 
-#### "game_mode_type"
+#### Property: "game_mode_type"
+
+**optional**
 
 Dictates which game mode the setting will appear in
 
-"allmodes", "campaign" or "pvp"
+_possible values_: "allmodes", "campaign" or "pvp"
 
-#### slider_convert_to_percent
+#### Property: slider_convert_to_percent
+
+**optional**
 
 For slider settings only. Setting this to _true_ will convert the value to a percent visually in the menu. It will not affect the actual value used by the gameplay system.
 
-#### "slider_step_incremenet"
+_possible values_: true or false
+Defaults to _false_
+
+#### Property: "slider_step_incremenet"
+
+**optional**
 
 For slider settings only. Numeric value to be used as the slider value increment. (Sliders default to 1)
+
+_possible values_: any whole number (preferably a number that will divide the full range of the slider evenly)
+
 ![](images/custom_game_settings/sliderSteps.png)
 
 ### Using Custom Settings
@@ -121,7 +155,7 @@ The values for each custom game setting can then be used with entity archetype d
 
 Entities are constructed with a series of components that describe their behaviour. Since custom game settings are server-bound, this section only applies to server entity descriptions. For more general information about how entities are constructed, as well as a list of all the available components and their properties, check out the documentation for [Entities](https://github.com/Mojang/minecraft-legends-docs/blob/main/Entities.md#server-entity-documentation).
 
-In particular, there is a family of components with similar names: *badger:difficulty_modifier_...*
+In particular, there is a family of components with similar names: _badger:difficulty*modifier*..._
 
 These components are the mechanism in which an entity's properties can be altered based on what difficulty is chosen by the player. Consider this example:
 
@@ -144,7 +178,7 @@ These components are the mechanism in which an entity's properties can be altere
       }
 ```
 
-Since `badger:difficulty_modifier_damage` changes the damage of an entity's target actions, attaching this component to an entity would mean that the damage they deal through their target actions would increase as players choose harder difficulties. *See [the documentation](https://github.com/Mojang/minecraft-legends-docs/blob/main/Entities.md#badgerdifficulty_modifier_damage) for these components for a complete description of these properties.*
+Since `badger:difficulty_modifier_damage` changes the damage of an entity's target actions, attaching this component to an entity would mean that the damage they deal through their target actions would increase as players choose harder difficulties. _See [the documentation](https://github.com/Mojang/minecraft-legends-docs/blob/main/Entities.md#badgerdifficulty_modifier_damage) for these components for a complete description of these properties._
 
 Custom game modes have their own 'Custom' difficulty as they don't rely on traditional difficulty options for modifications such as this, however the same machanism is used to modify entities. Rather than defining a static value for a traditional difficulty, a separate section `"custom_game_settings"` can be used instead or in tandem:
 
@@ -161,7 +195,7 @@ Custom game modes have their own 'Custom' difficulty as they don't rely on tradi
       }
 ```
 
-Comparing this to the previous example, if an entity in a custom game had this component in it's description, their target actions' damage would instead be modified by *multiplying* their base damage (which is the damage in the specific target action) by the value set for the `unit_damage` custom game setting.
+Comparing this to the previous example, if an entity in a custom game had this component in it's description, their target actions' damage would instead be modified by _multiplying_ their base damage (which is the damage in the specific target action) by the value set for the `unit_damage` custom game setting.
 
 A description of each property is as follows:
 
@@ -171,7 +205,7 @@ A description of each property is as follows:
 | numeric_modifier_type | pre_add, post_add, pre_multiply, post_multiply | Descriptor for how the value of the custom game setting should be applied to the base value.       |
 | scaling_factor        | any float between (0.0, 1.0]                   | Scales the value of the custom game setting before it is applied to the entity's base value.       |
 
-This applies to all the components in the *badger:difficulty_modifier_...* family. Check out the [Entities](https://github.com/Mojang/minecraft-legends-docs/blob/main/Entities.md#server-entity-documentation) documentation to see all of these components that are available.
+This applies to all the components in the _badger:difficulty*modifier*..._ family. Check out the [Entities](https://github.com/Mojang/minecraft-legends-docs/blob/main/Entities.md#server-entity-documentation) documentation to see all of these components that are available.
 
 A special mention here for the `"badger:template"` component as well. This component can be used for specific entity descriptions to inherit the components from the descriptions of other entities. This can be really useful for custom game settings since we can define a single difficulty modifier elsewhere and apply it to any number of different entities. Just define the difficulty modifier on a generic entity and then include its identifier in the template component for your specific entity and it will be modified the same as if you added it directly. **Note that if an entity inherits from another and they both define the same component, the resulting component will have a combination of both copmonents' properties, using the property of the inheriting entity's components when they're defined for both.**
 
