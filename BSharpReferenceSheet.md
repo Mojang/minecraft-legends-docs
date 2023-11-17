@@ -226,10 +226,10 @@ For example
 
 ### Entity Destruction Listeners
 
-Due to the massive open world nature of Minecraft Legends, we’ve had to introduce several destruction listeners each with their on nuance. Here’s an overview of all 3.
+Due to the massive open world nature of Minecraft Legends, we’ve had to introduce several destruction listeners each with their own nuance. Here’s an overview of all 3.
 
 |  | Guaranteed to fire | Provides destroyed entity | Valid entities | Intended usecase |
 | --- | --- | --- | --- | --- |
 | NonPopCappedEntityDestroyed | Yes | Yes | Non pop cap entities (entities that can only be destroyed while unsuspended). Eg. Structures and bosses. | When you want to do critical work based off an entity that was destroyed. (eg. progression beats) |
-| PopCappedEntityDestroyed | No | Yes | Any entity. | When you want to do non-critical work abased off an entity that was destroyed. (eg. play effects) |
+| PopCappedEntityDestroyed | No | Yes | Any entity. | When you want to do non-critical work based off an entity that was destroyed. (eg. play effects) |
 | EntitiesAmountDestroyed | Yes | No | Any entity. | When you care about amount of entities destroyed OR need to guarantee your snippet triggers. |
