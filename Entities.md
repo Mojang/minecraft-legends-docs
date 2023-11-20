@@ -1,4 +1,4 @@
-###### Version: 1.17.65535.0
+###### Version: 1.18.65535.0
 
 
 
@@ -292,7 +292,7 @@ Alters the camera position based on follow target's locomotion
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| default_seconds_ahead| | Default amount of seconds to multiply the follow taget's average velocity with in order to position the camera ahead of the follow target. |
-| List| pitch_modifiers| | List of pitch angle [0, 360] modifiers written in ascending order. These modifiers are used to identify which yaw modifiers should be applied for the camera positioning. Note, this angle is the difference in pitch between the player's velocity vector and the camera look pitch.<br/><h5><p id="angle">angle</p></h5>Angle boundary in degrees [0,360]. Note we interpolate between these boundaries.</br><br><h5><p id="yaw_modifiers">yaw_modifiers</p></h5>List of yaw angle modifiers [0, 360] written in ascending order. These modifiers are used to identiify which additive changes we should apply to our seconds ahead and camera positioning calculation. This angle is the difference in yaw between the player's velocity vector and the camera look yaw.</br><h6></h6><h5><p id="angle">angle</p></h5>Angle boundary in degrees [0,360]. Note we interpolate between these boundaries.</br><br><h5><p id="seconds_ahead_delta">seconds_ahead_delta</p></h5>Additive change in seconds ahead amount if modifier met</br><br><br> |
+| List| pitch_modifiers| | List of pitch angle [0, 360] modifiers written in ascending order. These modifiers are used to identify which yaw modifiers should be applied for the camera positioning. Note, this angle is the difference in pitch between the player's velocity vector and the camera look pitch.<br/><h5><p id="angle">angle</p></h5>Angle boundary in degrees [0,360]. Note we interpolate between these boundaries.</br><br><h5><p id="yaw_modifiers">yaw_modifiers</p></h5>List of yaw angle modifiers [0, 360] written in ascending order. These modifiers are used to identiify which additive changes we should apply to our seconds ahead and camera positioning calculation. This angle is the difference in yaw between the player's velocity vector and the camera look yaw.</br><br><h5><p id="angle">angle</p></h5>Angle boundary in degrees [0,360]. Note we interpolate between these boundaries.</br><br><h5><p id="seconds_ahead_delta">seconds_ahead_delta</p></h5>Additive change in seconds ahead amount if modifier met</br><br> |
 | List| speed_modifiers| | List of possible speed modifiers.<br/><h5><p id="seconds_ahead_multiplier">seconds_ahead_multiplier</p></h5>Multiplying change in seconds ahead amount if modifier met</br><br><h5><p id="speed">speed</p></h5>Speed boundary. Note we interpolate between these boundaries.</br><br> |
 | Integer| ticks_to_average_velocity_over| | Amount of ticks we use to create our average velocity. The larger this is the more 'smooth' changes in camera positioning compared to changes in velocity. 10 is a good baseline. |
 
@@ -341,44 +341,44 @@ Optional parameters to control how decals are rendered.
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| Decimal| alpha| |  |
+| Decimal| alpha| | Sets the opacity of the decal. |
 | Integer| animation_frame_count| | Number of frames in the decal's animation |
 | Integer| animation_framerate| | Framerate of the decal's animation |
-| Boolean| apply_to_owned| |  |
-| Boolean| apply_to_unowned| |  |
-| String| bin| |  |
+| Boolean| apply_to_owned| | Bitwise flag for checking if rendered object entity is in a valid team. |
+| Boolean| apply_to_unowned| | Bitwise flag for checking if rendered object entity is not in a team. |
+| String| bin| | Name of the group to organize the decal. |
 | Vector [a, b, c]| decal_size| | Size of the decal in blocks. May be overridden by code. |
 | String| decal_textures| | When set, will use the stated textures for this decal, defaulting to the first. Textures after the first can be switched to via code |
-| Decimal| fade_out_start| |  |
-| Vector [a, b, c, d]| fill_color| |  |
-| Boolean| height_fade| |  |
-| Decimal| height_fade_center| |  |
-| Decimal| height_fade_height| |  |
-| Boolean| is_symmetric_texture| |  |
+| Decimal| fade_out_start| | Duration in seconds to begin fading out the decal. |
+| Vector [a, b, c, d]| fill_color| | A vector 4 of the color of the fill [R,G,B,A]. |
+| Boolean| height_fade| | Bitwise flag for enabling height fade. |
+| Decimal| height_fade_center| | Vertical position of the decal to center the opacity fade. |
+| Decimal| height_fade_height| | Vertical offset from HeightFadeCenter to lower opacity. |
+| Boolean| is_symmetric_texture| | Bitwise flag for mirroring the texture vertically and horizontally. |
 | Decimal| lifetime| | When set and > 0, the decal disappears after this many seconds. |
-| Boolean| linear_pulse_mode| |  |
-| Boolean| mask_entities| |  |
-| Boolean| normal_mapped| |  |
-| Vector [a, b, c, d]| outline_color| |  |
-| Decimal| outline_softness| |  |
-| Decimal| outline_thickness| |  |
-| Vector [a, b, c, d]| pulse_color| |  |
-| Decimal| pulse_count| |  |
-| Decimal| pulse_softness| |  |
-| Decimal| pulse_speed| |  |
-| Decimal| pulse_thickness| |  |
-| Vector [a, b, c]| rotation_center| |  |
-| String| shape| | Shape type of the decal |
-| Boolean| sliced_texture| |  |
-| Integer| sort_key| |  |
-| Decimal| sparkle_blink_speed| |  |
-| Decimal| sparkle_density| |  |
-| Decimal| sparkle_movement_speed| |  |
-| Decimal| sparkle_size| |  |
-| Decimal| sparkle_strength| |  |
+| Boolean| linear_pulse_mode| | Bitwise flag for selecting whether to use the shape of the distance function or object z position for the pulse size. |
+| Boolean| mask_entities| | Bitwise flag for checking if rendered object is an entity. |
+| Boolean| normal_mapped| | Boolean for whether a normal map for the decal texture exists. |
+| Vector [a, b, c, d]| outline_color| | A vector 4 of the color of the outline [R,G,B,A]. |
+| Decimal| outline_softness| | Size of the edge gradient of the outline. |
+| Decimal| outline_thickness| | Size of the outline of the decal. |
+| Vector [a, b, c, d]| pulse_color| | A vector 4 of the color of the pulse [R,G,B,A]. |
+| Decimal| pulse_count| | Number of times to repeat the pulse. |
+| Decimal| pulse_softness| | Size of the edge gradient of the pulse. |
+| Decimal| pulse_speed| | Speed over global time the pulse increases in size. |
+| Decimal| pulse_thickness| | Size of the pulse decal. |
+| Vector [a, b, c]| rotation_center| | Local vector 3 position for the pivot point of rotation. |
+| String| shape| | Shape type of the decal. |
+| Boolean| sliced_texture| | Bitwise flag for slicing the texture atlas correctly if symmetric. |
+| Integer| sort_key| | Sorting index. |
+| Decimal| sparkle_blink_speed| | Frequency of the sparkles blinking. |
+| Decimal| sparkle_density| | Density of the sparkles. |
+| Decimal| sparkle_movement_speed| | Speed of the sparkles moving about the decal. |
+| Decimal| sparkle_size| | Size of the sparkles. |
+| Decimal| sparkle_strength| | Opacity of additive sparkles. |
 | Boolean| start_enabled| | When true, this decal will be enabled and visible when spawned. When false, it will not render unless code is in place to cause it to do so. |
-| Decimal| texture_slice_corner_size| |  |
-| Decimal| yaw| |  |
+| Decimal| texture_slice_corner_size| | Amount from [0.0-1.0] to trim the corner of the square texture. |
+| Decimal| yaw| | Sets the yaw rotation of the decal. |
 
 
 
@@ -386,6 +386,11 @@ Optional parameters to control how decals are rendered.
 ### badger:decoration_collider_request
 
 Define the decoration collider to be attached to an entity.
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| String| name| | Archetype name of the decoration collider. |
+
 
 
 
@@ -531,7 +536,7 @@ Defines the settings for keeping client-side entities alive after they have died
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| time| | How much time, in seconds, the entity will stay alive for after it has died, before being unloaded. |
-| Decimal| time_if_disbanded| | How much time, in seconds, the entity will stay alive for after it has died, before being unloaded IF it dies due to disband. |
+| Decimal| time_if_refunded| | How much time, in seconds, the entity will stay alive for after it has died, before being unloaded IF it dies due to refund. |
 | Boolean| trigger_event_only_on_death| false| If true, the on_death event will only be triggered if the entity died due to reaching zero health. |
 
 
@@ -733,16 +738,20 @@ Defines the presentation triggers this entity can respond to, and the animation 
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| List| animation| | List of trigger responses. |
-| List| attachment| | List of trigger responses. |
-| List| audio| | List of trigger responses. |
-| List| beacon| | List of trigger responses. |
-| List| outline| | List of trigger responses. |
-| List| particles| | List of trigger responses. |
-| List| rumble| | List of trigger responses. |
-| List| script| | List of trigger responses. |
-| List| spawn_entity| | List of trigger responses. |
-| List| visual_state| | List of trigger responses. |
+| JSON Object| animation| | Descriptor for an animation object. |
+| String| attachment| | Descriptor for an attachment object. |
+| JSON Object| audio| | Descriptor for an audio effect object. |
+| JSON Object| beacon| | Descriptor for an beacon effect object. |
+| JSON Object| distance_curve| | Details for how the duration curve will be impacted due to distance between the event sender and the client player.<br/><h5><p id="min_range">min_range</p></h5>Minimum Distance whereby any distance smaller than or equal will be treated as 1.0f multiplier.</br><br><h5><p id="multiplier_function">multiplier_function</p></h5>Multiplier Curve that will be used to process the distance curve.</br><br><h5><p id="range">range</p></h5>Maximum distance whereby any distance greater than or equal will be treated as a 0.0f multiplier.</br><br> |
+| JSON Object| duration_curve| | Details for how you want the duration curve to look<br/><h5><p id="duration">duration</p></h5>The duration of the rumble in seconds, note if there is a start delay, this duration does not start until AFTER that delay.</br><br><h5><p id="in_duration">in_duration</p></h5>Amount of time it takes to get from Minimum to Max Rumble Strength.</br><br><h5><p id="in_easing_function">in_easing_function</p></h5>Function used to ease into the rumble (i.e. at the initiation of the rumble).</br><br><h5><p id="minimum_strength">minimum_strength</p></h5>The Minimum of the curve, at start of rumble this will be the first amount set and the amount the easing_out will move towards.</br><br><h5><p id="out_duration">out_duration</p></h5>Amount of time it takes to get from Rumble Max to Minimum strength</br><br><h5><p id="out_easing_function">out_easing_function</p></h5>Function used to ease out of rumble (i.e. at the tail-end of the rumble.</br><br><h5><p id="pulse_duration">pulse_duration</p></h5>The duration of the pulse in seconds. Note that this will be uniform so the number of pulses will be the duration / pulse_duration. Therefore the duration must be divisible by the pulse to get an integer of pulses.</br><br><h5><p id="start_delay">start_delay</p></h5>The amount of time we delay before we start the initial rumble.</br><br><h5><p id="strength">strength</p></h5>The Maximum strength of the rumble that the in_easing_function will move towards.</br><br> |
+| JSON Object| invulnerability_decal| | Descriptor for a visual only invulnerability decal. |
+| String| outline| | Descriptor for an outline object |
+| Boolean| override| | Boolean value determining whether this type of rumble can override other rumble events |
+| JSON Object| particles| | Descriptor for an particle effect object. |
+| Integer| priority| | The priority of this rumble event, lower integer value means higher priority |
+| String| script| | Descriptor for the script name to execute on trigger |
+| String| spawn_entity| | If the handler is a single string, then it's spawning only a single entity with 100% chance of success. |
+| String| visual_state| | Descriptor for a visual state object. |
 
 
 
@@ -794,6 +803,17 @@ The trigger that occurs when an entity is respawned
 ### badger:rig_operations
 
 Specifies a list of rig operations to apply.
+
+
+
+### badger:rotation_presentation
+
+Defines clientside presentation-related tunings for rotation.
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| String| rotation_stop_presentation_event_delay| | Defines the delay after rotation ends before the stop presentation event is sent. This can be used to avoid excessive event triggering when rapidly starting and stopping rotation. |
+
 
 
 
@@ -902,6 +922,7 @@ Triggers invulnerability decal on entity along with offsets for modifying the bo
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Vector [a, b, c]| max_aabb_subtractive_offset| | Offset vector to subtract from max AABB bound of the decal |
 | Vector [a, b, c]| min_aabb_additive_offset| | Offset vector to add to min AABB bound of the decal |
+| List| states| | A list of invulnerability states this entity can have. By default the first state is active. |
 
 
 
@@ -1164,7 +1185,7 @@ Tests whether the biome the subject is in has the specified tag.
 | String| value| | (Required) The tag to look for |
 
 
-**Examples**
+### Examples
 
 **Full..**
 ```
@@ -1323,7 +1344,7 @@ Defines the settings used to spawn an AoE entity
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| damage_effects| | Defines the damage effects for the AoE.<br/><h5><p id="damage">damage</p></h5>The amount of damage dealt to entities inside this AoE.</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>The tags required to NOT be on an entity for it to be influenced by this AoE.</br><br><h5><p id="include_tags">include_tags</p></h5>The tags required to be on an entity for it to be influenced by this AoE.</br><br><h5><p id="requires_los">requires_los</p></h5>Whether or not the AoE requires LoS from the shape pivot to the target to hit.</br><br> |
 | JSON Object| shape| | The shape used for the AoE. |
-| JSON Object| timer| | Defines an timer for the effects of the AoE.<br/><h5><p id="interval">interval</p></h5>The time between applying the effect(s) of the AoE, in seconds.</br><br> |
+| JSON Object| timer| | Defines an timer for the effects of the AoE.<br/><h5><p id="interval">interval</p></h5>The time between applying the effect(s) of the AoE, in seconds.</br><br><h5><p id="jitter">jitter</p></h5>Array of ticks to modify the intervals to provide pseudo-randomness and ease strain on AOE performance.</br><br> |
 
 
 
@@ -1392,7 +1413,7 @@ When applied to a structure, provides a buffing aura to entities within its zone
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| auras| | The list of buff auras used by this entity.<br/><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>The rule that determines which types of entities that will be buffed (friendly, enemy, etc.).</br><br><h5><p id="apply_to_build_previews">apply_to_build_previews</p></h5>Does this buff apply to build previews? (for things such as area overlay buffs)</br><br><h5><p id="buff_id">buff_id</p></h5>The buff to be applied by this entity.</br><br><h5><p id="can_apply_to_self">can_apply_to_self</p></h5>Whether this buff can be applied to the aura applicator itself.</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Entities with any of these tags will not be given a buff.</br><br><h5><p id="include_tags">include_tags</p></h5>Entities must have all these tags to get a buff.</br><br><h5><p id="load_affected_entities_on_construction_completion">load_affected_entities_on_construction_completion</p></h5>If true, the entity will load all suspended entities affected by the aura.</br><br><h5><p id="only_apply_to_construction_completed">only_apply_to_construction_completed</p></h5>Does this buff only apply to structures who have completed construction?</br><br><h5><p id="only_apply_to_damaged">only_apply_to_damaged</p></h5>Does this buff only apply to damaged entities?</br><br><h5><p id="persistent">persistent</p></h5>Whether this buff should persist after the aura applicator is gone.</br><br><h5><p id="search_mode">search_mode</p></h5>What entities this aura affects. Valid values are `zone`, `village`, `spawner_controller`.</br><br><h5><p id="unlock_condition">unlock_condition</p></h5>Enable or disable this aura depending on the presence of a given unlock resource.</br><h6></h6><h5><p id="has_unlock">has_unlock</p></h5>If true, this aura will only be active when this resource is acquired. If false, this aura will only be active if this resource is not acquired.</br><br><h5><p id="resource">resource</p></h5>The name of a resource used to enable or disable this aura.</br><br><br> |
+| Array| auras| | The list of buff auras used by this entity.<br/><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>The rule that determines which types of entities that will be buffed (friendly, enemy, etc.).</br><br><h5><p id="apply_to_build_previews">apply_to_build_previews</p></h5>Does this buff apply to build previews? (for things such as area overlay buffs)</br><br><h5><p id="buff_id">buff_id</p></h5>The buff to be applied by this entity.</br><br><h5><p id="can_apply_to_self">can_apply_to_self</p></h5>Whether this buff can be applied to the aura applicator itself.</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Entities with any of these tags will not be given a buff.</br><br><h5><p id="include_tags">include_tags</p></h5>Entities must have all these tags to get a buff.</br><br><h5><p id="load_affected_entities_on_construction_completion">load_affected_entities_on_construction_completion</p></h5>If true, the entity will load all suspended entities affected by the aura.</br><br><h5><p id="only_apply_to_construction_completed">only_apply_to_construction_completed</p></h5>Does this buff only apply to structures who have completed construction?</br><br><h5><p id="only_apply_to_damaged">only_apply_to_damaged</p></h5>Does this buff only apply to damaged entities?</br><br><h5><p id="persistent">persistent</p></h5>Whether this buff should persist after the aura applicator is gone.</br><br><h5><p id="search_mode">search_mode</p></h5>What entities this aura affects. Valid values are `zone`, `village`, `spawner_controller`.</br><br><h5><p id="unlock_condition">unlock_condition</p></h5>Enable or disable this aura depending on the presence of a given unlock resource.</br><br><h5><p id="has_unlock">has_unlock</p></h5>If true, this aura will only be active when this resource is acquired. If false, this aura will only be active if this resource is not acquired.</br><br><h5><p id="resource">resource</p></h5>The name of a resource used to enable or disable this aura.</br><br> |
 | JSON Object| buff_queue| | Optional data to add if the aura should be applied to entiies in a queue<br/><h5><p id="limit_concurrent_applications">limit_concurrent_applications</p></h5>The number of entities the aura is applied to per unit of time</br><br><h5><p id="time_interval">time_interval</p></h5>The time interval when the aura is applied</br><br> |
 
 
@@ -1435,6 +1456,18 @@ Settings to determine how auto firing behaves.
 | Decimal| shot_cooldown_time| | amount of time in seconds in between auto fired shots. |
 | String| shots_molang_name| | The name of the molang variable representing the number of shots. |
 | Integer| total_shots| | number of shots to auto fire before needing to cool down. |
+
+
+
+
+### badger:auto_lure
+
+Controls if this spawner will automatically lure units on spawn/recall and which lures to apply
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| String| lure_action_id| | The action ID triggered on the player if the player does not already have an active lure of the defined archetype. This should be the action that spawns the desired lure on the player. |
+| String| lure_archetype| | The lure Archetype to apply when this spawner creates a unit (Between it and the player that triggered it) |
 
 
 
@@ -1636,7 +1669,7 @@ Provides a list of sources of additive or substractive influence upon building c
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| List| sensors| | List of building creation sources.<br/><h5><p id="building_start_or_complete">building_start_or_complete</p></h5>Designate whether building creation will be tracked at the start or completion of the placement</br><br><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of structures</br><h6></h6><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for building structures</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for building structures</br><br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this building creation source</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this building creation source</br><br> |
+| List| sensors| | List of building creation sources.<br/><h5><p id="building_start_or_complete">building_start_or_complete</p></h5>Designate whether building creation will be tracked at the start or completion of the placement</br><br><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of structures</br><br><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for building structures</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for building structures</br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this building creation source</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this building creation source</br><br> |
 
 
 
@@ -1658,7 +1691,7 @@ Provides a list of sources of additive or substractive influence upon building d
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| List| sensors| | List of building creation sources.<br/><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of structures</br><h6></h6><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for building structures</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for building structures</br><br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this building destruction source</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this building destruction source</br><br> |
+| List| sensors| | List of building creation sources.<br/><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of structures</br><br><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for building structures</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for building structures</br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this building destruction source</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this building destruction source</br><br> |
 
 
 
@@ -1719,9 +1752,9 @@ Structure information to display in the UI.
 
 
 
-### badger:buildable_replace
+### badger:buildable_replaceable
 
-Flag Attribute that indicates if the structure can replace existing structures.
+Flag Attribute that indicates if the structure can be replaced by other structures
 
 
 
@@ -1762,8 +1795,9 @@ will spawn Mobs from components position.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Integer| batch| | Batch count |
-| JSON Object| batch_size_phase| | Batch size phases definitions.<br/><h5><p id="continuous_spawn_timeout">continuous_spawn_timeout</p></h5>Maximum number of seconds between two spawns events for them to be considered continuous spawn events.</br><br><h5><p id="phases">phases</p></h5>Array of spawner batch size phases definitions.</br><h6></h6><h5><p id="batch_size">batch_size</p></h5>Batch size that spawner will use when its continuous spawns exceed the corresponding threshold.</br><br><h5><p id="threshold">threshold</p></h5>Number of continuous spawn events required for spawner to apply corresponding batch size.</br><br><br> |
+| JSON Object| batch_size_phase| | Batch size phases definitions.<br/><h5><p id="continuous_spawn_timeout">continuous_spawn_timeout</p></h5>Maximum number of seconds between two spawns events for them to be considered continuous spawn events.</br><br><h5><p id="phases">phases</p></h5>Array of spawner batch size phases definitions.</br><br><h5><p id="batch_size">batch_size</p></h5>Batch size that spawner will use when its continuous spawns exceed the corresponding threshold.</br><br><h5><p id="threshold">threshold</p></h5>Number of continuous spawn events required for spawner to apply corresponding batch size.</br><br> |
 | Integer| cap| | Max mobs spawned that are still alive. -1 indicates there is no cap |
+| Boolean| disable_pop_cap_culling| | When true, mobs spawned by this spawner cannot be despawned by the pop cap system. |
 | Boolean| disable_wander| | When true, mobs spawned by this spawner will have wandering disabled. |
 | Boolean| enable_recall| | When true, mobs spawned by this spawner will be able to be recalled. |
 | Boolean| has_spawn_cost| | Setting this to true will make the spawner test the spawners' resource list if it can afford the cost of spawning the mobs. |
@@ -1960,7 +1994,7 @@ Provides a list of sources of additive or substractive damage influence for this
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| List| sensors| | List of damage sources.<br/><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of units/structures</br><h6></h6><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for damage receiver units</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for damage receiver units</br><br><br><h5><p id="damage_type_filter">damage_type_filter</p></h5>Track particular types of damage</br><h6></h6><h5><p id="exclude_any">exclude_any</p></h5>Exclude tags of damage</br><br><h5><p id="include_all">include_all</p></h5>Include tags of damage</br><br><br><h5><p id="inflictor_or_receiver_position">inflictor_or_receiver_position</p></h5>Designate whether damage will be tracked at the inflictor or receiver position</br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this damage source</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this damage source</br><br> |
+| List| sensors| | List of damage sources.<br/><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of units/structures</br><br><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for damage receiver units</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for damage receiver units</br><br><h5><p id="damage_type_filter">damage_type_filter</p></h5>Track particular types of damage</br><br><h5><p id="exclude_any">exclude_any</p></h5>Exclude tags of damage</br><br><h5><p id="include_all">include_all</p></h5>Include tags of damage</br><br><h5><p id="inflictor_or_receiver_position">inflictor_or_receiver_position</p></h5>Designate whether damage will be tracked at the inflictor or receiver position</br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this damage source</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this damage source</br><br> |
 
 
 
@@ -2005,6 +2039,12 @@ Defines the material tag to use when an entity is hit with an action.
 ### badger:damage_source_telemetry_tracker
 
 Determines whether or not the latest damage source is tracked for telemetry by this entity
+
+
+
+### badger:death_telemetry_tracking
+
+Defines the settings used when tracking telemetry for killed entities.
 
 
 
@@ -2065,7 +2105,8 @@ Modifiers for max accuracy range based on difficulty
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br> |
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br> |
 
 
 
@@ -2076,7 +2117,32 @@ Modifiers for min accuracy range based on difficulty
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br> |
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br> |
+
+
+
+
+### badger:difficulty_modifier_build_speed
+
+Modifiers for build speed based on difficulty and custom game options
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+
+
+
+
+### badger:difficulty_modifier_building_cost
+
+Modifier for building costs based on difficulty or custom game setting.
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
 
 
 
@@ -2087,7 +2153,104 @@ Modifiers for damage based on difficulty
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br> |
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br> |
+
+
+
+
+### badger:difficulty_modifier_fall_damage
+
+Modifiers for fall damage on difficulty and custom game option
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+
+
+
+
+### badger:difficulty_modifier_fall_damage_distance
+
+Modifiers for fall damage distance based on difficulty and custom game option
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+
+
+
+
+### badger:difficulty_modifier_gravity
+
+Modifiers for gravity based on difficulty and custom game options
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+
+
+
+
+### badger:difficulty_modifier_health_regeneration
+
+Modifier for health regeneration based on difficulty or custom game setting.
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+
+
+
+
+### badger:difficulty_modifier_jump_gravity
+
+Modifiers for jump gravity based on difficulty and custom game options
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+
+
+
+
+### badger:difficulty_modifier_jump_height
+
+Modifiers for jump height based on difficulty and custom game options
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+
+
+
+
+### badger:difficulty_modifier_knockback
+
+Modifiers for knockback based on difficulty and custom game option
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+
+
+
+
+### badger:difficulty_modifier_knockback_resistance
+
+Modifiers for knockback resistance based on difficulty and custom game options
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
 
 
 
@@ -2098,7 +2261,33 @@ Modifiers for max health based on difficulty
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><h6></h6><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><br> |
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br> |
+
+
+
+
+### badger:difficulty_modifier_resistance
+
+Modifiers for damage resistances based on difficulty
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| Array| damage_types| | The modifiers for specified damage types as json key names. Modifiers not specified in this array will affect damage resistance across all types.<br/><h5><p id="append_resistance_to_entities">append_resistance_to_entities</p></h5>Boolean to append the resistance to entities if absent from the mob data.</br><br><h5><p id="custom_game_settings">custom_game_settings</p></h5>Defines what custom game settings affect this numeric modifier.</br><br><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br><h5><p id="difficulties">difficulties</p></h5>The settings for each difficulty.</br><br><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="name">name</p></h5>Name of damage type.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+
+
+
+
+### badger:difficulty_modifier_spawning_cost
+
+Modifier for mob spawning costs based on difficulty or custom game setting.
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
+| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
 
 
 
@@ -2147,31 +2336,25 @@ Defines this entity as a status effect that disables sprint.
 
 
 
-### badger:disbandable
+### badger:distant_stimulus_movement
 
-Marks this unit as able to be disbanded, and gives their priority
-
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Integer| priority| | Disband priority. Lower values will be disbanded first |
-| Decimal| refund_multiplier| | How much of the units cost is refunded on disband |
-
-
-
-
-### badger:disbanding_spawner
-
-A spawner that will try to disband nearby units to make room for ticket cost of spawned entities
+Attribute that defines how entity moves to pursue the attacker after being attacked by a distant damage source
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| String| alliance_rule| | The alliance rule to filter by when searching for entities. |
-| Boolean| can_disband_in_combat| | Whether or not this spawner can disband mobs that are currently in combat. |
-| String| disband_for_ticket| | The ticket that is being checked to disband for. |
-| Array| exclude_tags| | Forbidden tags on entities to disband. |
-| Array| include_tags| | Required tags on entities to disband. |
-| Decimal| max_disband_range| | The maximum distance away from the spawner that a unit will be disbanded. |
+| Decimal| max_movement_duration| | The maximum amount of time in seconds which the movement is allowed to take |
+| Decimal| max_movement_range| | The maximum distance allowed for the movement |
+| Integer| min_distant_stimulus_distance| | The minimum distance between the damage source and damage taker for the damage to be considered a distant stimulus |
+| Decimal| nearby_ally_propagation_range| | The radius around the attacked entity where nearby allies will also be alerted. |
+| String| propagation_exclude_tags| | Tags that nearby mobs must NOT have in order to be alerted when this entity is attacked. |
+| String| propagation_include_tags| | Tags that nearby mobs must have in order to be alerted when this entity is attacked. |
 
+
+
+
+### badger:do_not_replace_buildables
+
+Flag Attribute that indicates if the structure can replace existing structures.
 
 
 
@@ -2318,6 +2501,17 @@ Indicates that this entity can fast travel.
 
 
 
+### badger:gatherable_resources
+
+Contains the most commonly available resources to gather at this entity
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| Array| gatherable_resource_names| | A list of resources names the entity drops |
+
+
+
+
 ### badger:generate_player_village
 
 An entity that creates a village when placed in world
@@ -2404,6 +2598,7 @@ The amount of health that regenerates per second
 | Decimal| attack_cooldown_seconds| | The cooldown before the entity can regenerate health again after attacks |
 | Decimal| health_regen_amount| | The amount of HP (per second) the entity can regenerate |
 | Decimal| regen_cooldown_seconds| | The cooldown between each health regeneration |
+| Boolean| regen_while_suspended| | Whether or not the entity regens health while suspended |
 
 
 
@@ -2437,7 +2632,7 @@ A list of Hud messages. Each are triggered when player is in proximity
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| List| messages| | List of different hud messages.<br/><h5><p id="cooldown_seconds">cooldown_seconds</p></h5>The cooldown between sending the hud message.</br><br><h5><p id="filter">filter</p></h5>Tags to define what type of entity can trigger the hud message.</br><h6></h6><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>The alliance rule used to determine what type of entity should trigger the hud message</br><br><h5><p id="exclude">exclude</p></h5>The tags to be excluded from when filtering</br><br><h5><p id="include">include</p></h5>The tags to be included in when filtering</br><br><br><h5><p id="hud_message_args">hud_message_args</p></h5>A list of arguments used in the hud message.</br><br><h5><p id="hud_message_id">hud_message_id</p></h5>The string ID of the HUD message.</br><br><h5><p id="range">range</p></h5>The range an entity needs to be in to trigger the HudMessage</br><br> |
+| List| messages| | List of different hud messages.<br/><h5><p id="cooldown_seconds">cooldown_seconds</p></h5>The cooldown between sending the hud message.</br><br><h5><p id="filter">filter</p></h5>Tags to define what type of entity can trigger the hud message.</br><br><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>The alliance rule used to determine what type of entity should trigger the hud message</br><br><h5><p id="exclude">exclude</p></h5>The tags to be excluded from when filtering</br><br><h5><p id="include">include</p></h5>The tags to be included in when filtering</br><br><h5><p id="hud_message_args">hud_message_args</p></h5>A list of arguments used in the hud message.</br><br><h5><p id="hud_message_id">hud_message_id</p></h5>The string ID of the HUD message.</br><br><h5><p id="range">range</p></h5>The range an entity needs to be in to trigger the HudMessage</br><br> |
 
 
 
@@ -2494,6 +2689,7 @@ Defines this entity as a coordinator of one or more (child) influencer entities.
 | Decimal| formation_separation| | The separation distance between the lure entity and the entities in the box formation. |
 | Integer| max_follower_count| | Directly sets the max number of units influenced at once by this entity. If max_followers_resource is also specified it will use the smaller of the two. |
 | String| max_followers_resource| | The name of the resource corresponding to the maximum number of entities that can be influenced at once. Unlimited if unspecified. If max_follower_count is also specified it will use the smaller of the two. |
+| Decimal| trigger_formation_update_radius| | When the player stops the formation will not update until the player leaves the radius positioned at the players last stationary position |
 
 
 
@@ -2702,6 +2898,7 @@ Defines how the entity can lure other entities.
 | Decimal| active_timer| | The number of seconds this lure will actively influence new entities, after which it will become dormant (unless reactivated otherwise). Set to 0 for an instantaneous lure. |
 | String| alliance_rule_filter| | The rule that determines which types of entities that will be lured (friendly, enemy, etc.). |
 | Boolean| applies_strict_ownership| | When true, this lure will retain "strict ownership" of any influenced mobs, preventing other players from controlling them as long as they are lured. |
+| Boolean| can_attack_along_line| | If true, mobs can attack any targets they can reach within the bounds of the linear leash. Requires 'leash_to_line' to be true. |
 | Boolean| center_effect_on_owner| | If true, the lure will affect an area around the lure's owner, rather than the lure itself. Lured entities will still move toward the lure itself. |
 | String| chained_preceding_lure_archetype| | Spawns the defined lure archetype to act as a precursor to this lure. Mobs that complete the "preceding" lure will then be redirected to move to this lure. |
 | String| config_id| | The config name used by lured entities when determining whether to use a non-default lured config. |
@@ -3045,6 +3242,7 @@ The amount of health that regenerates per second
 | Decimal| attack_cooldown_seconds| | The cooldown before the entity can regenerate health again after attacks |
 | Decimal| health_regen_amount| | The amount of HP (per second) the entity can regenerate |
 | Decimal| regen_cooldown_seconds| | The cooldown between each health regeneration |
+| Boolean| regen_while_suspended| | Whether or not the entity regens health while suspended |
 
 
 
@@ -3292,6 +3490,7 @@ Behavior modifications for movement
 | Boolean| enable_air_control_on_knockback| | Bool to enable air control while being knocked back. |
 | Decimal| move_speed| | How fast this entity moves in meters (cubes) per second. |
 | Decimal| swim_speed| | How fast this entity moves in meters (cubes) per second while touching water. If left undefined, will default to matching move_speed. |
+| Decimal| turn_rate| | Speed at which the entity will rotate to face a new direction, in degrees per second. |
 
 
 
@@ -3364,8 +3563,11 @@ Description of how this entity can navigate.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Boolean| avoid_block_damage| | Whether or not the entity will avoid block damage while navigating |
 | Decimal| avoidance_lookahead| | The distance to look ahead for obstacles while navigating. |
+| Boolean| disable_space_occupancy| | Enables or disables crowd avoidance |
 | Decimal| fall_distance| | The maximum distance this entity will be willing to step down hills |
 | String| ignore_solids_rule| | The alliance rule that specifies if this entity should ignore tagged solid blocks while pathfinding |
+| Decimal| max_distance_to_ignore_space_occupancy| | The max distance to ignore crowd avoidance |
+| Decimal| max_height_to_ignore_space_occupancy| | The max height to ignore crowd avoidance |
 
 
 
@@ -3487,7 +3689,7 @@ Provides a list of sources of additive or subtractive PERSISTENT influence for a
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| List| sensors| | List of persistent influence for entity sources.<br/><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of entities</br><h6></h6><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for entities</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for entities</br><br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this entity will persist at</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this entity source</br><br> |
+| List| sensors| | List of persistent influence for entity sources.<br/><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of entities</br><br><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for entities</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for entities</br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this entity will persist at</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this entity source</br><br> |
 
 
 
@@ -3533,7 +3735,7 @@ Defines the triggers this entity can respond to, and the entities to spawn (with
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
-| List| spawn_entity| | List of trigger responses. |
+| String| spawn_entity| | If the handler is a single string, then it's spawning only a single entity with 100% chance of success. |
 
 
 
@@ -3618,9 +3820,46 @@ Defines where on the entity ranged attacks should aim for
 
 
 
+### badger:recall_prevention
+
+Tunable timers for entities to be prevent being recalled by other players during actions.
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| Decimal| on_lured_disabled_duration| | Duration in seconds for the mob to be unrecallable after being directed. |
+
+
+
+
 ### badger:recallable_entity
 
 Flag component that marks entity as recallable
+
+
+
+### badger:refundable
+
+Marks this unit as refundable, and gives their priority
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| Integer| priority| | Refund priority. Lower values will be refunded first |
+| Decimal| refund_multiplier| | How much of the units cost is refunded |
+
+
+
+
+### badger:refunding_spawner
+
+A spawner that can be used to refund mobs
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| String| alliance_rule| | The alliance rule to filter which players can use this spawner to refund mobs. |
+| Boolean| can_refund_in_combat| | Whether or not this spawner can refund mobs that are currently in combat. |
+| Array| exclude_tags| | Forbidden tags on entities to refund. |
+| Array| include_tags| | Required tags on entities to refund. |
+
 
 
 
@@ -3676,6 +3915,18 @@ Defines entity's ability to resist being affected by status effects.
 
 
 
+### badger:resource_cost_multiplier
+
+This value scales resource costs for the player it is attached to, including building placement and mob spawning costs.
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| String| building_cost_multiplier| | The multiplier that is applied to all building costs, increasing it or lowering it. Default value 1.0. |
+| String| spawning_cost_multiplier| | The multiplier that is applied to all mob spawn costs, increasing it or lowering it. Default value 1.0. |
+
+
+
+
 ### badger:resource_modifier
 
 Modify the Pop Cap for a list of resources
@@ -3706,7 +3957,7 @@ Makes this entity act as a respawn point for players.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| alliance_rule| | Alliance rule tag name. |
 | String| player_respawned_trigger| | The trigger event to send when a player respawns at a respawn point |
-| JSON Object| spawn_blocking| | Settings to control what blocks a spawn point<br/><h5><p id="blocking_alliance_rule">blocking_alliance_rule</p></h5>The Alliance rule tag name for checking respawn blocking.</br><br><h5><p id="blocking_radius">blocking_radius</p></h5>The radius around the respawn point to check for entities potentially blocking respawning</br><br><h5><p id="tag_filter">tag_filter</p></h5>The tag filter used to determine if an entity should block a respawn point</br><h6></h6><h5><p id="exclude_tags">exclude_tags</p></h5>Array of tags to exlucde for entities blocking respawn points</br><br><h5><p id="include_tags">include_tags</p></h5>Array of tags required for entities blocking respawn points</br><br><br> |
+| JSON Object| spawn_blocking| | Settings to control what blocks a spawn point<br/><h5><p id="blocking_alliance_rule">blocking_alliance_rule</p></h5>The Alliance rule tag name for checking respawn blocking.</br><br><h5><p id="blocking_radius">blocking_radius</p></h5>The radius around the respawn point to check for entities potentially blocking respawning</br><br><h5><p id="tag_filter">tag_filter</p></h5>The tag filter used to determine if an entity should block a respawn point</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Array of tags to exlucde for entities blocking respawn points</br><br><h5><p id="include_tags">include_tags</p></h5>Array of tags required for entities blocking respawn points</br><br> |
 
 
 
@@ -3800,7 +4051,7 @@ Defines the rules for when or where to spawn entities.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | JSON Object| block_type_rule| | Defines optional block type spawner rule.<br/><h5><p id="valid_types">valid_types</p></h5>Defines a list of valid block types names to spawn entities on.</br><br> |
 | JSON Object| bsharp_rule| | Defines optional bSharp global variable spawner rule.<br/><h5><p id="value">value</p></h5>Defines the value of the global variable that causes the spawner to stop spawning.</br><br><h5><p id="variable">variable</p></h5>Defines name of the bSharp global variable.</br><br> |
-| JSON Object| distance_rule| | Defines optional distance spawner rule.<br/><h5><p id="distance_data">distance_data</p></h5>Defines optional entity distance rule.</br><h6></h6><h5><p id="alliance_rule">alliance_rule</p></h5>Defines the alliance rule of an entity that can prevent spawning.</br><br><h5><p id="max_distance">max_distance</p></h5>Defines the distance that entities have to be within before the spawner can start spawning.</br><br><h5><p id="min_distance">min_distance</p></h5>Defines the distance that entities cannot be within before the spawner can start spawning.</br><br><h5><p id="tag_filter">tag_filter</p></h5>filter object</br><h6></h6><h5><p id="exclude_tags">exclude_tags</p></h5>list of exclude tags</br><br><h5><p id="include_tags">include_tags</p></h5>list of include tags</br><br><br><br><h5><p id="village_bounds_distance_data">village_bounds_distance_data</p></h5>Defines optional village bounds distance spawner rule.</br><h6></h6><h5><p id="destruction_spawn_delay">destruction_spawn_delay</p></h5>Defines the duration of time waited after the destruction of a village in range before applying the isDestroyed rule.</br><br><h5><p id="horde_names">horde_names</p></h5>Defines the hordes to check. Do not define to check all villages of any horde.</br><br><h5><p id="is_destroyed">is_destroyed</p></h5>Defines if this rule only applies to destroyed villages. Do not define to check both alive and destroyed villages.</br><br><h5><p id="max_distance">max_distance</p></h5>Defines the padding from village bounds the spawner can start spawning.</br><br><h5><p id="min_distance">min_distance</p></h5>Defines the padding from village bounds the spawner cannot be in.</br><br><br><h5><p id="village_distance_data">village_distance_data</p></h5>Defines optional village distance spawner rule.</br><h6></h6><h5><p id="destruction_spawn_delay">destruction_spawn_delay</p></h5>Defines the duration of time waited after the destruction of a village in range before applying the isDestroyed rule.</br><br><h5><p id="horde_names">horde_names</p></h5>Defines the hordes to check. Do not define to check all villages of any horde.</br><br><h5><p id="is_destroyed">is_destroyed</p></h5>Defines if this rule only applies to destroyed villages. Do not define to check both alive and destroyed villages.</br><br><h5><p id="max_distance">max_distance</p></h5>Defines the distance that any village has to be within before the spawner can start spawning.</br><br><h5><p id="min_distance">min_distance</p></h5>Defines the distance that a village cannot be within before the spawner can start spawning.</br><br><br> |
+| JSON Object| distance_rule| | Defines optional distance spawner rule.<br/><h5><p id="distance_data">distance_data</p></h5>Defines optional entity distance rule.</br><br><h5><p id="alliance_rule">alliance_rule</p></h5>Defines the alliance rule of an entity that can prevent spawning.</br><br><h5><p id="max_distance">max_distance</p></h5>Defines the distance that entities have to be within before the spawner can start spawning.</br><br><h5><p id="min_distance">min_distance</p></h5>Defines the distance that entities cannot be within before the spawner can start spawning.</br><br><h5><p id="tag_filter">tag_filter</p></h5>filter object</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>list of exclude tags</br><br><h5><p id="include_tags">include_tags</p></h5>list of include tags</br><br><h5><p id="village_bounds_distance_data">village_bounds_distance_data</p></h5>Defines optional village bounds distance spawner rule.</br><br><h5><p id="destruction_spawn_delay">destruction_spawn_delay</p></h5>Defines the duration of time waited after the destruction of a village in range before applying the isDestroyed rule.</br><br><h5><p id="horde_names">horde_names</p></h5>Defines the hordes to check. Do not define to check all villages of any horde.</br><br><h5><p id="is_destroyed">is_destroyed</p></h5>Defines if this rule only applies to destroyed villages. Do not define to check both alive and destroyed villages.</br><br><h5><p id="max_distance">max_distance</p></h5>Defines the padding from village bounds the spawner can start spawning.</br><br><h5><p id="min_distance">min_distance</p></h5>Defines the padding from village bounds the spawner cannot be in.</br><br><h5><p id="village_distance_data">village_distance_data</p></h5>Defines optional village distance spawner rule.</br><br><h5><p id="destruction_spawn_delay">destruction_spawn_delay</p></h5>Defines the duration of time waited after the destruction of a village in range before applying the isDestroyed rule.</br><br><h5><p id="horde_names">horde_names</p></h5>Defines the hordes to check. Do not define to check all villages of any horde.</br><br><h5><p id="is_destroyed">is_destroyed</p></h5>Defines if this rule only applies to destroyed villages. Do not define to check both alive and destroyed villages.</br><br><h5><p id="max_distance">max_distance</p></h5>Defines the distance that any village has to be within before the spawner can start spawning.</br><br><h5><p id="min_distance">min_distance</p></h5>Defines the distance that a village cannot be within before the spawner can start spawning.</br><br> |
 | Boolean| spawn_if_village_occupied| | Defines optional flag for whether this spawner should spawn when a village is occupied or not. Omitting this option allows spawning regardless of the occupation state. |
 | JSON Object| time_of_day_rule| | Defines optional time of day spawner rule.<br/><h5><p id="times">times</p></h5>Defines the times of day that this spawner is allowed to spawn during.</br><br> |
 
@@ -3982,6 +4233,7 @@ Defines this entity as a target assigner which pushes priority targets to influe
 | Boolean| despawn_on_target_lost| | When true, the entire order will end when the target is destroyed, cancelling movement. |
 | Decimal| drop_target_range| | How far a selected target needs to be from the assigner before it is dropped. |
 | Decimal| find_target_range| | How far will the assigner will search for a target to select/assign. |
+| Boolean| force_move| | If this command is a force move command, will adjust enemy highlighting to match the action. |
 | Decimal| force_target_range| | Within this range, mobs will go directly to attack the target, ignoring any secondary targets that are closer. |
 | Boolean| parent_self_to_target| | When true, the target assigner entity will parent itself to the targeted entity. |
 | JSON Object| pre_redirect_target_filter| | Early phase alliance and tag filter BEFORE redirection. Redirector hurtboxes that get found in this phase will redirect you to target the default hurtbox, which will get further filtered by the main tag filter. Don't change this without coder approval.<br/><h5><p id="exclude_tags">exclude_tags</p></h5>Array of tags to exclude (any of) when filtering targets.</br><br><h5><p id="include_tags">include_tags</p></h5>Array of tags to require (all of) when filtering targets.</br><br> |
@@ -3998,6 +4250,7 @@ Defines the entity's targeting behaviour. Used to drive what the entity can targ
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| targeting_priorities| | Entries defining what the entity can target at a specified range. Entries are in order of high-to-low priority. |
+| Boolean| update_targeting_every_tick| | When true, the entity checks for targets constantly, instead of a couple of times per second. Doing so is more costly for performance and should be avoided outside of special cases. |
 
 
 
@@ -4104,6 +4357,17 @@ Flag Attribute that indicates this entity is used as a trigger section.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | List| filters| | List of filter include and exclude tags |
+
+
+
+
+### badger:unit_direct_tags
+
+Tags that are used to filter entities for advanced direct groups.
+
+| Type| Name| Default Value| Description |
+|:-----------:|:-----------:|:-----------:|:-----------:|
+| Array| tags| | Tags to add to this entity for advanced direct groupings. |
 
 
 
