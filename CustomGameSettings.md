@@ -179,7 +179,7 @@ The values for each custom game setting can then be used with entity archetype d
 
 Entities are constructed with a series of components that describe their behaviour. Since custom game settings are server-bound, this section only applies to server entity descriptions. For more general information about how entities are constructed, as well as a list of all the available components and their properties, check out the documentation for [Entities](https://github.com/Mojang/minecraft-legends-docs/blob/main/Entities.md#server-entity-documentation).
 
-In particular, there is a family of components with similar names: _badger:difficulty*modifier*..._
+In particular, there is a family of components with similar names: <i>badger:difficulty_modifier_...</i>
 
 These components are the mechanism in which an entity's properties can be altered based on what difficulty is chosen by the player. Consider this example:
 
