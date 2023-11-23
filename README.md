@@ -28,3 +28,6 @@ Structures in Minecraft Legends can use special variations of [barrier blocks](B
 
 ## BSharp
 The bulk of the heavy lifting in the campaign mode is accomplished through our scripting language called BSharp. It is built on JavaScript and can do quite a lot of powerful things in the game. Check out the [BSharp Reference Sheet](BSharpReferenceSheet.md) for more information.
+
+## Wolverine
+[Wolverine](Wolverine.md) is a versatile structure conversion tool for converting structures between Minecraft (Bedrock and Java) and Minecraft Lengeds. Taking `.nbt`, `.mcstructure`, or `.schematic` files made in Minecraft as input, this tool will create Minecraft: Legends formatted structures to be used by creators in making their own Packs!
