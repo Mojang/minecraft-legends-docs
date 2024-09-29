@@ -1,15 +1,12 @@
-###### Version: 1.18.65535.0
-
-
-
 # Client Entity Documentation
 
 Client entity definitions are contained within a Resource Pack and contain all of the information necessary to describe how an entity should look (model, texture, animation) and sound. To create your own, start by navigating to the "entity" folder inside the root of the Resource Pack. In the entity folder create a JSON file and give it a name. The JSON file needs a format version and minecraft:client_entity information.
 
-The minecraft:client_entity section contains the description for the entity. Under description there are a number of things that you can set about an entity. 
+The minecraft:client_entity section contains the description for the entity. Under description there are a number of things that you can set about an entity.
 
-**Example client entity definition JSON for the prismarine item drop**
-```
+**Example client entity definition JSON for the prismarine item drop**:
+
+```json
 {
   "format_version": "1.10.0",
   "minecraft:client_entity": {
@@ -45,11 +42,7 @@ The minecraft:client_entity section contains the description for the entity. Und
 
 ```
 
-
-
 ## Entity Description Properties
-
-
 
 ### badger:animal_interaction
 
@@ -61,9 +54,6 @@ Handles animal interaction information.
 | String| molang_variable| | The molang variable to toggle the pat pat animation on both the animal and the player |
 | String| trigger_event| | The presentation event to trigger when the interaction occurs |
 
-
-
-
 ### badger:animation_variation
 
 Settings to determine which animation is played based on which interval an action occurs within
@@ -73,20 +63,27 @@ Settings to determine which animation is played based on which interval an actio
 | Array| intervals| | The set of intervals used to determine the molang index based on the last time an action was performed. |
 | String| molang_index_name| | The name of the molang used by animation for a given set of intervals. |
 
-
-
-
 ### badger:area_overlays
 
 Defines any visual overlay effects applied to this entity, such as auras and attack range circles.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| List| auras| | Defines a list of aura-type overlays.<br/><h5><p id="filter_team">filter_team</p></h5>When true, the overlay is only visible to allied players.</br><br><h5><p id="layer">layer</p></h5>Defines what layer the aura is rendered to. Valid values: zone, aoi, aura, or overlay</br><br><h5><p id="size">size</p></h5>Size of the overlay, in blocks.</br><br><h5><p id="type">type</p></h5>Defines the type of overlay, which affects when and how it will be rendered. Valid values: default, aura, buff, culture, tower, highlight</br><br><h5><p id="uses_zone_size">uses_zone_size</p></h5>When true, the overlay expands to match the entity's zone of effect. See 'badger:owned_territory'.</br><br><h5><p id="views">views</p></h5>Defines when the overlay should be visible. Valid values: gameplay, placement. Gameplay overlays are active during normal gameplay, and placement overlays are active during buildable placement.</br><br> |
-| List| circles| | Defines a list of circle-type overlays.<br/><h5><p id="filter_team">filter_team</p></h5>When true, the overlay is only visible to allied players.</br><br><h5><p id="layer">layer</p></h5>Defines what layer the aura is rendered to. Valid values: zone, aoi, aura, or overlay</br><br><h5><p id="size">size</p></h5>Size of the overlay, in blocks.</br><br><h5><p id="type">type</p></h5>Defines the type of overlay, which affects when and how it will be rendered. Valid values: default, aura, buff, culture, tower, highlight</br><br><h5><p id="uses_zone_size">uses_zone_size</p></h5>When true, the overlay expands to match the entity's zone of effect. See 'badger:owned_territory'.</br><br><h5><p id="views">views</p></h5>Defines when the overlay should be visible. Valid values: gameplay, placement. Gameplay overlays are active during normal gameplay, and placement overlays are active during buildable placement.</br><br> |
+**Area Overlays**:
 
+| **Type** | **Name** | **Description** |
+|----------|----------|-----------------|
+| **List** | **auras** | Defines a list of aura-type overlays. |
+| **List** | **circles** | Defines a list of circle-type overlays. |
 
+| **Attributes**      | **Description**                   | **Default Value** | **Valid Values**                     |
+|---------------------|-------------------------------|-------------------|--------------------------------------|
+| filter_team          | When true, the overlay is only visible to allied players.          | _Unknown_             | true, false                          |
+| views                | Defines when the overlay should be visible.            | gameplay          | gameplay, placement                  |
+| layer                | Defines what layer the aura is rendered to.                | aura              | zone, aoi, aura, overlay             |
+| size                 | Size of the overlay, in blocks.                    |                   | Any positive integer                 |
+| type                 | Defines the type of overlay, which affects when and how it will be rendered.                 | default           | default, aura, buff, culture, tower, highlight |
+| uses_zone_size       | When true, the overlay expands to match the entity's zone of effect.       | _unknown_             | true, false                          |
 
+---
 
 ### badger:attacker_damage_prediction
 
@@ -97,9 +94,6 @@ Defines presentation behaviour for when the entity anticipates performing an att
 | String| apply_buff| | The buff applied to the entity about to perform an attack that deals damage of a certain hit reaction threshold. |
 | String| hit_reaction_type| | The hit reaction threshold which applies the buff. |
 
-
-
-
 ### badger:audio_beat_sync
 
 This component allows an entity to trigger presentation events based on beats or marker triggers from the music.
@@ -108,21 +102,20 @@ This component allows an entity to trigger presentation events based on beats or
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Boolean| receive_only_markers| | If this is true, this entity will not be sent any Beat callbacks, only Marker callbacks. |
 
-
-
-
 ### badger:audio_block_scanning
 
 This component provides information for the block scanning system for which biomes to look for and which audio events to play when it finds it.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| biomes| | Array of all of the biomes this block scan will look for.<br/><h5><p id="biome_name">biome_name</p></h5>This is the name of the biome the block scan is looking for.</br><br><h5><p id="fmod_event">fmod_event</p></h5>This is the name of the FMOD Event that will start when the biome is found. It's recommended to use a looping sound.</br><br><h5><p id="liquid_only">liquid_only</p></h5>When this bool is true, only liquid type blocks will be valid when detecting a biome type.</br><br> |
-| Integer| max_step_dist| | The maximum distance in blocks that this block scanner will go. |
-| Integer| min_step_dist| | The minimum distance in blocks that this block scanner will go. |
+| **Type**    | **Name**          | **Description** |
+|-------------|-------------------|-----------------|
+| **Array**   | **biomes**        | Array of all the biomes this block scan will look for. |
+|             | biome_name        | The name of the biome the block scan is looking for. Type: _string_ |
+|             | fmod_event        | The name of the FMOD Event that will start when the biome is found. It's recommended to use a looping sound. Type: _string_ |
+|             | liquid_only       | When this boolean is true, only liquid-type blocks will be valid when detecting a biome type. Type: _boolean_ |
+| **Integer** | **max_step_dist** | The maximum distance in blocks that this block scanner will go. |
+| **Integer** | **min_step_dist** | The minimum distance in blocks that this block scanner will go. |
 
-
-
+---
 
 ### badger:audio_interactable
 
@@ -132,26 +125,17 @@ This flags an entity to apply attributes about the audio event that should be pl
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| enter_range_audio_event| | The name of the audio event that should be played when the player comes into interaction range. |
 
-
-
-
 ### badger:audio_molang_to_fmod
 
 This flag component indicates that the entity will update any specified Molang to FMOD audio parameters, these molang parameters are not data driven due to expensive molang calls.
-
-
 
 ### badger:audio_time_of_day
 
 This flags an entity to apply an FMOD event parameter for 'time_of_day'.
 
-
-
 ### badger:audio_update_FMOD_projectile_velocity
 
 This flags an entity so its velocity will be sent to FMOD for all of the audio events it triggers.
-
-
 
 ### badger:audio_vo_sequence_speaker_tag
 
@@ -161,19 +145,21 @@ This flags an entity to apply attributes about a tag that will allow the VO Sequ
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| speaker_tag| | A tag for this entity so that VO sequence audio may be positioned on it. |
 
-
-
-
 ### badger:beacon_render_info
 
 Provides a beacon on a village entity
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| List| states| | A list of beacon states this entity can have. By default the first state is active.<br/><h5><p id="beacon_color">beacon_color</p></h5>Base color to be multiplied onto the beacon texture</br><br><h5><p id="beacon_width">beacon_width</p></h5>Width of Beacon </br><br><h5><p id="emissive_scale">emissive_scale</p></h5>Flat value to scale the emissiveness of the beacon - Default is tuned for near camera beacons</br><br><h5><p id="max_distance">max_distance</p></h5>Maximum distance after this beacon is no longer rendered</br><br><h5><p id="meta_material">meta_material</p></h5>Meta material name used to render beacon</br><br><h5><p id="min_distance">min_distance</p></h5>Minimum distance before this beacon is no longer rendered</br><br> |
+| **Type**  | **Name**          | **Description** |
+|-----------|-------------------|-----------------|
+| **List**  | **states**        | A list of beacon states this entity can have. By default, the first state is active. |
+|           | beacon_color      | Base color to be multiplied onto the beacon texture. (String) |
+|           | beacon_width      | Width of the beacon. (Integer) |
+|           | emissive_scale    | Flat value to scale the emissiveness of the beacon - Default is tuned for near-camera beacons. (Float) |
+|           | max_distance      | Maximum distance after which this beacon is no longer rendered. (Integer) |
+|           | meta_material     | Meta material name used to render the beacon. (String) |
+|           | min_distance      | Minimum distance before this beacon is no longer rendered. (Integer) |
 
-
-
+---
 
 ### badger:block_source_cull_distance_override
 
@@ -183,20 +169,13 @@ Adds a distance override for the block source culling distance for this entity
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| distance| | Override to the maximum distance from the player at which the block source culling occurs |
 
-
-
-
 ### badger:block_source_info
 
 Allows the entity to track the block source information for the current block it's on. This is to detect things like, biome data, water, on the ground, etc...
 
-
-
 ### badger:block_source_removal
 
 Remove the BlockSourceComponent on the client because this entity doesn't need one.
-
-
 
 ### badger:boom_camera
 
@@ -215,20 +194,13 @@ Badger's boom camera.
 | Decimal| starting_relative_yaw| | The initial yaw of the boom camera. |
 | Decimal| target_vertical_offset| | Vertical offset from the camera's follow target. |
 
-
-
-
 ### badger:cam_overrides_look_orientation
 
 Attach to a camera to indicate whether a camera overrides the direction the player looks when they move
 
-
-
 ### badger:cam_overrides_move_orientation
 
 Attach to a camera to indicate whether a camera inhibits the player from moving
-
-
 
 ### badger:camera_avoidance
 
@@ -245,9 +217,6 @@ Badger's main camera avoidance logic.
 | Decimal| target_disk_radius| | Target disk radius to use to move camera for avoidance. |
 | Decimal| target_vertical_offset| | Vertical offset from target that should use as anchor avoidance/follow point. |
 
-
-
-
 ### badger:camera_bounds
 
 Describes how and when a camera makes rotational and/or positional changes
@@ -260,9 +229,6 @@ Describes how and when a camera makes rotational and/or positional changes
 | Decimal| position_smoothing_spring| | Smoothing Spring constant determining how long the spring takes to get the camera to the appropriate position. |
 | Decimal| soft_bounds_scale| | Scale applied to the spherical cone used to recenter the camera IF the hard bounds spherical cone angle has been broken. |
 
-
-
-
 ### badger:camera_distance_activation
 
 Describes the range this camera can activate in.
@@ -270,9 +236,6 @@ Describes the range this camera can activate in.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| distance| | The distance from the camera to it's look target. This determines the range this camera will try to activate in. |
-
-
-
 
 ### badger:camera_input_layout_override
 
@@ -282,28 +245,27 @@ Defines how cameras can override an existing input layout.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| layout_name| | The name of the input layout. |
 
-
-
-
 ### badger:camera_locomotion
 
 Alters the camera position based on follow target's locomotion
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Decimal| default_seconds_ahead| | Default amount of seconds to multiply the follow taget's average velocity with in order to position the camera ahead of the follow target. |
-| List| pitch_modifiers| | List of pitch angle [0, 360] modifiers written in ascending order. These modifiers are used to identify which yaw modifiers should be applied for the camera positioning. Note, this angle is the difference in pitch between the player's velocity vector and the camera look pitch.<br/><h5><p id="angle">angle</p></h5>Angle boundary in degrees [0,360]. Note we interpolate between these boundaries.</br><br><h5><p id="yaw_modifiers">yaw_modifiers</p></h5>List of yaw angle modifiers [0, 360] written in ascending order. These modifiers are used to identiify which additive changes we should apply to our seconds ahead and camera positioning calculation. This angle is the difference in yaw between the player's velocity vector and the camera look yaw.</br><br><h5><p id="angle">angle</p></h5>Angle boundary in degrees [0,360]. Note we interpolate between these boundaries.</br><br><h5><p id="seconds_ahead_delta">seconds_ahead_delta</p></h5>Additive change in seconds ahead amount if modifier met</br><br> |
-| List| speed_modifiers| | List of possible speed modifiers.<br/><h5><p id="seconds_ahead_multiplier">seconds_ahead_multiplier</p></h5>Multiplying change in seconds ahead amount if modifier met</br><br><h5><p id="speed">speed</p></h5>Speed boundary. Note we interpolate between these boundaries.</br><br> |
-| Integer| ticks_to_average_velocity_over| | Amount of ticks we use to create our average velocity. The larger this is the more 'smooth' changes in camera positioning compared to changes in velocity. 10 is a good baseline. |
+| **Type** | **Name**                         | **Description**                                                                                         |
+|----------|----------------------------------|---------------------------------------------------------------------------------------------------------|
+| **Decimal** | **default_seconds_ahead**      | Default amount of seconds to multiply the follow target's average velocity with to position the camera ahead of the follow target. |
+| **List**    | **pitch_modifiers**            | List of pitch angle modifiers [0, 360] written in ascending order. These modifiers identify which yaw modifiers should be applied for camera positioning. Note: This angle is the difference in pitch between the player's velocity vector and the camera look pitch. |
+|            | angle                           | Angle boundary in degrees [0, 360]. Interpolation occurs between these boundaries. (Float)             |
+|            | yaw_modifiers                   | List of yaw angle modifiers [0, 360] written in ascending order. These modifiers identify which additive changes should be applied to our seconds ahead and camera positioning calculation. This angle is the difference in yaw between the player's velocity vector and the camera look yaw. (List) |
+|            | seconds_ahead_delta             | Additive change in seconds ahead amount if the modifier is met. (Decimal)                             |
+| **List**    | **speed_modifiers**            | List of possible speed modifiers.                                                                        |
+|            | seconds_ahead_multiplier         | Multiplying change in seconds ahead amount if the modifier is met. (Decimal)                           |
+|            | speed                           | Speed boundary. Interpolation occurs between these boundaries. (Decimal)                                |
+| **Integer** | **ticks_to_average_velocity_over** | Amount of ticks used to create the average velocity. A larger value results in smoother camera positioning changes relative to velocity. A value of 10 is a good baseline. |
 
-
-
+---
 
 ### badger:camera_show_indicators
 
 Describes whether or not the camera is able to see circular indicators under mobs.
-
-
 
 ### badger:camera_show_zone
 
@@ -314,14 +276,9 @@ Describes whether or not the camera be able to see zones.
 | Boolean| show_all_zones| | When set to true, this camera will display all zones in preview |
 | Decimal| zone_distance| | The distance that this camera should show zones at |
 
-
-
-
 ### badger:cinematic_camera
 
 Attach to a camera to indicate that it's used in the cinematic system as a camera.
-
-
 
 ### badger:clamp_camera
 
@@ -331,9 +288,6 @@ Badger's boom camera.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| horizontal_clamp| | Horizontal clamp for the camera. |
 | Decimal| vertical_clamp| | Vertical clamp for the camera. |
-
-
-
 
 ### badger:decal_visualization
 
@@ -380,9 +334,6 @@ Optional parameters to control how decals are rendered.
 | Decimal| texture_slice_corner_size| | Amount from [0.0-1.0] to trim the corner of the square texture. |
 | Decimal| yaw| | Sets the yaw rotation of the decal. |
 
-
-
-
 ### badger:decoration_collider_request
 
 Define the decoration collider to be attached to an entity.
@@ -391,14 +342,9 @@ Define the decoration collider to be attached to an entity.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| name| | Archetype name of the decoration collider. |
 
-
-
-
 ### badger:entity_age
 
 Enables the age timer.
-
-
 
 ### badger:face_animation
 
@@ -413,9 +359,6 @@ Defines facial animation properties for the entity.
 | Array| blink_time_open| | Range (in seconds) to hold non-blink frame. |
 | Positive Integer| default_frame| | Default frame index. |
 
-
-
-
 ### badger:fast_travel_presentation
 
 Defines the entity's presentation event & molang variable names for fast travel.
@@ -428,9 +371,6 @@ Defines the entity's presentation event & molang variable names for fast travel.
 | String| windup| | The name of the windup presentation event & molang variable. |
 | Decimal| windup_event_time| | The time, in seconds, when the fast travel start trigger event is triggered after initiating fast travel. |
 
-
-
-
 ### badger:hero_lure_presentation
 
 Defines the entity's presentation event names for hero lure.
@@ -440,9 +380,6 @@ Defines the entity's presentation event names for hero lure.
 | String| start_trigger| | The name of the start presentation event. |
 | String| stop_trigger| | The name of the stop presentation event. |
 
-
-
-
 ### badger:hit_reaction_threshold
 
 Defines this entity as a hit reaction threshold prototype.
@@ -451,20 +388,20 @@ Defines this entity as a hit reaction threshold prototype.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| activation_percent| | The percentage of target's max health that attacking damage will do, on the range [0,1]. |
 
-
-
-
 ### badger:hud_message_interaction_failed
 
 This describes HUD messages to show if we have a failed interaction that requires a resource/unlock cost.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| resource_cost_failed_message| | Defines the HUD message that will be shown if the player doesn't have resources for the interaction cost.<br/><h5><p id="hud_message_args">hud_message_args</p></h5>Arguments to pass into the HUD message. Message needs to support arguments.</br><br><h5><p id="hud_message_id">hud_message_id</p></h5>HUD message id from hud_text_messages.json</br><br> |
-| JSON Object| unlock_cost_failed_message| | Defines the HUD message that will be shown if the player doesn't have resources for the unlock.<br/><h5><p id="hud_message_args">hud_message_args</p></h5>Arguments to pass into the HUD message. Message needs to support arguments.</br><br><h5><p id="hud_message_id">hud_message_id</p></h5>HUD message id from hud_text_messages.json</br><br> |
+| **Type**       | **Name**                           | **Description**                                                                                                                                                                                |
+|----------------|------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **resource_cost_failed_message**   | Defines the HUD message displayed when the player lacks the resources for the interaction cost.                                                                                               |
+|                | hud_message_args                   | Arguments to pass into the HUD message; the message must support these arguments.                                                                                                            |
+|                | hud_message_id                     | HUD message ID sourced from `hud_text_messages.json`.                                                                                                                                         |
+| **JSON Object**| **unlock_cost_failed_message**     | Defines the HUD message displayed when the player lacks the resources to unlock an item or feature.                                                                                           |
+|                | hud_message_args                   | Arguments to pass into the HUD message; the message must support these arguments.                                                                                                            |
+|                | hud_message_id                     | HUD message ID sourced from `hud_text_messages.json`.                                                                                                                                         |
 
-
-
+---
 
 ### badger:input_actions
 
@@ -479,9 +416,6 @@ Defines the entity's input mapping of possible actions.
 | String| target_facing| | The relative direction to shoot in e.g. player_facing (only valid when action type is set to target) |
 | Decimal| target_range| | The range of the target (only valid when action type is set to target) |
 
-
-
-
 ### badger:interaction_presentation
 
 Defines toggles to enable or disable certain interaction presentation events from firing when interacting with this entity.
@@ -490,9 +424,6 @@ Defines toggles to enable or disable certain interaction presentation events fro
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Boolean| trigger_generic_events| true| When true, will trigger generic presentation events when interacted with (archetype doesn't matter). Can be combined with specific events. |
 | Boolean| trigger_specific_events| false| When true, will trigger archetype specific presentation events when interacted with. Can be combined with generic events. |
-
-
-
 
 ### badger:interpolation
 
@@ -504,9 +435,6 @@ Defines the entity's interpolation parameters.
 | Decimal| position_interpolation_steps| | How many fixed update ticks (there are 20 per second) an interpolation of an position change takes. Default is 1, the value can be greater then 1 but also be a fraction (for example 0.5f). |
 | Decimal| position_interpolation_steps_y_down| | How many fixed update ticks (there are 20 per second) an interpolation of an position change while falling downwards takes. Default is 1, the value can be greater then 1 but also be a fraction (for example 0.5f). |
 
-
-
-
 ### badger:invasion_icon
 
 The colour for the backing of the healthbar icon during invasions
@@ -515,9 +443,6 @@ The colour for the backing of the healthbar icon during invasions
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| icon_color| | The The RGBA value of the icon colour. Formatted as an array |
 
-
-
-
 ### badger:invulnerability_heartbeat_view
 
 This component provides which audio events to play when the invulnerability heartbeat pulses.
@@ -525,9 +450,6 @@ This component provides which audio events to play when the invulnerability hear
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| audio_bae_event| | This is the name of the Audio BAE Event that will start when the invulnerability render pulse occurs. It's recommended to not use a looping sound. |
-
-
-
 
 ### badger:keep_alive_timer
 
@@ -539,9 +461,6 @@ Defines the settings for keeping client-side entities alive after they have died
 | Decimal| time_if_refunded| | How much time, in seconds, the entity will stay alive for after it has died, before being unloaded IF it dies due to refund. |
 | Boolean| trigger_event_only_on_death| false| If true, the on_death event will only be triggered if the entity died due to reaching zero health. |
 
-
-
-
 ### badger:knockback_reaction_threshold
 
 Defines this entity as a knockback reaction threshold prototype.
@@ -550,14 +469,9 @@ Defines this entity as a knockback reaction threshold prototype.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| activation_value| | The amount of knockback force that an attacking entity needs to do. |
 
-
-
-
 ### badger:locator
 
 This flags an entity that it is used as a locator for vfx
-
-
 
 ### badger:locator_effect
 
@@ -569,9 +483,6 @@ Defines how effects are spawned at given locators.
 | String| locator| | The name of the locator to bind the particle effect to. |
 | Array| particle_effects| | The container that holds the data for each tyep of particle effect. |
 | Decimal| removal_time| | The time delay between when the effect is disabled and when to remove it. |
-
-
-
 
 ### badger:lookat
 
@@ -586,9 +497,6 @@ Defines the ability for an entity to look at other things.
 | Decimal| min_range| | Defines the min range that this entity will look at. |
 | Decimal| turning_delta| | Defines how many degrees per frame the head will turn to target. |
 
-
-
-
 ### badger:map3_child_offset
 
 Used on a Map Entity (for World Map 3), defines a relative offset another Map Entity can use (like a VFX entity).
@@ -599,26 +507,17 @@ Used on a Map Entity (for World Map 3), defines a relative offset another Map En
 | Decimal| y| | Y offset. |
 | Decimal| z| | Z offset. |
 
-
-
-
 ### badger:map3_copy_local_camera_orientation
 
 Map entity will inherit the local camera's orientation.
-
-
 
 ### badger:map3_copy_orientation
 
 Map entity will inherit the icon entity's (and game entity) orientation.
 
-
-
 ### badger:map_entity_3d_icon
 
 Map Entity (for World Map 3) will have an icon on the map screen
-
-
 
 ### badger:map_icon_offset
 
@@ -630,9 +529,6 @@ Adds an offset to an map source entity.
 | Decimal| y| | Y offset. |
 | Decimal| z| | Z offset. |
 
-
-
-
 ### badger:mount_molang
 
 Defines the molang variable name to be used when this entity is mounted.
@@ -640,9 +536,6 @@ Defines the molang variable name to be used when this entity is mounted.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| mount_variable| | The molang variable name that is set when this entity is mounted. |
-
-
-
 
 ### badger:music_2d_emitter
 
@@ -658,9 +551,6 @@ Defines the 2D Music emitter component. Attaching this to an entity allows it to
 | Integer| priority| | Determines which emitter to choose when more than one is active. Higher is more priority. |
 | String| state_name| | Name of the state for Debugging |
 
-
-
-
 ### badger:music_emitter_states
 
 Defines the current state of this music emitter entity.
@@ -668,9 +558,6 @@ Defines the current state of this music emitter entity.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | List| badger:music_emitter_states| | A list of the current states this emitter can be in. This must match the resource_pack music_states for badger:music_2d_emitter. |
-
-
-
 
 ### badger:on_destruction
 
@@ -680,9 +567,6 @@ This flags an entity to apply attributes with the details about the entity to sp
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| locator| | The locator at the position where the new entity should be spawned |
 | String| spawn_entity| | The archetype name for the entity that should be spawned |
-
-
-
 
 ### badger:orbital_arm
 
@@ -700,9 +584,6 @@ Settings that define how a camera orbits a follow target while focusing on a loo
 | Decimal| zoom_cursor_multiplier| | A multiplier to drive the amount of zoom relative to cursor distance. Larger numbers means greater cursor distance change is needed for same amount of zoom |
 | Decimal| zoom_lerp| | How smoothly the orbital camera zooms in and out, on the range [0,1]. |
 
-
-
-
 ### badger:placement_molang
 
 Defines the molang string sent for structure placement
@@ -710,9 +591,6 @@ Defines the molang string sent for structure placement
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| name| | Defines the tag string |
-
-
-
 
 ### badger:point_lights
 
@@ -729,40 +607,46 @@ Defines point lights possibly attached to entity locators.
 | Vector [a, b, c]| offset| | Offset for light, in local space (can also be a Molang expression per channel). |
 | Decimal| radius| | Radius of light (can also be a Molang expression). |
 
-
-
-
 ### badger:presentation_event
 
 Defines the presentation triggers this entity can respond to, and the animation events to play.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| animation| | Descriptor for an animation object. |
-| String| attachment| | Descriptor for an attachment object. |
-| JSON Object| audio| | Descriptor for an audio effect object. |
-| JSON Object| beacon| | Descriptor for an beacon effect object. |
-| JSON Object| distance_curve| | Details for how the duration curve will be impacted due to distance between the event sender and the client player.<br/><h5><p id="min_range">min_range</p></h5>Minimum Distance whereby any distance smaller than or equal will be treated as 1.0f multiplier.</br><br><h5><p id="multiplier_function">multiplier_function</p></h5>Multiplier Curve that will be used to process the distance curve.</br><br><h5><p id="range">range</p></h5>Maximum distance whereby any distance greater than or equal will be treated as a 0.0f multiplier.</br><br> |
-| JSON Object| duration_curve| | Details for how you want the duration curve to look<br/><h5><p id="duration">duration</p></h5>The duration of the rumble in seconds, note if there is a start delay, this duration does not start until AFTER that delay.</br><br><h5><p id="in_duration">in_duration</p></h5>Amount of time it takes to get from Minimum to Max Rumble Strength.</br><br><h5><p id="in_easing_function">in_easing_function</p></h5>Function used to ease into the rumble (i.e. at the initiation of the rumble).</br><br><h5><p id="minimum_strength">minimum_strength</p></h5>The Minimum of the curve, at start of rumble this will be the first amount set and the amount the easing_out will move towards.</br><br><h5><p id="out_duration">out_duration</p></h5>Amount of time it takes to get from Rumble Max to Minimum strength</br><br><h5><p id="out_easing_function">out_easing_function</p></h5>Function used to ease out of rumble (i.e. at the tail-end of the rumble.</br><br><h5><p id="pulse_duration">pulse_duration</p></h5>The duration of the pulse in seconds. Note that this will be uniform so the number of pulses will be the duration / pulse_duration. Therefore the duration must be divisible by the pulse to get an integer of pulses.</br><br><h5><p id="start_delay">start_delay</p></h5>The amount of time we delay before we start the initial rumble.</br><br><h5><p id="strength">strength</p></h5>The Maximum strength of the rumble that the in_easing_function will move towards.</br><br> |
-| JSON Object| invulnerability_decal| | Descriptor for a visual only invulnerability decal. |
-| String| outline| | Descriptor for an outline object |
-| Boolean| override| | Boolean value determining whether this type of rumble can override other rumble events |
-| JSON Object| particles| | Descriptor for an particle effect object. |
-| Integer| priority| | The priority of this rumble event, lower integer value means higher priority |
-| String| script| | Descriptor for the script name to execute on trigger |
-| String| spawn_entity| | If the handler is a single string, then it's spawning only a single entity with 100% chance of success. |
-| String| visual_state| | Descriptor for a visual state object. |
+| **Type**       | **Name**                     | **Description**                                                                                                                                                                                                                                    |
+|----------------|------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **animation**                | Descriptor for an animation object.                                                                                                                                                                                                                |
+| **String**     | **attachment**               | Descriptor for an attachment object.                                                                                                                                                                                                               |
+| **JSON Object**| **audio**                    | Descriptor for an audio effect object.                                                                                                                                                                                                              |
+| **JSON Object**| **beacon**                   | Descriptor for a beacon effect object.                                                                                                                                                                                                              |
+| **JSON Object**| **distance_curve**           | Details on how the duration curve is affected by the distance between the event sender and the client player.                                                                                                                                       |
+|                | min_range                    | Minimum distance; any distance smaller than or equal to this will be treated as a 1.0f multiplier.                                                                                                                                                |
+|                | multiplier_function           | Multiplier curve used to process the distance curve.                                                                                                                                                                                              |
+|                | range                         | Maximum distance; any distance greater than or equal to this will be treated as a 0.0f multiplier.                                                                                                                                                  |
+| **JSON Object**| **duration_curve**           | Details for configuring the appearance of the duration curve.                                                                                                                                                                                     |
+|                | duration                      | Total duration of the rumble in seconds. Note: If there is a start delay, this duration begins after that delay.                                                                                                                                 |
+|                | in_duration                   | Time taken to transition from minimum to maximum rumble strength.                                                                                                                                                                                |
+|                | in_easing_function            | Function used to ease into the rumble (i.e., at the start of the rumble).                                                                                                                                                                         |
+|                | minimum_strength              | Minimum strength of the curve; this will be the initial amount set at the start of the rumble, towards which the easing-out function will move.                                                                                                     |
+|                | out_duration                  | Time taken to transition from maximum rumble strength to minimum.                                                                                                                                                                                |
+|                | out_easing_function           | Function used to ease out of the rumble (i.e., at the end of the rumble).                                                                                                                                                                          |
+|                | pulse_duration                | Duration of each pulse in seconds. The number of pulses is calculated as total duration divided by pulse duration, requiring the total duration to be divisible by pulse duration for an integer result.                                          |
+|                | start_delay                   | Time delay before initiating the initial rumble.                                                                                                                                                                                                  |
+|                | strength                      | Maximum strength of the rumble that the in-easing function will approach.                                                                                                                                                                         |
+| **JSON Object**| **invulnerability_decal**     | Descriptor for a visual-only invulnerability decal.                                                                                                                                                                                               |
+| **String**     | **outline**                  | Descriptor for an outline object.                                                                                                                                                                                                                  |
+| **Boolean**    | **override**                 | Determines whether this type of rumble can override other rumble events (true/false).                                                                                                                                                             |
+| **JSON Object**| **particles**                | Descriptor for a particle effect object.                                                                                                                                                                                                          |
+| **Integer**    | **priority**                 | Priority of this rumble event; lower integer values indicate higher priority.                                                                                                                                                                      |
+| **String**     | **script**                   | Descriptor for the script name to execute upon trigger.                                                                                                                                                                                           |
+| **String**     | **spawn_entity**             | If the handler is a single string, it indicates that a single entity is spawned with a 100% chance of success.                                                                                                                                   |
+| **String**     | **visual_state**             | Descriptor for a visual state object.                                                                                                                                                                                                              |
 
-
-
+---
 
 ### badger:projectile_trail_request
 
 Determine a projectile trail from projectile trail collection.
 
-
-
-### badger:removal_time
+### badger:removal_time (_duplicate?_)
 
 destroys an entity after a given period of time
 
@@ -771,9 +655,6 @@ destroys an entity after a given period of time
 | String| presentation_event| | Name of the presentation event to fire when the timer triggers |
 | Boolean| sync_presentation_event| | Whether or not the event should be synced over the server, or if it should be local only |
 | Decimal| time| | Amount of time in seconds before the entity is destroyed |
-
-
-
 
 ### badger:rendering
 
@@ -786,9 +667,6 @@ The rendering parameters for the entity.
 | Boolean| render_controllers_are_constant| | Flag to indicate if the render controllers should be reprocessed each frame. |
 | Boolean| static| | Flag to indicate the entity type requires a static intitialization render pass. |
 
-
-
-
 ### badger:respawn_trigger
 
 The trigger that occurs when an entity is respawned
@@ -797,14 +675,9 @@ The trigger that occurs when an entity is respawned
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| trigger| | The trigger event to send when an entity respawns |
 
-
-
-
 ### badger:rig_operations
 
 Specifies a list of rig operations to apply.
-
-
 
 ### badger:rotation_presentation
 
@@ -814,9 +687,6 @@ Defines clientside presentation-related tunings for rotation.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| rotation_stop_presentation_event_delay| | Defines the delay after rotation ends before the stop presentation event is sent. This can be used to avoid excessive event triggering when rapidly starting and stopping rotation. |
 
-
-
-
 ### badger:skin
 
 Defines the entity with this data as a clientside skin archetype
@@ -825,9 +695,6 @@ Defines the entity with this data as a clientside skin archetype
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| archetype| | The name of the base archetype that this clientside skin is for. Gameplay behaviour will be inherited from this base archetype.. |
 
-
-
-
 ### badger:smooth_look_at
 
 Settings for smoothing camera look.
@@ -835,9 +702,6 @@ Settings for smoothing camera look.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| focus_radius| | The radius around the look target that will trigger smoothing if the target moves beyond it. |
-
-
-
 
 ### badger:speed_data_to_fmod
 
@@ -852,14 +716,9 @@ This component allows an entity to send data related to its speed to FMOD. It se
 | Decimal| min_speed| | The minimum value we want to track for the entity's speed parameter. Setting this will normalize the parameter value between the min and max. |
 | Decimal| min_velocity_y| | The minimum value we want to track for the entity's Y velocity parameter. Setting this will normalize the parameter value between the min and max. |
 
-
-
-
 ### badger:terrain_type_molang
 
 Specify that an entity should define and update the 'variable.terrain_type' molang variable
-
-
 
 ### badger:threat_owner
 
@@ -873,9 +732,6 @@ Defines this entity as a host for music threat level.
 | Decimal| max_threat| | Max possible threat value for this host. |
 | Decimal| min_threat| | Min threat value for this host. |
 
-
-
-
 ### badger:threat_source
 
 Defines this entity as a contributor to threat level for an owning source village/base.
@@ -885,9 +741,6 @@ Defines this entity as a contributor to threat level for an owning source villag
 | Decimal| base_value| | How much threat this entity contributes after the transition time has passed. |
 | Decimal| spawn_value| | How much threat this entity contributes when spawned. |
 | Decimal| transition_time| | Time in seconds it takes for this entity to transition in threat value from the spawn value to the base value. |
-
-
-
 
 ### badger:toggleable_decorative_child
 
@@ -899,20 +752,13 @@ Defines an entity archetype to add as a child of this entity, that will be destr
 | Integer| molang_variant_id| | Sets the molang parameter 'variable.variant_id' on the child when it is created. This is used to create visual variants of the child entity using things like material swaps. |
 | Boolean| start_enabled| | Defines whether the child should be enabled by default. |
 
-
-
-
 ### badger:variable_propagation
 
 Allows specification of what variables propagate from a parent to a parented entity
 
-
-
 ### badger:verlet_dynamics
 
 Specifies a list of verlet dynamics to apply.
-
-
 
 ### badger:visual_only_invulnerability_decal
 
@@ -924,14 +770,9 @@ Triggers invulnerability decal on entity along with offsets for modifying the bo
 | Vector [a, b, c]| min_aabb_additive_offset| | Offset vector to add to min AABB bound of the decal |
 | List| states| | A list of invulnerability states this entity can have. By default the first state is active. |
 
-
-
-
 ### badger:visualize_local_player_allegiance
 
 This flags an entity to apply a molang variable encoding allegiance to the local player for visual purposes.
-
-
 
 ### minecraft:camera
 
@@ -953,9 +794,6 @@ Defines Badger functionality to the existing Bedrock camera.
 | Decimal| shadow_depth_bias| | Overrides the depth bias used for shadow cascades. |
 | Decimal| shadow_slope_bias| | Overrides the slope bias used for shadow cascades. |
 
-
-
-
 ### minecraft:camera_attach
 
 Describes how a camera entity should attach to another entity.
@@ -966,9 +804,6 @@ Describes how a camera entity should attach to another entity.
 | Vector [a, b, c]| offset| | The offset from the locator/entity where the camera will be attached. |
 | Boolean| use_locator_orientation| | True if the camera should use the locator's orientation as it's view orientation. |
 
-
-
-
 ### minecraft:camera_avoidance
 
 Describes how cameras that orbit a target should avoid collision and occlusion.
@@ -976,9 +811,6 @@ Describes how cameras that orbit a target should avoid collision and occlusion.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| relax_distance_smoothing_spring| | How quickly the camera will return to it's desired distance once a collison or occulsion is cleared. |
-
-
-
 
 ### minecraft:camera_blend_in_default
 
@@ -991,9 +823,6 @@ Describes how a camera can pitch around the x axis and yaw around the y axis.
 | String| ease| | The type of easing function used to control the blend. |
 | Decimal| input_dampening_coefficient| | Dampens the input on the camera to if the camera to is accepting input during the blend. |
 
-
-
-
 ### minecraft:camera_fly
 
 Describes how a camera flies around.
@@ -1003,9 +832,6 @@ Describes how a camera flies around.
 | Decimal| speed| | The speed of the camera when flying. |
 | Decimal| speed_alt| | The alternative speed of the camera when flying. |
 | Decimal| sprint_multiplier| | The multiplier set by /sprint of the speed of the camera when flying. |
-
-
-
 
 ### minecraft:camera_look_at
 
@@ -1021,9 +847,6 @@ Describes how a camera frames it's look target.
 | Vector [a, b]| soft_bounds_min| | The bottom left coordinates of the soft bounds. |
 | Decimal| soft_bounds_smoothing_spring| | How quickly the camera's orientation will correct to keep it's look target within the soft bounds. |
 
-
-
-
 ### minecraft:camera_orbit
 
 Describes how a camera orbits around it's follow target.
@@ -1038,9 +861,6 @@ Describes how a camera orbits around it's follow target.
 | Decimal| polar_smoothing_spring| | How quickly the camera's polar angle will correct to match the desired azimuth. |
 | Decimal| radius| | The ideal distance the camera will keep from it's follow target. |
 
-
-
-
 ### minecraft:camera_speed_modifier
 
 Used as a multiplier for the fly camera / first person camera.
@@ -1051,9 +871,6 @@ Used as a multiplier for the fly camera / first person camera.
 | Boolean| slow_mode_modified_by_sprint| | Boolean for whether or not slow mode speed is affected by sprint multiplier. |
 | Decimal| translation_speed_modifier| | Multiplier for the translation speed. |
 
-
-
-
 ### minecraft:first_person_look
 
 Describes how a camera can pitch around the x axis and yaw around the y axis.
@@ -1063,32 +880,21 @@ Describes how a camera can pitch around the x axis and yaw around the y axis.
 | Decimal| pitch_max| | The maximum pitch angle in degrees that the camera can have. |
 | Decimal| pitch_min| | The minimum pitch angle in degrees that the camera can have. |
 
-
-
-
 ### minecraft:follow_target
 
 A target to follow.
-
-
 
 ### minecraft:look_target
 
 A target to look at.
 
-
-
 ## identifier
 
 The identifier is used to register the entity with the server. In the Client Entity Definitions JSON the identifier sets the appearance of the entity(materials, textures, geometry, etc.) The matching identifier in the Entity Behavior JSON in the Behavior Pack is what gives the entity its behaviors.
 
-
-
 ## materials, textures, animations
 
 Players can set the materials, texture and geometry used for the entity in this section. Players can set one or more materials, textures, and geometries that can be used by the mob. Players must set user defined names for them. These names are used in the Render Controllers JSON. Players can reference materials, textures, and geometry from the vanilla Minecraft Resource Pack or create their own.  Custom materials, textures, and geometry should be in the corresponding folder at the root of the Resource Pack.
-
-
 
 ## scripts
 
@@ -1096,9 +902,10 @@ Scripts allow players to use MoLang to compute calculations once and store that 
 -Pre-animation scripts are evaluated immediately before animations are processed.
 -Scale sets the scale of the mob's geometry.
 
-
+_NOTE: This section is to be completely rewritten as it is thoroughly inaccurate. FISH and a BAT in LEGENDS? Imagine_
 **Example pre-animation script for cod**
-```
+
+```json
 "scripts": {
   "pre_animation": [
     "variable.ZRot = !query.is_in_water ? Math.cos((query.time_stamp + global.frame_alpha) * 14.32) * 90 : 0.0;",
@@ -1107,40 +914,31 @@ Scripts allow players to use MoLang to compute calculations once and store that 
 },
 ```
 
-**Example scale script for the bat**
-```
+**Example scale script for the bat**:
+
+```json
 "scripts": {
   "scale": "0.35"
 },
 ```
 
-
-
 ## animations
 
 Allows the player to assign names to reference the long name for animations. These names are used by the animation controller JSON. Players can reference animations from the vanilla Minecraft Resource Pack or create their own. Custom animations should be in the animation folder at the root of the Resource Pack.
-
-
 
 ## render_controllers
 
 Specifies the names of render controllers. This name needs to match the name of a corresponding JSON located in the Render Controllers folder. Players can reference Render Controllers from the vanilla Minecraft Resource Pack or create their own. Custom Render Controllers should be in the textures folder at the root of the Resource Pack.
 
-
-
 ## enable_attachables
 
 Legacy, not used.
 
-
-
-# Filters
+## Filters
 
 Filters allow data objects to specify test criteria which allows their use.
 
 For example, a model that includes a filter will only be used when the filter criteria is true.
-
-
 
 A typical filter consists of four parameters:
 
@@ -1152,15 +950,11 @@ A typical filter consists of four parameters:
 
  value: the value being compared with the test.
 
-
-
 A typical filter looks like the following:
 
- { "test" : "moon_intensity", "subject" : "self", "operator" : "greater", "value" : "0.5" } 
+ { "test" : "moon_intensity", "subject" : "self", "operator" : "greater", "value" : "0.5" }
 
 Which results in the calling entity (self) calculating the moon_intensity at its location and returning true if the result is greater than 0.5.
-
-
 
 Tests can be combined into groups using the collections 'all_of', 'any_of', or 'none_of'.
 
@@ -1170,43 +964,58 @@ Tests can be combined into groups using the collections 'all_of', 'any_of', or '
 
  All tests in a 'none_of' group must fail in order for the group to pass.
 
-
-
-
-
 ## has_biome_tag
 
 Tests whether the biome the subject is in has the specified tag.
 
-| Type| Name| Default| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| String| operator| equals| (Optional) The comparison to apply with 'value'.<br/><table border="1" style="width:100%; border-style:solid; border-collapse:collapse; border-width:2;"><tr> <th style="border-style:solid; border-width:2;">Options</th> <th style="border-style:solid; border-width:2;">Description</th> </tr><tr><td style="border-style:solid; border-width:2; padding:8px">!=</td><td style="border-style:solid; border-width:2; padding:8px">Test for inequality.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px"><</td><td style="border-style:solid; border-width:2; padding:8px">Test for less-than the value.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px"><=</td><td style="border-style:solid; border-width:2; padding:8px">Test for less-than or equal to the value.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px"><></td><td style="border-style:solid; border-width:2; padding:8px">Test for inequality.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">=</td><td style="border-style:solid; border-width:2; padding:8px">Test for equality.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">==</td><td style="border-style:solid; border-width:2; padding:8px">Test for equality.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">></td><td style="border-style:solid; border-width:2; padding:8px">Test for greater-than the value.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">>=</td><td style="border-style:solid; border-width:2; padding:8px">Test for greater-than or equal to the value.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">equals</td><td style="border-style:solid; border-width:2; padding:8px">Test for equality.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">not</td><td style="border-style:solid; border-width:2; padding:8px">Test for inequality.</br></td></tr></table> |
-| String| subject| self| (Optional) The subject of this filter test.<br/><table border="1" style="width:100%; border-style:solid; border-collapse:collapse; border-width:2;"><tr> <th style="border-style:solid; border-width:2;">Options</th> <th style="border-style:solid; border-width:2;">Description</th> </tr><tr><td style="border-style:solid; border-width:2; padding:8px">block</td><td style="border-style:solid; border-width:2; padding:8px">The block involved with the interaction.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">damager</td><td style="border-style:solid; border-width:2; padding:8px">The damaging actor involved with the interaction.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">other</td><td style="border-style:solid; border-width:2; padding:8px">The other member of an interaction, not the caller.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">parent</td><td style="border-style:solid; border-width:2; padding:8px">The caller's current parent.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">player</td><td style="border-style:solid; border-width:2; padding:8px">The player involved with the interaction.</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">self</td><td style="border-style:solid; border-width:2; padding:8px">The entity or object calling the test</br></td></tr><tr><td style="border-style:solid; border-width:2; padding:8px">target</td><td style="border-style:solid; border-width:2; padding:8px">The caller's current target.</br></td></tr></table> |
-| String| value| | (Required) The tag to look for |
+| **Type**       | **Name**    | **Default** | **Description**                                                                                          |
+|----------------|-------------|-------------|----------------------------------------------------------------------------------------------------------|
+| **String**     | **operator**| equals      | (Optional) The comparison to apply with 'value'. Possible options include:                              |
+|                |             |             | - `!=` : Test for inequality.                                                                             |
+|                |             |             | - `<` : Test for less-than the value.                                                                    |
+|                |             |             | - `<=` : Test for less-than or equal to the value.                                                       |
+|                |             |             | - `<>` : Test for inequality.                                                                             |
+|                |             |             | - `=` : Test for equality.                                                                                 |
+|                |             |             | - `==` : Test for equality.                                                                                |
+|                |             |             | - `>` : Test for greater-than the value.                                                                  |
+|                |             |             | - `>=` : Test for greater-than or equal to the value.                                                    |
+|                |             |             | - `equals` : Test for equality.                                                                           |
+|                |             |             | - `not` : Test for inequality.                                                                            |
+| **String**     | **subject** | self        | (Optional) The subject of this filter test. Possible options include:                                    |
+|                |             |             | - `block` : The block involved with the interaction.                                                     |
+|                |             |             | - `damager` : The damaging actor involved with the interaction.                                          |
+|                |             |             | - `other` : The other member of an interaction, not the caller.                                          |
+|                |             |             | - `parent` : The caller's current parent.                                                                 |
+|                |             |             | - `player` : The player involved with the interaction.                                                   |
+|                |             |             | - `self` : The entity or object calling the test.                                                        |
+|                |             |             | - `target` : The caller's current target.                                                                 |
+| **String**     | **value**   |             | (Required) The tag to look for.                                                                          |
 
+---
 
 ### Examples
 
 **Full..**
-```
+
+```json
 { "test": "has_biome_tag", "subject": "self", "operator": "equals", "value": " " }
 ```
 
 **Short (using Defaults)..**
-```
+
+```json
 { "test": "has_biome_tag", "value": " " }
 ```
 
-
-
-# Server Entity Documentation
+## Server Entity Documentation
 
 Server entity definitions are contained within a Behaviour Pack and contain all of the information necessary to describe how an entity should behave. To create your own, start by navigating to the "entity" folder inside the root of the Behaviour Pack. In the entity folder create a JSON file and give it a name. The JSON file needs a format version and minecraft:entity information.
 
-The minecraft:entity section contains the description for the entity. Under description there are a number of things that you can set about an entity. 
+The minecraft:entity section contains the description for the entity. Under description there are a number of things that you can set about an entity.
 
-**Example server entity definition JSON for the prismarine item drop**
-```
+**Example server entity definition JSON for the prismarine item drop**:
+
+```json
 {
   "format_version": "1.8.0",
   "minecraft:entity": {
@@ -1235,11 +1044,7 @@ The minecraft:entity section contains the description for the entity. Under desc
 
 ```
 
-
-
-## Entity Description Properties
-
-
+## Server Entity Description Properties
 
 ### badger:aabb
 
@@ -1251,19 +1056,18 @@ Dimensions of this entities bounding box
 | Decimal| length| | The length of the entity (optional if not specified the width is used). |
 | Decimal| width| | The width of the entity. |
 
-
-
-
 ### badger:action_tickets
 
 Defines the action tickets that this entity has
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| action_tickets| | Defines the number of 'action tickets' this entity has, which limits how many entities can target it simultaneously. Separated by category of action.<br/><h5><p id="cc">cc</p></h5>Close combat tickets.</br><br><h5><p id="ct">ct</p></h5>Creeper-target tickets.</br><br><h5><p id="ht">ht</p></h5>Heal-target tickets.</br><br><h5><p id="rc">rc</p></h5>Ranged combat tickets.</br><br><h5><p id="sc">sc</p></h5>Secondary combat tickets.</br><br> |
-
-
-
+| Type         | Name            | Description                                                                                                                                                      |
+|:------------:|:---------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| JSON Object  | action_tickets  | Defines the number of "action tickets" this entity has, which limits how many entities can target it simultaneously. Separated by category of action:          |
+|              | - cc            | Close combat tickets.                                                                                                                                         |
+|              | - ct            | Creeper-target tickets.                                                                                                                                       |
+|              | - ht            | Heal-target tickets.                                                                                                                                          |
+|              | - rc            | Ranged combat tickets.                                                                                                                                       |
+|              | - sc            | Secondary combat tickets.                                                                                                                                     |
 
 ### badger:advanced_direct_reticle
 
@@ -1273,9 +1077,6 @@ Defines the entity archetype applied to the advanced direct reticle on the clien
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| reticle_entity_id| | Defines the name of the entity archetype to use. |
 | Decimal| reticle_radius| | Defines the size of the advanced direct targeting reticle. |
-
-
-
 
 ### badger:aimable
 
@@ -1294,14 +1095,9 @@ Defines the ability to be aimed at a target location.
 | Decimal| starting_range| | Defines the starting range that this entity will be aimed at when first interacted with. |
 | Boolean| uses_move_stick| | Sets whether this aimable should be controlled by the move stick, rather than the aim stick, when using a controller. |
 
-
-
-
 ### badger:aimable_turret
 
 Flags an entity as a turret for an aimable entity.
-
-
 
 ### badger:allay
 
@@ -1319,35 +1115,39 @@ Handles allay movement information.
 | Decimal| spin_speed| | How fast the allay rotates around its target |
 | Decimal| travel_time| | How many seconds it takes to move between destinations. |
 
-
-
-
 ### badger:allay_panic
 
 sends a panicked allay home after a given time, destroying the gather order
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| String| panicked_path| | Icon name for panicked version |
-| Decimal| return_timer| | Amount of time in seconds after being scared before the allay returns home. Leave undeclared for infinite time. |
-| Decimal| scare_delay| | Amount of time in seconds before the allay gets scared. |
-| JSON Object| scare_filter| | Allay Panic on filter<br/><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Alliance rule filter name</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>The tags to be excluded from when filtering</br><br><h5><p id="include_tags">include_tags</p></h5>The tags to be included in when filtering</br><br> |
+| **Type**       | **Name**             | **Description**                                                                                                 |
+|----------------|----------------------|-----------------------------------------------------------------------------------------------------------------|
+| **String**     | **panicked_path**    | Icon name representing the panicked version of the allay.                                                      |
+| **Decimal**    | **return_timer**     | Duration in seconds after being scared before the allay returns home. Leave undeclared for an infinite return time. |
+| **Decimal**    | **scare_delay**      | Duration in seconds before the allay becomes scared.                                                            |
+| **JSON Object**| **scare_filter**     | **Configuration for the allay's panic filtering** criteria.                                                        |
+|                | alliance_rule_filter  | Name of the alliance rule filter applied to the allay's panic behavior.                                        |
+|                | exclude_tags         | List of tags to be excluded when filtering potential threats.                                                  |
+|                | include_tags         | List of tags to be included when filtering potential threats.                                                  |
 
-
-
+---
 
 ### badger:aoe
 
 Defines the settings used to spawn an AoE entity
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| damage_effects| | Defines the damage effects for the AoE.<br/><h5><p id="damage">damage</p></h5>The amount of damage dealt to entities inside this AoE.</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>The tags required to NOT be on an entity for it to be influenced by this AoE.</br><br><h5><p id="include_tags">include_tags</p></h5>The tags required to be on an entity for it to be influenced by this AoE.</br><br><h5><p id="requires_los">requires_los</p></h5>Whether or not the AoE requires LoS from the shape pivot to the target to hit.</br><br> |
-| JSON Object| shape| | The shape used for the AoE. |
-| JSON Object| timer| | Defines an timer for the effects of the AoE.<br/><h5><p id="interval">interval</p></h5>The time between applying the effect(s) of the AoE, in seconds.</br><br><h5><p id="jitter">jitter</p></h5>Array of ticks to modify the intervals to provide pseudo-randomness and ease strain on AOE performance.</br><br> |
+| **Type**       | **Name**              | **Description**                                                                                                                                           |
+|----------------|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Array**      | **damage_effects**    | Defines the damage effects applied within the AoE.                                                                                                       |
+|                | damage                 | The amount of damage dealt to entities inside this AoE.                                                                                                |
+|                | exclude_tags           | The tags required for an entity to **not** be influenced by this AoE.                                                                                  |
+|                | include_tags           | The tags required for an entity to be influenced by this AoE.                                                                                          |
+|                | requires_los          | Indicates whether the AoE requires line of sight (LoS) from the shape pivot to the target to apply damage.                                             |
+| **JSON Object**| **shape**             | Specifies the shape used for the AoE.                                                                                                                  |
+| **JSON Object**| **timer**             | Defines the timing for applying the effects of the AoE.                                                                                                |
+|                | interval               | The time, in seconds, between applying the effect(s) of the AoE.                                                                                       |
+|                | jitter                 | An array of ticks that modifies the intervals, providing pseudo-randomness to ease performance strain on the AoE.                                         |
 
-
-
+---
 
 ### badger:applies_buffs
 
@@ -1364,9 +1164,6 @@ Defines this entity's ability to confer buffs to nearby entities.
 | Array| preset_buffs| | The preset buffs to be applied by this entity. Use this if the buffs applied by this entity should not be modifiable. |
 | Boolean| wipe_buffs| | Whether this buff applicator wipes existing buffs on the receiving entity before applying its own buffs |
 
-
-
-
 ### badger:apply_damage
 
 Defines the settings for applying damage.
@@ -1375,9 +1172,6 @@ Defines the settings for applying damage.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | JSON Object| damage| | The damage to apply. |
 
-
-
-
 ### badger:apply_status
 
 Defines the settings for applying status effects.
@@ -1385,9 +1179,6 @@ Defines the settings for applying status effects.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | JSON Object| apply_status| | The list of status effects to apply. |
-
-
-
 
 ### badger:atomic_village_exempt
 
@@ -1398,26 +1189,36 @@ Dictates whether this entity can cause its owning village to force suspension.
 | Boolean| exempt_from_requests| | This entity won't cause its owning village to force suspension. |
 | Boolean| exempt_from_requests_and_suspension| | This entity won't cause its owning village to force suspension nor will it forcefully be suspended when it's owning village is. |
 
-
-
-
 ### badger:audio_ignore_vo_reminder
 
 This flags an entity to ignore VO reminders if the player is near this entity. Used for entities like villages
-
-
 
 ### badger:aura_applicator
 
 When applied to a structure, provides a buffing aura to entities within its zone of control.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| auras| | The list of buff auras used by this entity.<br/><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>The rule that determines which types of entities that will be buffed (friendly, enemy, etc.).</br><br><h5><p id="apply_to_build_previews">apply_to_build_previews</p></h5>Does this buff apply to build previews? (for things such as area overlay buffs)</br><br><h5><p id="buff_id">buff_id</p></h5>The buff to be applied by this entity.</br><br><h5><p id="can_apply_to_self">can_apply_to_self</p></h5>Whether this buff can be applied to the aura applicator itself.</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Entities with any of these tags will not be given a buff.</br><br><h5><p id="include_tags">include_tags</p></h5>Entities must have all these tags to get a buff.</br><br><h5><p id="load_affected_entities_on_construction_completion">load_affected_entities_on_construction_completion</p></h5>If true, the entity will load all suspended entities affected by the aura.</br><br><h5><p id="only_apply_to_construction_completed">only_apply_to_construction_completed</p></h5>Does this buff only apply to structures who have completed construction?</br><br><h5><p id="only_apply_to_damaged">only_apply_to_damaged</p></h5>Does this buff only apply to damaged entities?</br><br><h5><p id="persistent">persistent</p></h5>Whether this buff should persist after the aura applicator is gone.</br><br><h5><p id="search_mode">search_mode</p></h5>What entities this aura affects. Valid values are `zone`, `village`, `spawner_controller`.</br><br><h5><p id="unlock_condition">unlock_condition</p></h5>Enable or disable this aura depending on the presence of a given unlock resource.</br><br><h5><p id="has_unlock">has_unlock</p></h5>If true, this aura will only be active when this resource is acquired. If false, this aura will only be active if this resource is not acquired.</br><br><h5><p id="resource">resource</p></h5>The name of a resource used to enable or disable this aura.</br><br> |
-| JSON Object| buff_queue| | Optional data to add if the aura should be applied to entiies in a queue<br/><h5><p id="limit_concurrent_applications">limit_concurrent_applications</p></h5>The number of entities the aura is applied to per unit of time</br><br><h5><p id="time_interval">time_interval</p></h5>The time interval when the aura is applied</br><br> |
+| **Type**       | **Name**                           | **Description**                                                                                                                                                                                                                                           |
+|----------------|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Array**      | **auras**                          | A list of buff auras used by this entity.                                                                                                                                                                                                               |
+|                | **alliance_rule_filter**           | The rule that determines which types of entities will be buffed (friendly, enemy, etc.).                                                                                                                                                                 |
+|                | **apply_to_build_previews**        | Indicates whether this buff applies to build previews (e.g., area overlay buffs).                                                                                                                                                                         |
+|                | **buff_id**                        | The identifier of the buff to be applied by this entity.                                                                                                                                                                                               |
+|                | **can_apply_to_self**              | Specifies whether this buff can be applied to the aura applicator itself.                                                                                                                                                                               |
+|                | **exclude_tags**                   | Entities with any of these tags will not receive a buff.                                                                                                                                                                                                |
+|                | **include_tags**                   | Entities must have all these tags to receive a buff.                                                                                                                                                                                                    |
+|                | **load_affected_entities_on_construction_completion** | If true, the entity will load all suspended entities affected by the aura.                                                                                                                                                                              |
+|                | **only_apply_to_construction_completed** | Specifies whether this buff only applies to structures that have completed construction.                                                                                                                                                                 |
+|                | **only_apply_to_damaged**          | Specifies whether this buff only applies to damaged entities.                                                                                                                                                                                            |
+|                | **persistent**                     | Indicates whether this buff should persist after the aura applicator is gone.                                                                                                                                                                           |
+|                | **search_mode**                    | Defines what entities this aura affects. Valid values include `zone`, `village`, and `spawner_controller`.                                                                                                                                               |
+|                | **unlock_condition**               | Enables or disables this aura depending on the presence of a given unlock resource.                                                                                                                                                                       |
+|                | **has_unlock**                     | If true, this aura will only be active when the specified resource is acquired; if false, it will only be active if the resource is not acquired.                                                                                                        |
+|                | **resource**                       | The name of the resource used to enable or disable this aura.                                                                                                                                                                                            |
+| **JSON Object**| **buff_queue**                     | Optional data to add if the aura should be applied to entities in a queue.                                                                                                                                                                               |
+|                | **limit_concurrent_applications**  | The number of entities to which the aura is applied per unit of time.                                                                                                                                                                                  |
+|                | **time_interval**                  | The time interval for applying the aura.                                                                                                                                                                                                                  |
 
-
-
+---
 
 ### badger:auto_deconstruction
 
@@ -1429,9 +1230,6 @@ Values used to tune the trigger points for auto deconstruction
 | Boolean| team_owned| true| If true, will not deconstruct as long as in range of at least 1 team member. If false, deconstructs based on distance to constructing player. |
 | Integer| warning_distance| | The minimum block distance at which the player receives a warning that their structures will be deconstructed |
 
-
-
-
 ### badger:auto_despawn
 
 Makes this entity be despawned when its too far from any player.
@@ -1439,9 +1237,6 @@ Makes this entity be despawned when its too far from any player.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Integer| distance| | Distance from players at which this entity will despawn. |
-
-
-
 
 ### badger:auto_fire
 
@@ -1457,9 +1252,6 @@ Settings to determine how auto firing behaves.
 | String| shots_molang_name| | The name of the molang variable representing the number of shots. |
 | Integer| total_shots| | number of shots to auto fire before needing to cool down. |
 
-
-
-
 ### badger:auto_lure
 
 Controls if this spawner will automatically lure units on spawn/recall and which lures to apply
@@ -1469,21 +1261,19 @@ Controls if this spawner will automatically lure units on spawn/recall and which
 | String| lure_action_id| | The action ID triggered on the player if the player does not already have an active lure of the defined archetype. This should be the action that spawns the desired lure on the player. |
 | String| lure_archetype| | The lure Archetype to apply when this spawner creates a unit (Between it and the player that triggered it) |
 
-
-
-
 ### badger:auto_teleport
 
 Attributes required for auto teleport lured distant entities to their luring entities
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Decimal| auto_teleport_distance| | The minimum distance between a lured entity and the luring entity for the lured entity to be auto teleported |
-| Decimal| auto_teleport_offset_behind_camera| | The distance between the camera and the auto-teleport destination; this distance is in the opposite direction of the camera's orientation |
-| JSON Object| auto_teleport_tag_filter| | The tag filter used to determine if a lured entity could potentially be auto-teleported<br/><h5><p id="exclude_tags">exclude_tags</p></h5>The tags that a lured entity must not have for it to be potentially auto-teleported to its luring entity</br><br><h5><p id="include_tags">include_tags</p></h5>The tags that a lured entity must have for it to be potentially auto-teleported to its luring entity</br><br> |
+| **Type**       | **Name**                               | **Description**                                                                                                                                    |
+|----------------|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Decimal**    | **auto_teleport_distance**             | Minimum distance required between a lured entity and the luring entity for the lured entity to be auto-teleported.                               |
+| **Decimal**    | **auto_teleport_offset_behind_camera** | Distance from the camera to the auto-teleport destination, measured in the opposite direction of the camera's orientation.                        |
+| **JSON Object**| **auto_teleport_tag_filter**           | Tag filter to determine if a lured entity is eligible for auto-teleportation.                                                                    |
+|                | exclude_tags                           | Tags that a lured entity must not possess to be considered for auto-teleportation to its luring entity.                                          |
+|                | include_tags                           | Tags that a lured entity must have to qualify for auto-teleportation to its luring entity.                                                       |
 
-
-
+---
 
 ### badger:background_loading
 
@@ -1493,27 +1283,27 @@ Dictates how a village entity is loaded in the background.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Integer| priority| | Villages with a lower priority value will be planned and loaded first. The default value is 0. |
 
-
-
-
 ### badger:becomes_lost
 
 Signifies that this entity can become lost, and gives the configuration for the lost state
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| alone_exclude_filters| | The list containing the data for what units can't be around this entity for it to be considered lost<br/><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>The alliance rule filter for this type of unit</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>The tags units must not have to be considered in this filter</br><br><h5><p id="exclusion_radius">exclusion_radius</p></h5>The distance this type of unit must be from the entity for it to become lost</br><br><h5><p id="include_tags">include_tags</p></h5>The tags units must have to be considered in this filter</br><br> |
-| String| lost_unit_pacing_buff_id| | The buff to put on the unit when it's pacing |
-| Boolean| must_be_player_spawned| | Whether or not the unit must be player spawned to become lost |
-| Decimal| pace_destination_radius| | The radius of destinations from the initial lost location that the unit will choose to pace to |
-| Decimal| pace_frequency| | The frequency of (in average times per second) the unit will change direction when pacing |
-| String| return_to_player_alliance_rule| | Alliance rule of who to return to |
-| Decimal| time_alone_to_become_lost| | How long a unit has to be 'alone' (where alone is defined by the filter) before it is considered lost |
-| Decimal| time_pacing_before_returning| | How long a lost unit paces before it returns to the nearest friendly player |
-| Decimal| time_suspended_to_become_lost| | How long a unit has to be suspended before it is considered lost |
+| **Type**       | **Name**                            | **Description**                                                                                                                                       |
+|----------------|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Array**      | **alone_exclude_filters**           | A list of criteria specifying which units cannot be nearby for the entity to be considered lost.                                                     |
+|                | alliance_rule_filter                | The alliance rule filter for this type of unit.                                                                                                      |
+|                | exclude_tags                        | Tags that units must not have to be considered in this filter.                                                                                      |
+|                | exclusion_radius                    | The minimum distance that this type of unit must maintain from the entity to be considered lost.                                                    |
+|                | include_tags                        | Tags that units must have to be included in this filter.                                                                                            |
+| **String**     | **lost_unit_pacing_buff_id**       | The buff applied to the unit when it is pacing.                                                                                                      |
+| **Boolean**    | **must_be_player_spawned**          | Indicates whether the unit must be spawned by the player to be considered lost.                                                                      |
+| **Decimal**    | **pace_destination_radius**         | The radius within which the unit will choose destinations to pace toward from the initial lost location.                                              |
+| **Decimal**    | **pace_frequency**                  | The average frequency (in times per second) with which the unit changes direction while pacing.                                                      |
+| **String**     | **return_to_player_alliance_rule**  | The alliance rule determining which player the unit will return to.                                                                                  |
+| **Decimal**    | **time_alone_to_become_lost**      | The duration for which a unit must be 'alone' (as defined by the filter) before it is considered lost.                                             |
+| **Decimal**    | **time_pacing_before_returning**    | The duration a lost unit will pace before returning to the nearest friendly player.                                                                   |
+| **Decimal**    | **time_suspended_to_become_lost**   | The duration for which a unit must be suspended before it is considered lost.                                                                        |
 
-
-
+---
 
 ### badger:behavior_offline_traits
 
@@ -1523,9 +1313,6 @@ The component allows behaviors to change offline trait phase on behaviour swaps.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Enumerator| traits_phase| | Defines which offline phase will be applied by the behaviour swap. List of valid values: PRECONSTRUCTION, CONSTRUCTING, BUILT, DECONSTRUCTING, DISABLED |
 
-
-
-
 ### badger:behavior_swap_interaction
 
 Enables the use of an interaction to trigger behavior swap.
@@ -1533,9 +1320,6 @@ Enables the use of an interaction to trigger behavior swap.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| behavior| | The behavior name to swap to upon interacting |
-
-
-
 
 ### badger:block_conversion
 
@@ -1549,19 +1333,20 @@ Converts any listed blocks to a modified version
 | JSON Object| modifiers| | Key value pairs that describe which keywords should be replaced with other strings in block names |
 | Boolean| top_to_bottom| | Changes the order of block conversion to top to bottom |
 
-
-
-
 ### badger:block_damage
 
 states what is required to place a buildable.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| List| phases| | Array of damage phase descriptions.<br/><h5><p id="damage_level">damage_level</p></h5>from 0.0 the normalized damage level to apply phase.</br><br><h5><p id="max_clamp">max_clamp</p></h5>normalized lowest position that gets min damage.</br><br><h5><p id="max_damage">max_damage</p></h5>max damage level.</br><br><h5><p id="min_clamp">min_clamp</p></h5>normalized highest position that gets max damage.</br><br><h5><p id="min_damage">min_damage</p></h5>min damage level.</br><br> |
+| **Type** | **Name**   | **Description**                                                                                                        |
+|----------|------------|------------------------------------------------------------------------------------------------------------------------|
+| **List** | **phases** | An array of damage phase descriptions, each containing the following properties:                                      |
+|          | damage_level | The normalized damage level applied to the phase, ranging from 0.0 (no damage) to the maximum defined damage.      |
+|          | max_clamp    | The normalized position that represents the minimum damage applied.                                                  |
+|          | max_damage   | The maximum damage level that can be applied during this phase.                                                      |
+|          | min_clamp    | The normalized position that represents the maximum damage applied.                                                  |
+|          | min_damage   | The minimum damage level that can be applied during this phase.                                                      |
 
-
-
+---
 
 ### badger:block_reversal
 
@@ -1570,9 +1355,6 @@ Reverts any changed blocks to the original version
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| duration_percentage| | What percentage of the time this block revert process should take |
-
-
-
 
 ### badger:bsharp_interact_cost
 
@@ -1583,9 +1365,6 @@ states what is required to perform a B# interaction with this entity.
 | Array| resource_cost| | An array of items and amounts. |
 | Array| unlock| | These are the unlocks needed to use this interaction. An array of items with an amount. |
 
-
-
-
 ### badger:bsharp_lifetime
 
 Defines which global variable controls the lifetime of an entity.
@@ -1594,9 +1373,6 @@ Defines which global variable controls the lifetime of an entity.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Integer| value| | Defines the value of the global variable that causes the entity to despawn. |
 | String| variable| | Defines name of the bSharp global variable. |
-
-
-
 
 ### badger:bsharp_teleport_presentation
 
@@ -1607,9 +1383,6 @@ Defines the entity's presentation event for teleportation.
 | String| arrived_event| | The name of the presentation event fired after the entity teleports |
 | String| engaged_event| | The name of the presentation event fired before/during the entity's teleportation |
 | Decimal| windup_time| | The time, in seconds, the entity waits after it and the teleport engaged presentation event is triggered before teleporting. |
-
-
-
 
 ### badger:buff
 
@@ -1622,9 +1395,6 @@ Defines a buff
 | Array| ingredients| | The resources which will be spent / consumed to apply this buff. A buff must have costs to be placeable on a slotted buff applicator. |
 | Boolean| propagates_to_projectiles| | Whether this buff is propagated to projectiles created by the entity this buff is applied on. |
 
-
-
-
 ### badger:build_speed_change_on_damage
 
 Temporarily change the build speed of a buildable structure when being damaged
@@ -1633,9 +1403,6 @@ Temporarily change the build speed of a buildable structure when being damaged
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| build_speed_multiplier| | the multiplier that will be used to adjust the build speed |
 | Integer| duration| | the time in seconds for which the adjustment will be applied |
-
-
-
 
 ### badger:buildable_controller_spawner
 
@@ -1660,19 +1427,22 @@ will spawn Mobs from components position.
 | String| variable_name| | The Gobal B-Sharp Variable to Watch |
 | Integer| weight| | The weight to pick this choice |
 
-
-
-
 ### badger:buildable_creation_influence_source
 
 Provides a list of sources of additive or substractive influence upon building creation for this AI.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| List| sensors| | List of building creation sources.<br/><h5><p id="building_start_or_complete">building_start_or_complete</p></h5>Designate whether building creation will be tracked at the start or completion of the placement</br><br><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of structures</br><br><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for building structures</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for building structures</br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this building creation source</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this building creation source</br><br> |
+| **Type**       | **Name**                      | **Description**                                                                                                                                                      |
+|----------------|-------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **List**       | **sensors**                   | List of building creation sources.                                                                                                                                 |
+|                | **building_start_or_complete** | Designate whether building creation will be tracked at the start or upon completion of placement.                                                                    |
+|                | **damage_receiver_filter**     | Specify particular types of structures to track based on damage received.                                                                                          |
+|                | **alliance_rule_filter**       | Define team alliance rules for tracking.                                                                                                                           |
+|                | **exclude_tags**               | Tags to exclude for building structures.                                                                                                                            |
+|                | **include_tags**               | Tags to include for building structures.                                                                                                                            |
+|                | **multiplier**                 | The weight of the heat stamp for this building creation source, affecting how significant the heat impact is.                                                        |
+|                | **propagation_decay**          | The propagation or spread decay of the heat stamp for this building creation source, determining how quickly the heat impact diminishes over time.                  |
 
-
-
+---
 
 ### badger:buildable_destruction
 
@@ -1682,19 +1452,21 @@ states what is required to animate a building's destruction.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| particle_effect| | The name of the particle effect that will be played when the structure is removed. |
 
-
-
-
 ### badger:buildable_destruction_influence_source
 
 Provides a list of sources of additive or substractive influence upon building destruction for this AI.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| List| sensors| | List of building creation sources.<br/><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of structures</br><br><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for building structures</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for building structures</br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this building destruction source</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this building destruction source</br><br> |
+| **Type** | **Name**                       | **Description**                                                                                                       |
+|----------|--------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| **List** | **sensors**                    | List of building creation sources.                                                                                   |
+|          | damage_receiver_filter         | Tracks particular types of structures.                                                                                |
+|          | alliance_rule_filter           | Defines team alliance rules for tracking.                                                                             |
+|          | exclude_tags                   | Tags to exclude for building structures.                                                                              |
+|          | include_tags                   | Tags to include for building structures.                                                                              |
+|          | multiplier                     | The weight of the heat stamp for this building destruction source.                                                   |
+|          | propagation_decay              | The decay rate of the propagation/spread of the heat stamp for this building destruction source.                     |
 
-
-
+---
 
 ### badger:buildable_foundation
 
@@ -1710,9 +1482,6 @@ Dictates what to place as the foundation.
 | String| placement_rule| | The rule that dictates when to place this foundation: always, instant_only |
 | String| style| | Style of foundation to generate: inverted_pyramid, pillar, bowl, dome, supports |
 
-
-
-
 ### badger:buildable_health_generation
 
 Parameters used to calculate the normalized initial health of structures upon initial constructing.
@@ -1721,14 +1490,9 @@ Parameters used to calculate the normalized initial health of structures upon in
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| initial_health_percentage| | The initial health of the entity normalized. Calculated by a percent of their max health |
 
-
-
-
 ### badger:buildable_intangible
 
 When applied to a buildable, it prevents it from blocking the placement of other buildings.
-
-
 
 ### badger:buildable_presentation
 
@@ -1749,33 +1513,30 @@ Structure information to display in the UI.
 | String| tooltip_description| | The structure tooltip description to display in the UI. |
 | String| tooltip_title| | The structure tooltip title to display in the UI. |
 
-
-
-
 ### badger:buildable_replaceable
 
 Flag Attribute that indicates if the structure can be replaced by other structures
-
-
 
 ### badger:buildable_requirement
 
 states what is required to place a buildable.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| blocker_entities| | The entities that cannot be colliding with this structure for it to be built<br/><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Alliance filter rule</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>List of blocker exclude filters</br><br><h5><p id="include_tags">include_tags</p></h5>List of blocker include filters</br><br> |
-| String| exclusive_zone_alliance_rule| | exclusive zone alliance rule |
-| Boolean| invalid_block_snaptoground| | When checking for invalid blocks, should we snap to the ground blocks below the building |
-| Array| invalid_block_tags| | List of all the block tag types that this buildable can not be placed on. |
-| Array| invalid_blocks| | The name (dirt/air/water/lava..etc) of block types that a structure cannot be built upon |
-| Array| recipe| | An array of items and amounts. |
-| Array| ticket_cost| | An array of tickets and amounts. |
-| Array| unlock| | These are the items needed to unlock certain buildings. An array of items with an amount. |
-| String| zone_alliance_rule| | Alliance rule filter on what zone this can be placed in - any_team, enemy, friendly, etc.  |
+| **Type**       | **Name**                          | **Description**                                                                                                                                     |
+|----------------|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **blocker_entities**              | The entities that must not collide with this structure for it to be built.                                                                         |
+|                | alliance_rule_filter              | Alliance filter rule that applies to this structure.                                                                                               |
+|                | exclude_tags                      | List of tags for entities that are excluded from colliding with this structure.                                                                     |
+|                | include_tags                      | List of tags for entities that are included as blockers for this structure.                                                                         |
+| **String**     | **exclusive_zone_alliance_rule**  | Alliance rule that defines the restrictions for this exclusive zone.                                                                                |
+| **Boolean**    | **invalid_block_snaptoground**    | Determines whether to snap to ground blocks below the building when checking for invalid blocks.                                                    |
+| **Array**      | **invalid_block_tags**            | List of block tag types that this buildable cannot be placed on.                                                                                   |
+| **Array**      | **invalid_blocks**                | List of block types (e.g., dirt, air, water, lava) that this structure cannot be built upon.                                                       |
+| **Array**      | **recipe**                        | An array of items and their corresponding amounts needed for crafting this structure.                                                               |
+| **Array**      | **ticket_cost**                   | An array representing the cost in tickets and their respective amounts required for this structure.                                                 |
+| **Array**      | **unlock**                        | List of items and amounts required to unlock certain buildings.                                                                                     |
+| **String**     | **zone_alliance_rule**            | Alliance rule filter that determines the zones in which this structure can be placed (e.g., any_team, enemy, friendly, etc.).                      |
 
-
-
+---
 
 ### badger:buildable_snap_point
 
@@ -1785,35 +1546,26 @@ When applied to a buildable, it flags it as being a position snapping target for
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Integer| top_snap_offset| | This adjusts the height which previews snap to, when they snap to the top of this structure. |
 
-
-
-
 ### badger:buildable_spawner
 
 will spawn Mobs from components position.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Integer| batch| | Batch count |
-| JSON Object| batch_size_phase| | Batch size phases definitions.<br/><h5><p id="continuous_spawn_timeout">continuous_spawn_timeout</p></h5>Maximum number of seconds between two spawns events for them to be considered continuous spawn events.</br><br><h5><p id="phases">phases</p></h5>Array of spawner batch size phases definitions.</br><br><h5><p id="batch_size">batch_size</p></h5>Batch size that spawner will use when its continuous spawns exceed the corresponding threshold.</br><br><h5><p id="threshold">threshold</p></h5>Number of continuous spawn events required for spawner to apply corresponding batch size.</br><br> |
-| Integer| cap| | Max mobs spawned that are still alive. -1 indicates there is no cap |
-| Boolean| disable_pop_cap_culling| | When true, mobs spawned by this spawner cannot be despawned by the pop cap system. |
-| Boolean| disable_wander| | When true, mobs spawned by this spawner will have wandering disabled. |
-| Boolean| enable_recall| | When true, mobs spawned by this spawner will be able to be recalled. |
-| Boolean| has_spawn_cost| | Setting this to true will make the spawner test the spawners' resource list if it can afford the cost of spawning the mobs. |
-| Integer| max_height_difference| | Maximum height difference between spawned unit location and spawner location. |
-| Decimal| max_radius| | Max radius within which mobs will be spawned. |
-| Decimal| min_radius| | Min radius within which mobs will not be spawned. |
-| Vector [a, b, c]| offset| | Offset to spawn the entities at relative to the spawner. Only used when no spawn position is set on the structure. |
-| Decimal| rate| | Rate of mobs spawned in seconds. |
-| Boolean| requires_input| | Setting this to true will require an input from the player to spawn mobs. |
-| Decimal| spawn_delay| | Delay after the spawn trigger that the mobs will be spawned in seconds. |
-| String| spawning_trigger| | Spawning trigger tag |
-| String| type| | Name of the type of mob. |
-| Array| types| | List of mob type names |
+| **Type**       | **Name**                          | **Description**                                                                                                                                     |
+|----------------|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **blocker_entities**              | The entities that must not collide with this structure for it to be built.                                                                         |
+|                | alliance_rule_filter              | Alliance filter rule that applies to this structure.                                                                                               |
+|                | exclude_tags                      | List of tags for entities that are excluded from colliding with this structure.                                                                     |
+|                | include_tags                      | List of tags for entities that are included as blockers for this structure.                                                                         |
+| **String**     | **exclusive_zone_alliance_rule**  | Alliance rule that defines the restrictions for this exclusive zone.                                                                                |
+| **Boolean**    | **invalid_block_snaptoground**    | Determines whether to snap to ground blocks below the building when checking for invalid blocks.                                                    |
+| **Array**      | **invalid_block_tags**            | List of block tag types that this buildable cannot be placed on.                                                                                   |
+| **Array**      | **invalid_blocks**                | List of block types (e.g., dirt, air, water, lava) that this structure cannot be built upon.                                                       |
+| **Array**      | **recipe**                        | An array of items and their corresponding amounts needed for crafting this structure.                                                               |
+| **Array**      | **ticket_cost**                   | An array representing the cost in tickets and their respective amounts required for this structure.                                                 |
+| **Array**      | **unlock**                        | List of items and amounts required to unlock certain buildings.                                                                                     |
+| **String**     | **zone_alliance_rule**            | Alliance rule filter that determines the zones in which this structure can be placed (e.g., any_team, enemy, friendly, etc.).                      |
 
-
-
+---
 
 ### badger:buildable_structure
 
@@ -1829,9 +1581,6 @@ Dictates what to place as the structure.
 | String| nbt_file| | Name of the nbt file to place as the structure. |
 | Boolean| silence_destroyed_trigger_when_killed| | Whether the on_building_destroyed trigger should be silenced when the building is killed. |
 
-
-
-
 ### badger:campaign_team
 
 Some general attributes that describe a faction.
@@ -1840,20 +1589,13 @@ Some general attributes that describe a faction.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| team_tag| | Name of the team to put this entity on. |
 
-
-
-
 ### badger:causes_fear
 
 Defines this entity as a status effect that causes its target to fear the status inflictor.
 
-
-
 ### badger:chunk_reload_indestructible_flag
 
 Used to exclude a buildable from a destructive world reload
-
-
 
 ### badger:cinematic_death
 
@@ -1863,14 +1605,9 @@ The entity should play a cinematic on death. This encodes which cinematic plays.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | List| cine_id| | The IDs of the cinematic that plays when this entity dies. |
 
-
-
-
 ### badger:claimed_area_excluded
 
 For entities that should always be excluded from ClaimedAreaSystem. This is only in regards to bases being assigned to claimed areas.
-
-
 
 ### badger:clear_from_zone_of_control
 
@@ -1882,9 +1619,6 @@ Flags this entity to be removed if it overlaps with a Zone of Control of an enti
 | Array| filter_tag_set| | Tags that filters out entities with ZOC |
 | Array| include_tags| | The tags to be included in when filtering |
 
-
-
-
 ### badger:collision_weight
 
 Defines the weight of an entity.
@@ -1892,9 +1626,6 @@ Defines the weight of an entity.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| weight| | Defines weight of this entity for the purposes of collision with other entities. |
-
-
-
 
 ### badger:conditionally_solid_blocks
 
@@ -1905,9 +1636,6 @@ Defines which extra blocks will be considered solid during pathfinding & collisi
 | Array| exclude_tags| | Defines the exclude set of block tags to consider conditionally solid. |
 | Array| include_tags| | Defines the include set of block tags to consider conditionally solid. |
 
-
-
-
 ### badger:conflict_config
 
 Configuration data if this entity has special overrides when managed by a conflict coordinator.
@@ -1915,9 +1643,6 @@ Configuration data if this entity has special overrides when managed by a confli
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| invulnerable_behavior| | Behaviour to use when this entity is invulnerable via a conflict coordinator. Reverted to default when vulnerable. |
-
-
-
 
 ### badger:conflict_coordinator
 
@@ -1928,26 +1653,26 @@ Declares a (spawn controller) entity to be a conflict coordinator, prolonging sp
 | String| activated_tag| | Tag added/removed from the coordinator when activated. |
 | Decimal| player_engagement_distance| | Distance from the coordinator a player needs to be, to be considered as engaged. |
 
-
-
-
 ### badger:core_resource_consumer
 
 Dictates resource consumer behaviour.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| | Array| | force_gather_non_surface_blocks_list |
-| Boolean| always_gather_damaged| | Will always gather damaged blocks no matter the material if true |
-| Array| material_category| | List of Material categories |
-| Boolean| only_gather_surface| | Will only gather blocks with no solid blocks on top |
-| String| replacement_block| | The name of the block to replace a gathered resource with |
-| Array| special_replacements| | A map of 'initial' block names to 'replacement' block names to replace specific gathered resources with<br/><h5><p id="initial">initial</p></h5>The block type you want to change</br><br><h5><p id="replacement">replacement</p></h5>The block type you want to change to</br><br> |
-| Integer| step_height| | The height of the step in blocks |
-| Integer| step_width| | The width of the step in blocks |
+| **Type**       | **Name**                          | **Description**                                                                                                                                     |
+|----------------|-----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **blocker_entities**              | The entities that must not collide with this structure for it to be built.                                                                         |
+|                | alliance_rule_filter              | Alliance filter rule that applies to this structure.                                                                                               |
+|                | exclude_tags                      | List of tags for entities that are excluded from colliding with this structure.                                                                     |
+|                | include_tags                      | List of tags for entities that are included as blockers for this structure.                                                                         |
+| **String**     | **exclusive_zone_alliance_rule**  | Alliance rule that defines the restrictions for this exclusive zone.                                                                                |
+| **Boolean**    | **invalid_block_snaptoground**    | Determines whether to snap to ground blocks below the building when checking for invalid blocks.                                                    |
+| **Array**      | **invalid_block_tags**            | List of block tag types that this buildable cannot be placed on.                                                                                   |
+| **Array**      | **invalid_blocks**                | List of block types (e.g., dirt, air, water, lava) that this structure cannot be built upon.                                                       |
+| **Array**      | **recipe**                        | An array of items and their corresponding amounts needed for crafting this structure.                                                               |
+| **Array**      | **ticket_cost**                   | An array representing the cost in tickets and their respective amounts required for this structure.                                                 |
+| **Array**      | **unlock**                        | List of items and amounts required to unlock certain buildings.                                                                                     |
+| **String**     | **zone_alliance_rule**            | Alliance rule filter that determines the zones in which this structure can be placed (e.g., any_team, enemy, friendly, etc.).                      |
 
-
-
+---
 
 ### badger:counterattacker
 
@@ -1956,9 +1681,6 @@ Defines counterattacks that are performed when the entity is attacked by others.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | List| counterattacks| | List of counterattacks. |
-
-
-
 
 ### badger:culture
 
@@ -1971,9 +1693,6 @@ Base culture values for entity
 | Decimal| base_culture_c| | Base culture Score_A value intended for scoring buildings. Todo: Can later be improved to do dynamic culture modifiers based on upgrades. |
 | Boolean| is_hq| | Does this culture count as an HQ (used for determining new buildings culture type, for now) |
 
-
-
-
 ### badger:culture_status
 
 Data related to the accumulation of culture.
@@ -1985,31 +1704,38 @@ Data related to the accumulation of culture.
 | Integer| thresholdC| | Reward threshold for culture value C. |
 | Array| thresholds| | Array of culture reward thresholds. |
 
-
-
-
 ### badger:damage_influence_source
 
 Provides a list of sources of additive or substractive damage influence for this AI.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| List| sensors| | List of damage sources.<br/><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of units/structures</br><br><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for damage receiver units</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for damage receiver units</br><br><h5><p id="damage_type_filter">damage_type_filter</p></h5>Track particular types of damage</br><br><h5><p id="exclude_any">exclude_any</p></h5>Exclude tags of damage</br><br><h5><p id="include_all">include_all</p></h5>Include tags of damage</br><br><h5><p id="inflictor_or_receiver_position">inflictor_or_receiver_position</p></h5>Designate whether damage will be tracked at the inflictor or receiver position</br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this damage source</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this damage source</br><br> |
+| **Type**       | **Name**                            | **Description**                                                                                                                                         |
+|----------------|-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **List**       | **sensors**                         | A collection of damage sources with specific filters and settings.                                                                                     |
+|                | **damage_receiver_filter**          | Tracks particular types of units or structures that receive damage.                                                                                   |
+|                | **alliance_rule_filter**            | Specifies team alliance rules for tracking damage sources.                                                                                            |
+|                | **exclude_tags**                    | Tags for units that should be excluded from receiving damage.                                                                                          |
+|                | **include_tags**                    | Tags for units that should be included in damage tracking.                                                                                             |
+|                | **damage_type_filter**              | Tracks specific types of damage relevant to the sensors.                                                                                              |
+|                | **exclude_any**                     | Excludes any tags of damage from being considered.                                                                                                     |
+|                | **include_all**                     | Includes all tags of damage for tracking purposes.                                                                                                     |
+|                | **inflictor_or_receiver_position**  | Designates whether the tracking occurs at the inflictor (source of damage) or receiver (recipient of damage) position.                                |
+|                | **multiplier**                      | The weight or intensity of the heat stamp applied to this damage source.                                                                               |
+|                | **propagation_decay**               | The rate at which the heat stamp decays or spreads over time for this damage source.                                                                   |
 
-
-
+---
 
 ### badger:damage_over_time
 
 Makes a status effect apply damage over time to its host.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| damage| | Damage data applied by this effect.<br/><h5><p id="damage_amount">damage_amount</p></h5>Amount of damage</br><br><h5><p id="damage_types">damage_types</p></h5>List of damage type names (strings).</br><br> |
-| Decimal| interval| | Defines the time interval in secods at which damage is applied |
+| **Type**       | **Name**         | **Description**                                                                                     |
+|----------------|------------------|-----------------------------------------------------------------------------------------------------|
+| **JSON Object**| **damage**       | Contains the damage data applied by this effect.                                                  |
+|                | damage_amount     | Specifies the amount of damage inflicted.                                                           |
+|                | damage_types      | A list of damage type names, represented as strings.                                              |
+| **Decimal**    | **interval**     | Defines the time interval, in seconds, at which damage is applied.                                |
 
-
-
+---
 
 ### badger:damage_receiver
 
@@ -2022,9 +1748,6 @@ Allows entities to be damaged by attacks.
 | JSON Object| damage_resistances| | Specifies the damage resistance values |
 | String| shape| | Defines the shape of the damage receiver (the shape tested as the recipient for damage during an attack) to be used for collision against damage applicators (weapons' collision shapes). |
 
-
-
-
 ### badger:damage_receiver_material
 
 Defines the material tag to use when an entity is hit with an action.
@@ -2033,20 +1756,13 @@ Defines the material tag to use when an entity is hit with an action.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| material| | Defines the material to be used for presentation events when this entity is hit by an appropriate damage applicator. |
 
-
-
-
 ### badger:damage_source_telemetry_tracker
 
 Determines whether or not the latest damage source is tracked for telemetry by this entity
 
-
-
 ### badger:death_telemetry_tracking
 
 Defines the settings used when tracking telemetry for killed entities.
-
-
 
 ### badger:deconstruction
 
@@ -2062,9 +1778,6 @@ Scalar values to tune the amount of resources refunded and the time to deconstru
 | Array| ticket_cost| | The list of tickets required to apply this deconstruction action. |
 | Array| unlock| | The list of unlocks required to apply this deconstruction action. |
 
-
-
-
 ### badger:delayed_jump
 
 An entity with this component is able to jump after leaving the group for a set amount of time.
@@ -2072,9 +1785,6 @@ An entity with this component is able to jump after leaving the group for a set 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| delay_time| | The time that the player will still be able to jump after no longer touching the ground. |
-
-
-
 
 ### badger:destroy_on_village_destruction
 
@@ -2085,9 +1795,6 @@ Determines if this entity has custom destruction behaviour when its owner villag
 | Boolean| group| | The special destruction behaviour to use (eg. staggered destruction). Correlates to what is defined in badger:village_heart_destruction on the village entity. |
 | Boolean| ignore| false| If this entity should not be destroyed when the village is destroyed. |
 
-
-
-
 ### badger:destruction_vfx
 
 Customized VFX behaviour upon being destroyed.
@@ -2096,245 +1803,611 @@ Customized VFX behaviour upon being destroyed.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Boolean| always_play_vfx| | Whether or not to force the destruction VFX. |
 
+### `badger:difficulty_modifier_accuracy_min_range` & `badger:difficulty_modifier_accuracy_max_range`
 
+Modifiers for min and max accuracy range based on difficulty.
 
+**Custom Game Settings**:
 
-### badger:difficulty_modifier_accuracy_max_range
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
-Modifiers for max accuracy range based on difficulty
+---
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br> |
+**Difficulty Settings**:
 
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
 
+For each difficulty, the following modifiers are applicable:
 
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+| **wave_post_multiply**   | Multiplied by the Wave Level, then added after all other modifiers. Applied only if the `WAVE_SCALING_DIFFICULTY` game rule is true. |
 
-### badger:difficulty_modifier_accuracy_min_range
-
-Modifiers for min accuracy range based on difficulty
-
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br> |
-
-
-
+---
 
 ### badger:difficulty_modifier_build_speed
 
 Modifiers for build speed based on difficulty and custom game options
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:difficulty_modifier_building_cost
 
 Modifier for building costs based on difficulty or custom game setting.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:difficulty_modifier_damage
 
 Modifiers for damage based on difficulty
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+| **wave_post_multiply**   | Multiplied by the Wave Level, then added after all other modifiers. Applied only if the `WAVE_SCALING_DIFFICULTY` game rule is true. |
+
+---
 
 ### badger:difficulty_modifier_fall_damage
 
 Modifiers for fall damage on difficulty and custom game option
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:difficulty_modifier_fall_damage_distance
 
 Modifiers for fall damage distance based on difficulty and custom game option
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:difficulty_modifier_gravity
 
 Modifiers for gravity based on difficulty and custom game options
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:difficulty_modifier_health_regeneration
 
 Modifier for health regeneration based on difficulty or custom game setting.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:difficulty_modifier_jump_gravity
 
 Modifiers for jump gravity based on difficulty and custom game options
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:difficulty_modifier_jump_height
 
 Modifiers for jump height based on difficulty and custom game options
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:difficulty_modifier_knockback
 
 Modifiers for knockback based on difficulty and custom game option
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:difficulty_modifier_knockback_resistance
 
 Modifiers for knockback resistance based on difficulty and custom game options
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:difficulty_modifier_max_health
 
 Modifiers for max health based on difficulty
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="wave_post_multiply">wave_post_multiply</p></h5>Multiplied with the Wave Level then added after all other modifier values. Only applied if WAVE_SCALING_DIFFICULTY game rule is true</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+| **wave_post_multiply**   | Multiplied by the Wave Level, then added after all other modifiers. Applied only if the `WAVE_SCALING_DIFFICULTY` game rule is true. |
+
+---
 
 ### badger:difficulty_modifier_resistance
 
 Modifiers for damage resistances based on difficulty
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| Array| damage_types| | The modifiers for specified damage types as json key names. Modifiers not specified in this array will affect damage resistance across all types.<br/><h5><p id="append_resistance_to_entities">append_resistance_to_entities</p></h5>Boolean to append the resistance to entities if absent from the mob data.</br><br><h5><p id="custom_game_settings">custom_game_settings</p></h5>Defines what custom game settings affect this numeric modifier.</br><br><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br><h5><p id="difficulties">difficulties</p></h5>The settings for each difficulty.</br><br><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="name">name</p></h5>Name of damage type.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+#### Custom Game Settings
 
+| **Type**       | **Name**                     | **Description**                                                                                                                                                   |
+|----------------|------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings affect the numeric modifier.                                                                                                |
+|                | numeric_modifier_type         | What type of modifier the named custom game setting will apply to this entity. Valid values are: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding 'post_' counterparts. Effects of multiple game settings set to the same modifier WILL stack. |
+|                | scaling_factor                | A multiplier that changes how much the custom game setting will affect the numeric modifier. This is useful for scaling when multiple numeric modifiers need to use the same custom game setting differently. Formula: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0' |
+|                | setting_name                  | Name of the custom game setting to read from.                                                                                                                 |
 
+#### Damage Types
 
+| **Type**       | **Name**            | **Description**                                                                                                                                                   |
+|----------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Array**      | **damage_types**     | Modifiers for specified damage types as JSON key names. Modifiers not specified in this array will affect damage resistance across all types.                    |
+|                | append_resistance_to_entities | Boolean to append the resistance to entities if absent from the mob data.                                                                                     |
+|                | custom_game_settings  | Defines which custom game settings affect this numeric modifier.                                                                                                |
+|                | numeric_modifier_type  | What type of modifier the named custom game setting will apply to this entity. Valid values are: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding 'post_' counterparts. Effects of multiple game settings set to the same modifier WILL stack. |
+|                | scaling_factor         | A multiplier that changes how much the custom game setting will affect the numeric modifier. This is useful for scaling when multiple numeric modifiers need to use the same custom game setting differently. Formula: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0' |
+|                | setting_name           | Name of the custom game setting to read from.                                                                                                                 |
+|                | difficulties           | The settings for each difficulty level.                                                                                                                       |
+
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:difficulty_modifier_spawning_cost
 
 Modifier for mob spawning costs based on difficulty or custom game setting.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| custom_game_settings| | Defines what custom game settings affect this numeric modifier.<br/><h5><p id="numeric_modifier_type">numeric_modifier_type</p></h5>What type of modifier the named custom game setting will apply on this entity. Valid values are pre_multiply, pre_add, pre_subtract, pre_divide, and their corresponding 'post_' counterparts. The effects of multiple game settings set to the same modifier WILL stack.</br><br><h5><p id="scaling_factor">scaling_factor</p></h5>A multiplier that changes how much the custom game setting will affect this numeric modifier. This is useful for when multiple numeric modifiers need to use the same custom game setting, but scale with it differently. The formula for this is: '((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0'</br><br><h5><p id="setting_name">setting_name</p></h5>Name of the custom game setting to read from.</br><br> |
-| JSON Object| difficulties| | The settings for each difficulty.<br/><h5><p id="Custom">Custom</p></h5>Custom difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Easy">Easy</p></h5>Easy difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Hard">Hard</p></h5>Hard difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Normal">Normal</p></h5>Normal difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="Peaceful">Peaceful</p></h5>Peaceful difficulty modifiers</br><br><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br> |
+**Custom Game Settings**:
 
+| **Type**       | **Name**                     | **Description**                                                                                                  |
+|----------------|------------------------------|------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **custom_game_settings**      | Defines which custom game settings impact this numeric modifier.                                                |
+|                | **numeric_modifier_type**     | Type of modifier for the named custom game setting. Valid values include: `pre_multiply`, `pre_add`, `pre_subtract`, `pre_divide`, and their corresponding `post_` counterparts. Multiple settings with the same modifier will stack. |
+|                | **scaling_factor**            | Multiplier that adjusts how much the custom game setting affects this numeric modifier. The formula used is: `((CustomGameSettingValue - 1.0) * ScalingFactor) + 1.0`. Useful for scaling modifiers differently. |
+|                | **setting_name**              | Name of the custom game setting to read from.                                                                    |
 
+---
 
+**Difficulty Settings**:
+
+| **Type**       | **Difficulty**  | **Modifiers**                                                                                                          |
+|----------------|------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **difficulties**  | Settings for each difficulty level.                                                                                    |
+|                | **Custom**        | Custom difficulty modifiers.                                                                                           |
+|                | **Easy**          | Easy difficulty modifiers.                                                                                             |
+|                | **Normal**        | Normal difficulty modifiers.                                                                                           |
+|                | **Hard**          | Hard difficulty modifiers.                                                                                             |
+|                | **Peaceful**      | Peaceful difficulty modifiers.                                                                                         |
+
+For each difficulty, the following modifiers are applicable:
+
+| **Modifier**              | **Description**                                                                 |
+|--------------------------|---------------------------------------------------------------------------------|
+| **post_add**             | Amount added after all other modifier values.                                   |
+| **post_multiply**        | Percentage multiplied after all pre-modifier values are applied.               |
+| **pre_add**              | Amount added after pre-multiply values, but before any other modifiers.        |
+| **pre_multiply**         | Percentage multiplied before any other modifier values are applied.            |
+
+---
 
 ### badger:disable_by_health
 
 Converts any listed blocks to a modified version
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Decimal| block_conversion_cinematic_delay| 0| The block conversion start delay in seconds if a cinematic is played. |
-| JSON Object| block_conversion_states| | Block conversion data for when the structure is disabled or enabled by health.<br/><h5><p id="disabled_state">disabled_state</p></h5>Block conversion data used when the entity is disabled</br><br><h5><p id="enabled_state">enabled_state</p></h5>Block conversion data used when the entity is enabled</br><br> |
-| String| cine_id| | The cinematic ID to play when disabled. Optional. |
-| Decimal| health_disabled_percent| | What percentage of health that determines if the entity is disabled |
-| Decimal| health_enabled_percent| | What percentage of health that determines if the entity is enabled |
-
-
-
+| **Type**       | **Name**                          | **Description**                                                                                          |
+|----------------|-----------------------------------|----------------------------------------------------------------------------------------------------------|
+| **Decimal**    | **block_conversion_cinematic_delay** | The delay in seconds before block conversion starts if a cinematic is played (default: 0).                            |
+| **JSON Object**| **block_conversion_states**       | Block conversion data for when the structure is disabled or enabled by health.                          |
+|                | **disabled_state**                | Data used when the entity is disabled.                                                                    |
+|                | **enabled_state**                 | Data used when the entity is enabled.                                                                     |
+| **String**     | **cine_id**                      | The cinematic ID to play when the entity is disabled. This field is optional.                           |
+| **Decimal**    | **health_disabled_percent**       | The percentage of health that determines when the entity is disabled.                                   |
+| **Decimal**    | **health_enabled_percent**        | The percentage of health that determines when the entity is enabled.                                     |
 
 ### badger:disables_actions
 
 Defines this entity as a status effect that disables actions/attacks.
 
-
-
 ### badger:disables_influence
 
 Defines this entity as a status effect that disables influence on its receiver entity.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| tag_filter| | The tag filter used to determine if influence should be disabled on receiver entity<br/><h5><p id="exclude_tags">exclude_tags</p></h5>Tags that the receiver entity must not have for influence to be disabled</br><br><h5><p id="include_tags">include_tags</p></h5>Tags that the receiver entity must have for influence to be disabled</br><br> |
+| **Type**       | **Name**       | **Description**                                                                                                                                                                 |
+|----------------|----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **tag_filter** | The tag filter determines whether influence should be disabled on the receiver entity.                                                                                         |
+|                | **exclude_tags** | Tags that the receiver entity must not possess for influence to be disabled.                                                                                                  |
+|                | **include_tags** | Tags that the receiver entity must possess for influence to be disabled.                                                                                                     |
 
-
-
+---
 
 ### badger:disables_movement
 
 Defines this entity as a status effect that disables movement.
 
-
-
 ### badger:disables_sprint
 
 Defines this entity as a status effect that disables sprint.
-
-
 
 ### badger:distant_stimulus_movement
 
@@ -2349,14 +2422,9 @@ Attribute that defines how entity moves to pursue the attacker after being attac
 | String| propagation_exclude_tags| | Tags that nearby mobs must NOT have in order to be alerted when this entity is attacked. |
 | String| propagation_include_tags| | Tags that nearby mobs must have in order to be alerted when this entity is attacked. |
 
-
-
-
 ### badger:do_not_replace_buildables
 
 Flag Attribute that indicates if the structure can replace existing structures.
-
-
 
 ### badger:dynamic_scale_interpolate
 
@@ -2366,14 +2434,9 @@ Component that enables interpolation and specifies an interpolation speed when t
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| interpolate_time| | The interpolation time in seconds |
 
-
-
-
 ### badger:enable_respawn_when_discovered
 
 Adds a flag component that we want to enable features when an entity is discovered
-
-
 
 ### badger:engineer
 
@@ -2386,9 +2449,6 @@ Defines this entity as an engineer.
 | Decimal| travel_timeout| | Duration in seconds for engineer to travel to build zone (a buff will be applied afterwards). |
 | String| travel_timeout_buff| | The buff to apply when the engineer times out. |
 
-
-
-
 ### badger:engineer_station
 
 Makes this village use engineers.
@@ -2398,14 +2458,9 @@ Makes this village use engineers.
 | Boolean| destroy_buildable_on_engineer_destroyed| | If buildables should be destroyed if assigned engineer dies before completion. |
 | Decimal| reassignment_delay| | The cooldown time before a build request can be reassigned to another engineer if the current one died. |
 
-
-
-
 ### badger:entity_collision
 
 Defines the entity's entity collision properties.
-
-
 
 ### badger:entity_leap
 
@@ -2424,14 +2479,9 @@ Enables the leaping functionality for the entity and defines the leap properties
 | Decimal| prep| | The maximum vertical distance the entity will leap from. |
 | Decimal| upward| | The maximum vertical distance the entity will leap from. |
 
-
-
-
 ### badger:exclude_from_spatial_partition
 
 Controls if this entity should be excluded from spatial queries.
-
-
 
 ### badger:faction
 
@@ -2446,9 +2496,6 @@ Some general attributes that describe a faction.
 | Boolean| is_default_appearance| | The default appearance all factions should fallback to. Only one faction is allowed to be the default. |
 | String| name| | Name of this faction. |
 
-
-
-
 ### badger:fall_damage
 
 Defines the settings used to calculate falling damage.
@@ -2460,9 +2507,6 @@ Defines the settings used to calculate falling damage.
 | Integer| min_damage_distance| | Defines the minimum distance the entity needs fall to get damaged. Measured in meters. |
 | String| trigger_event| | Optional trigger event to be used when fall damage occurs for this entity. |
 
-
-
-
 ### badger:fast_travel
 
 Defines parameters for when this entity fast travels
@@ -2472,34 +2516,33 @@ Defines parameters for when this entity fast travels
 | Decimal| cooldown_time| | The amount of time the entity waits after fast travelling. |
 | Decimal| windup_time| | The amount of time the entity waits before fast travelling. |
 
-
-
-
 ### badger:fast_travel_point
 
 Indicates that this entity supports fast travel functionality
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| String| incoming_alliance_rule_filter| | The rule that determines which team's players can arrive at this fast travel point. |
-| String| outgoing_alliance_rule_filter| | The rule that determines which types of entities that will be considered candidates to fast travel (friendly, enemy, etc.). |
-| JSON Object| outgoing_tag_filter| | Determines the tag filters and alliance rule for outgoing entities.<br/><h5><p id="exclude_tags">exclude_tags</p></h5>Entities with any of these tags are not candidates to fast travel when lured.</br><br><h5><p id="include_tags">include_tags</p></h5>Entities that have these tags are candidates to fast travel when lured.</br><br> |
-| String| spawn_point_archetype| | The name of the archetype for the destination spawn point entity. |
+| **Type**       | **Name**                           | **Description**                                                                                                                                                                   |
+|----------------|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **String**     | **incoming_alliance_rule_filter**  | The rule that determines which team's players can arrive at this fast travel point.                                                                                            |
+| **String**     | **outgoing_alliance_rule_filter**  | The rule that determines which types of entities will be considered candidates for fast travel (e.g., friendly, enemy, etc.).                                                   |
+| **JSON Object**| **outgoing_tag_filter**            | Determines the tag filters and alliance rule for outgoing entities.                                                                                                            |
+|                | exclude_tags                       | Entities with any of these tags are excluded from being candidates for fast travel when lured.                                                                                 |
+|                | include_tags                       | Entities with these tags are considered candidates for fast travel when lured.                                                                                                 |
+| **String**     | **spawn_point_archetype**          | The name of the archetype for the destination spawn point entity.                                                                                                              |
 
-
-
+---
 
 ### badger:fast_traveller
 
 Indicates that this entity can fast travel.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| String| outgoing_alliance_rule_filter| | The rule that determines which types of entities that will be considered candidates to fast travel (friendly, enemy, etc.). |
-| JSON Object| outgoing_tag_filter| | Determines the tag filters and alliance rule for outgoing entities.<br/><h5><p id="exclude_tags">exclude_tags</p></h5>Entities with any of these tags are not candidates to fast travel when lured.</br><br><h5><p id="include_tags">include_tags</p></h5>Entities that have these tags are candidates to fast travel when lured.</br><br> |
+| **Type**         | **Name**                          | **Description**                                                                                                                           |
+|------------------|-----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| **String**       | **outgoing_alliance_rule_filter** | The rule that determines which types of entities will be considered candidates for fast travel (e.g., friendly, enemy).                   |
+| **JSON Object**  | **outgoing_tag_filter**           | Determines the tag filters and alliance rules for outgoing entities.                                                                       |
+|                  | **exclude_tags**                  | A list of tags; entities with any of these tags are not candidates for fast travel when lured.                                          |
+|                  | **include_tags**                  | A list of tags; entities with these tags are considered candidates for fast travel when lured.                                           |
 
-
-
+---
 
 ### badger:gatherable_resources
 
@@ -2508,9 +2551,6 @@ Contains the most commonly available resources to gather at this entity
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| gatherable_resource_names| | A list of resources names the entity drops |
-
-
-
 
 ### badger:generate_player_village
 
@@ -2522,9 +2562,6 @@ An entity that creates a village when placed in world
 | String| ownership_alliance_rule| | Alliance of structures that can become owned by this structure's 'bagder:owned_territory' when it is placed. |
 | String| villageId| | Village ID name |
 
-
-
-
 ### badger:generate_ruins
 
 With this component entities that contained ownedBlocks will leave behind a portion of their blocks when destroyed.
@@ -2534,9 +2571,6 @@ With this component entities that contained ownedBlocks will leave behind a port
 | Integer| max| | maximum block height of columns left behind |
 | Integer| min| | minimum block height of columns left behind |
 
-
-
-
 ### badger:glide
 
 An entity with this component is capable of gliding.
@@ -2545,14 +2579,9 @@ An entity with this component is capable of gliding.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| drag| | The amount of drag to apply to vertical velocity while gliding, in the range (0, 1] |
 
-
-
-
 ### badger:glide_telemetry_tracking
 
 Defines the settings used when tracking telemetry for mounts that are gliding.
-
-
 
 ### badger:granted_actions
 
@@ -2561,9 +2590,6 @@ Defines the actions that are given to another entity that this buff entity is ap
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | List| actions| | List of actions. |
-
-
-
 
 ### badger:has_saddle
 
@@ -2575,9 +2601,6 @@ Granted as a buff to indicated when an entity is seeking out mounts or riders
 | Decimal| mount_range| 1.0| The minimum distance that an entity with a Saddle buff must be before activating a mount action |
 | Decimal| search_range| 10.0| The maximum distance that an entity with a Saddle buff will search for a mount or rider |
 
-
-
-
 ### badger:health
 
 Amount of Max health for entity
@@ -2585,9 +2608,6 @@ Amount of Max health for entity
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| max_health| | How much health this entity has. Entity dies or is destroyed when health reaches zero. |
-
-
-
 
 ### badger:health_regeneration
 
@@ -2600,9 +2620,6 @@ The amount of health that regenerates per second
 | Decimal| regen_cooldown_seconds| | The cooldown between each health regeneration |
 | Boolean| regen_while_suspended| | Whether or not the entity regens health while suspended |
 
-
-
-
 ### badger:heartbeat
 
 An entity with this component will despawn after the timer runs out. The timer is reset by specific (hard coded) interactions related to combat and control.
@@ -2610,9 +2627,6 @@ An entity with this component will despawn after the timer runs out. The timer i
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| min_expire_time| | How much time in seconds before this entity expires if not interacting. |
-
-
-
 
 ### badger:hit_effect
 
@@ -2623,19 +2637,23 @@ Defines a hit effect
 | String| on_hit_target_trigger| | The name of the trigger event to send on the target being hit when this hit effect is applied. |
 | String| trigger| | The name of the trigger event to send on the entity applying the hit effect when this hit effect is applied. |
 
-
-
-
 ### badger:hud_message_proximity
 
 A list of Hud messages. Each are triggered when player is in proximity
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| List| messages| | List of different hud messages.<br/><h5><p id="cooldown_seconds">cooldown_seconds</p></h5>The cooldown between sending the hud message.</br><br><h5><p id="filter">filter</p></h5>Tags to define what type of entity can trigger the hud message.</br><br><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>The alliance rule used to determine what type of entity should trigger the hud message</br><br><h5><p id="exclude">exclude</p></h5>The tags to be excluded from when filtering</br><br><h5><p id="include">include</p></h5>The tags to be included in when filtering</br><br><h5><p id="hud_message_args">hud_message_args</p></h5>A list of arguments used in the hud message.</br><br><h5><p id="hud_message_id">hud_message_id</p></h5>The string ID of the HUD message.</br><br><h5><p id="range">range</p></h5>The range an entity needs to be in to trigger the HudMessage</br><br> |
+| **Type**   | **Name**                   | **Description**                                                                                                                                     |
+|------------|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **List**   | **messages**               | A collection of different HUD messages.                                                                                                            |
+|            | cooldown_seconds           | The cooldown period (in seconds) between sending the HUD message.                                                                                  |
+|            | filter                     | Tags used to define which type of entity can trigger the HUD message.                                                                               |
+|            | alliance_rule_filter       | The alliance rule used to determine which type of entity should trigger the HUD message.                                                            |
+|            | exclude                    | Tags that are excluded from filtering when determining which entities can trigger the HUD message.                                                   |
+|            | include                    | Tags that are included when filtering for entities that can trigger the HUD message.                                                                |
+|            | hud_message_args           | A list of arguments that will be used in the HUD message.                                                                                           |
+|            | hud_message_id             | The string ID associated with the HUD message.                                                                                                      |
+|            | range                      | The effective range within which an entity must be to trigger the HUD message.                                                                      |
 
-
-
+---
 
 ### badger:hurtbox
 
@@ -2647,9 +2665,6 @@ Adding this description to an entity will indicate it is a hurtbox child entity.
 | Boolean| no_tickets| | Decides whether or not this entity opts out of inheriting parent's tickets. If set to true this hurtbox will provide no action/attack tickets. |
 | Boolean| target_assigner_redirect_to_default| | When true, this will redirect target assigner targeting to the default hurtbox of the parent. |
 
-
-
-
 ### badger:hurtbox_tags
 
 Designer prescribed tags that will be transferred to any hurtboxes this entity may have.
@@ -2657,9 +2672,6 @@ Designer prescribed tags that will be transferred to any hurtboxes this entity m
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| tags| | The tags to add to this entity's hurtboxes. |
-
-
-
 
 ### badger:influence_map_ai
 
@@ -2672,9 +2684,6 @@ Denotes this entity as an influence map AI. It will create and manag influence m
 | Decimal| perception_radius| | Perception range of the map for any influence sources |
 | String| query_name| | Query Name for any units assigned to this AI |
 | Boolean| sensing_when_idle| | Boolean on whether this AI should be tracking sensor information even when idle (no units/entities currently following this AI). Default set to NOT sense when idle. |
-
-
-
 
 ### badger:influencer_coordinator
 
@@ -2691,19 +2700,29 @@ Defines this entity as a coordinator of one or more (child) influencer entities.
 | String| max_followers_resource| | The name of the resource corresponding to the maximum number of entities that can be influenced at once. Unlimited if unspecified. If max_follower_count is also specified it will use the smaller of the two. |
 | Decimal| trigger_formation_update_radius| | When the player stops the formation will not update until the player leaves the radius positioned at the players last stationary position |
 
-
-
-
 ### badger:interactable
 
 Defines the entity's ability to be interacted with by other entities, and the interactions that can be performed on it.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| interactions| | Entries defining what interactions can be performed on the entity.<br/><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Alliance rule that filters which teams can interact with this interactable. Typically this will be set to 'friendly'</br><br><h5><p id="camera">camera</p></h5>Camera mode to switch to when interacting with this entity. Intended to be used with 'badger:aimable'</br><br><h5><p id="default_disabled">default_disabled</p></h5>When true, this entity CANNOT be interacted with by default, until something else enables it.</br><br><h5><p id="delay">delay</p></h5>Delay, in seconds, before the interact UI appears after highlighting the interactable.</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Tags that the *interactor* must NOT have in order to interact with this interactable.</br><br><h5><p id="exclusive_interactor">exclusive_interactor</p></h5>When true, only one interactor can interact with this entity at a time.</br><br><h5><p id="include_tags">include_tags</p></h5>Tags that the *interactor* must have in order to interact with this interactable.</br><br><h5><p id="input_layout_override">input_layout_override</p></h5>Input layout to use when highlighting this interactable, setting the buttons and UI needed for the interaction.</br><br><h5><p id="input_layout_under_construction">input_layout_under_construction</p></h5>Same purpose as 'input_layout_override', but applies during the construction phase of a buildable entity.</br><br><h5><p id="interaction_priority">interaction_priority</p></h5>Defines which interactions take precedence over others, when several are in range. Zero is the default, with higher values taking priority.</br><br><h5><p id="name">name</p></h5>Name of the interaction.</br><br><h5><p id="only_restrict_angle_while_luring">only_restrict_angle_while_luring</p></h5>When true, the angle restriction defined by 'restricted_interact_angle' will only apply if the interactor is luring mobs. This can be used to lessen input conflicts.</br><br><h5><p id="range">range</p></h5>Interactor must be within this distance for the interaction to appear.</br><br><h5><p id="restricted_interact_angle">restricted_interact_angle</p></h5>When set, players must aim their cameras at the target, within this many degrees, to interact with it. When not set, players can interact without aiming at the target.</br><br> |
+| **Type**       | **Name**                              | **Description**                                                                                                                                                              |
+|----------------|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Array**      | **interactions**                      | Entries defining what interactions can be performed on the entity.                                                                                                         |
+|                | **alliance_rule_filter**              | Alliance rule that filters which teams can interact with this entity; typically set to "friendly."                                                                         |
+|                | **camera**                            | Camera mode to switch to when interacting with this entity; intended for use with "badger:aimable."                                                                        |
+|                | **default_disabled**                  | When true, this entity cannot be interacted with by default until another condition enables it.                                                                            |
+|                | **delay**                             | Delay, in seconds, before the interact UI appears after highlighting the interactable.                                                                                     |
+|                | **exclude_tags**                      | Tags that the _interactor_ must not have in order to interact with this entity.                                                                                           |
+|                | **exclusive_interactor**              | When true, only one interactor can interact with this entity at a time.                                                                                                   |
+|                | **include_tags**                      | Tags that the _interactor_ must have in order to interact with this entity.                                                                                               |
+|                | **input_layout_override**             | Input layout to use when highlighting this interactable, setting the buttons and UI needed for the interaction.                                                             |
+|                | **input_layout_under_construction**   | Same purpose as `input_layout_override`, but applies during the construction phase of a buildable entity.                                                                   |
+|                | **interaction_priority**              | Defines which interactions take precedence over others when several are in range; zero is the default, with higher values taking priority.                                  |
+|                | **name**                              | Name of the interaction.                                                                                                                                                    |
+|                | **only_restrict_angle_while_luring**  | When true, the angle restriction defined by `restricted_interact_angle` will only apply if the interactor is luring mobs; this helps reduce input conflicts.                |
+|                | **range**                             | The interactor must be within this distance for the interaction to appear.                                                                                                |
+|                | **restricted_interact_angle**         | When set, players must aim their cameras at the target within this many degrees to interact with it; when not set, players can interact without aiming at the target.     |
 
-
-
+---
 
 ### badger:interactor
 
@@ -2715,20 +2734,13 @@ Defines the entity's ability to interact with other entities, and filters what e
 | Array| exclude_tags| | Determines what tags an entity must NOT have for this interactor to interact with it. |
 | Array| include_tags| | Determines what tags an entity must have for this interactor to interact with it. |
 
-
-
-
 ### badger:interacts_with_blocks
 
 Defines that this entity can interact with world blocks
 
-
-
 ### badger:invader
 
 For entities that will contribute to the invasion.
-
-
 
 ### badger:invasion_defense_value
 
@@ -2739,9 +2751,6 @@ Defines the defensive value of this entity. Used for protecting culture villages
 | Decimal| defense_multiplier| | Defines this structure's ability to boost all the active defenses of it's village. |
 | Integer| defense_value| | Defines this structure's ability to actively defend it's village. |
 
-
-
-
 ### badger:inventory
 
 Defines the inventory for this entity.
@@ -2750,9 +2759,6 @@ Defines the inventory for this entity.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| drop_force| | The force with which the items are dropped. |
 | Decimal| drop_percentage| | The percentage of the inventory that is dropped upon death. |
-
-
-
 
 ### badger:item_collection
 
@@ -2763,9 +2769,6 @@ Defines the rules which regulate which items are able to be collected by players
 | String| alliance_rule_filter| | The alliance rule filter defining whether or not items can be collected by players on a given team. |
 | Boolean| allow_failed_collections| | If true, the item will be collected and dissapear even if it adds no resources to the collector's inventory. |
 | Decimal| collection_delay| | The time in seconds after dropping before this item can be picked up. |
-
-
-
 
 ### badger:jump
 
@@ -2781,9 +2784,6 @@ An entity with this component is capable of jumping
 | Array| trigger_event_status_filter| | If one or more status effect specified in this array is active when the entity jumps, trigger the event defined by trigger_event_with_status |
 | String| trigger_event_with_status| | If one or more status effect specified in trigger_event_status_filter is active when the entity jumps, this event will be triggered |
 
-
-
-
 ### badger:knockback
 
 Defines the settings applying knockback.
@@ -2791,9 +2791,6 @@ Defines the settings applying knockback.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | JSON Object| knockback| | Defines an offset, which defines the center point of falloff calculations. (Optional) |
-
-
-
 
 ### badger:knockback_resistance
 
@@ -2803,20 +2800,13 @@ Defines the settings for knock back resistance.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| affected_scale| | Defines how much a mob is affected by knock back. |
 
-
-
-
 ### badger:labelled_offsets
 
 A set of labelled positional offsets relative to the entity with this description. Used to define and identify specific points on the entity.
 
-
-
 ### badger:leap_destination
 
 Marks the entity as a potential destination for entities to leap to.
-
-
 
 ### badger:leash
 
@@ -2826,9 +2816,6 @@ Prevents the entity from getting too far from its spawn point.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| leash_range| | The maximum range that the entity can be from its tether point (spawn point). |
 | Decimal| return_range| | The range at which the entity will move to once it leaves its leash range. |
-
-
-
 
 ### badger:leash_on_stop
 
@@ -2840,20 +2827,18 @@ Prevents the entity from getting too far from where it last stopped.
 | Decimal| return_range| | The range at which the entity will move to once it leaves its leash range. |
 | Boolean| return_when_not_targeting| | If true, leashed entity will return when it is not targeting. |
 
-
-
-
 ### badger:loot
 
 Dictates the loot drops to spawn when the entity is destroyed.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| overrides| | The overridable loot tables this entity supports.<br/><h5><p id="name">name</p></h5>The override name to select the loot table.</br><br><h5><p id="table">table</p></h5>The loot table to use if selected</br><br> |
-| String| table| | The loot table used to determine the default potential rewards. |
+| **Type** | **Name**    | **Description**                                                                                   |
+|----------|-------------|---------------------------------------------------------------------------------------------------|
+| **Array**| **overrides**| The overridable loot tables supported by this entity.                                            |
+|          | name        | The name of the override used to select the loot table.                                          |
+|          | table       | The specific loot table to use if selected.                                                      |
+| **String**| **table**   | The loot table that determines the default potential rewards for this entity.                   |
 
-
-
+---
 
 ### badger:loot_collector
 
@@ -2866,28 +2851,26 @@ Enables this entity to collect loot.
 | Vector [a, b, c]| offset| | The loot collection destination offset. |
 | Decimal| radius| | The loot collection radius. |
 
-
-
-
 ### badger:lost_entity_recall_point
 
 Attribute that specify the minimum distance between an entity and a recall structure for the entity to be considered lost
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| String| alliance_rule_filter| | The alliance rule that an entity must match for the recall point to potentially recall this entity |
-| Integer| arrival_max_height_difference| | Maximum height difference between an recalled entity's arrival location and the recall point's location. |
-| Decimal| arrival_max_radius| | Max radius within which a recalled entity will arrive at. |
-| Decimal| arrival_min_radius| | Min radius within which a recalled entity will arrive at. |
-| Boolean| disable_influencing_during_channel| | If true, entities being recalled by this recall point will not be influencable during the channel. |
-| Boolean| include_in_combat| | If true, the recall point can recall entities that are enaged in combat. |
-| Decimal| min_entity_distance_from_hero| | The minimum distance between an entity and a hero (the hero should match the alliance rule) for the entity to be considered lost |
-| Decimal| min_recall_radius| | The minimum distance between an entity and this recall point for the entity to be considered lost |
-| String| recall_zone_requirement| | Specifies a zone requirement for recall (recalling from structures outside that zone will no longer work). |
-| JSON Object| tag_filter| | The tag filter used to determine if an entity could potentially be recalled to this recall point<br/><h5><p id="exclude_tags">exclude_tags</p></h5>Tags that an entity must not have for the recall point to potantially recall this entity</br><br><h5><p id="include_tags">include_tags</p></h5>Tags that an entity must have for the recall point to potentially recall this entity</br><br> |
+| **Type**       | **Name**                           | **Description**                                                                                                       |
+|----------------|------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| **String**     | **alliance_rule_filter**           | The alliance rule that an entity must match for the recall point to potentially recall this entity.                   |
+| **Integer**    | **arrival_max_height_difference**  | Maximum height difference between a recalled entity's arrival location and the recall point's location.               |
+| **Decimal**    | **arrival_max_radius**             | Maximum radius within which a recalled entity will arrive.                                                            |
+| **Decimal**    | **arrival_min_radius**             | Minimum radius within which a recalled entity will arrive.                                                            |
+| **Boolean**    | **disable_influencing_during_channel** | If true, entities being recalled by this recall point will not be influenced during the channel.                     |
+| **Boolean**    | **include_in_combat**              | If true, the recall point can recall entities that are engaged in combat.                                            |
+| **Decimal**    | **min_entity_distance_from_hero**  | The minimum distance between an entity and a hero (the hero should match the alliance rule) for the entity to be considered lost. |
+| **Decimal**    | **min_recall_radius**              | The minimum distance between an entity and this recall point for the entity to be considered lost.                   |
+| **String**     | **recall_zone_requirement**         | Specifies a zone requirement for recall; recalling from structures outside that zone will no longer work.            |
+| **JSON Object**| **tag_filter**                     | The tag filter used to determine if an entity could potentially be recalled to this recall point.                     |
+|                | **exclude_tags**                   | Tags that an entity must not have for the recall point to potentially recall this entity.                             |
+|                | **include_tags**                   | Tags that an entity must have for the recall point to potentially recall this entity.                                 |
 
-
-
+---
 
 ### badger:lure
 
@@ -2907,7 +2890,7 @@ Defines how the entity can lure other entities.
 | Integer| influenced_priority| | The priority threshold assigned to entities influenced by this lure. Determines whether the entities it influences can be overridden by other influencers. |
 | Decimal| influenced_reprioritization_timer| | The number of seconds this lure need to settle for before reprioritization occurs. |
 | Integer| influencer_priority| | The priority of this lure's influence. Determines whether it can influence already-influenced entities. |
-| Boolean| leash_to_line| | If true, affected mobs will be leashed to a *line* from the owner to the lure, rather than just the single point of the lure. Allows for attack-move behaviour. |
+| Boolean| leash_to_line| | If true, affected mobs will be leashed to a _line_ from the owner to the lure, rather than just the single point of the lure. Allows for attack-move behaviour. |
 | Decimal| lure_range| | The range at which entities can start to be lured. |
 | Decimal| max_speed_distance| | The distance from the entity's destination at which the maximum speed factor is applied. |
 | Decimal| max_speed_factor| | The multiplier applied to the speed of the lured units based on the distance from the entity's destination. |
@@ -2920,33 +2903,34 @@ Defines how the entity can lure other entities.
 | Boolean| sticky_assignment| | If true, entities influenced by this lure will remain assigned even when out of range. |
 | String| visual_alliance_rule_filter| | The alliance rule filter defining whether or not to the visualized influence range can seen by players on a given team. |
 
-
-
-
 ### badger:lured
 
 Defines settings for when this entity is lured.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| configurations| | Array of config overrides to use based on the lure's config ID.<br/><h5><p id="arrive_range">arrive_range</p></h5>When entities enter this range they will be unlured, if the lure is configured to release entities on arrival.</br><br><h5><p id="attack_move_range">attack_move_range</p></h5>How far away from the lure that the lured entity is allowed to attack move to targets.</br><br><h5><p id="config_id">config_id</p></h5>The config name to match with a lure for this config to be used</br><br><h5><p id="leash_range">leash_range</p></h5>How far away from the lure that the lured entity is allowed to be before it must return to the lure.</br><br><h5><p id="return_range">return_range</p></h5>The range from the lure the lured entity must move to when it's initially lured and whenever it leaves the leash range, before it's allowed to perform attacks again.</br><br> |
-| JSON Object| default_configuration| | Default settings for when this entity is lured.<br/><h5><p id="arrive_range">arrive_range</p></h5>When entities enter this range they will be unlured, if the lure is configured to release entities on arrival.</br><br><h5><p id="attack_move_range">attack_move_range</p></h5>How far away from the lure that the lured entity is allowed to attack move to targets.</br><br><h5><p id="leash_range">leash_range</p></h5>How far away from the lure that the lured entity is allowed to be before it must return to the lure.</br><br><h5><p id="return_range">return_range</p></h5>The range from the lure the lured entity must move to when it's initially lured and whenever it leaves the leash range, before it's allowed to perform attacks again.</br><br> |
-| String| resource_requirement| | The optional unlock the influencer requires to lure this entity. |
+| **Type**       | **Name**                     | **Description**                                                                                                                         |
+|----------------|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **configurations**           | Array of configuration overrides used based on the lure's configuration ID.                                                            |
+|                | arrive_range                 | The range within which entities will be unlured if the lure is set to release entities upon arrival.                                    |
+|                | attack_move_range            | The maximum distance from the lure within which the lured entity can attack move to targets.                                            |
+|                | config_id                    | The configuration name that matches with a lure for this specific configuration to be applied.                                          |
+|                | leash_range                  | The distance from the lure that the lured entity is allowed to be before it must return to the lure.                                   |
+|                | return_range                 | The distance from the lure that the lured entity must move to when initially lured or whenever it exits the leash range before attacking again. |
+| **JSON Object**| **default_configuration**     | Default settings applied when this entity is lured.                                                                                     |
+|                | arrive_range                 | The range within which entities will be unlured if the lure is set to release entities upon arrival.                                    |
+|                | attack_move_range            | The maximum distance from the lure within which the lured entity can attack move to targets.                                            |
+|                | leash_range                  | The distance from the lure that the lured entity is allowed to be before it must return to the lure.                                   |
+|                | return_range                 | The distance from the lure that the lured entity must move to when initially lured or whenever it exits the leash range before attacking again. |
+| **String**     | **resource_requirement**      | The optional unlock required by the influencer to lure this entity.                                                                     |
 
-
-
+---
 
 ### badger:map3_selectable
 
 Map Entity (for World Map 3) icon on the map screen will be selectable by the cursor
 
-
-
 ### badger:map3_solo_play_hidden
 
 Map Entity (for World Map 3) will be hidden when in a solo play game
-
-
 
 ### badger:map3_tooltip
 
@@ -2959,9 +2943,6 @@ Entity will have an icon on the map screen
 | Boolean| is_persistent| | persistent flag for map tooltip |
 | String| title| | title for map tooltip |
 
-
-
-
 ### badger:map3_tooltip_action
 
 Entity will have an icon on the map screen
@@ -2969,9 +2950,6 @@ Entity will have an icon on the map screen
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| action| | id for the action performed on the tooltip |
-
-
-
 
 ### badger:map3_tooltip_audio
 
@@ -2984,9 +2962,6 @@ audio for detailed map icon tooltip
 | String| event_type| | Audio type for the event. Can be 'Narrative' or 'Music' |
 | Decimal| selection_time| | [Optional] How long the icon must be selected for the audio event to trigger |
 
-
-
-
 ### badger:map3_tooltip_extended
 
 text for further detailed map icon tooltip
@@ -2997,9 +2972,6 @@ text for further detailed map icon tooltip
 | String| icon| | additional info icon for map tooltip |
 | String| priority| | dictate order that extended tooltips appear |
 
-
-
-
 ### badger:map_controller
 
 Entity will have a map entity on the world map
@@ -3009,9 +2981,6 @@ Entity will have a map entity on the world map
 | List| initial_key_values| | The initial key/values this map controller will have. |
 | List| initial_team_key_values| | The initial team-specific key/values this map controller will have. |
 
-
-
-
 ### badger:map_icon_revealed
 
 Entity will have an icon that is visible on the map screen
@@ -3020,20 +2989,13 @@ Entity will have an icon that is visible on the map screen
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Boolean| teammates_only| | restrict visibility to team |
 
-
-
-
 ### badger:meta_aabb
 
 Adding this description to an archetype will indicate to our structure editor it has an editable AABB.
 
-
-
 ### badger:mob_alliance
 
 Defines whether or not the village entity is a mob alliance village.
-
-
 
 ### badger:modifier_accuracy_max_range
 
@@ -3047,9 +3009,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_accuracy_min_range
 
 Buffs an entity's stats.
@@ -3061,9 +3020,6 @@ Buffs an entity's stats.
 | Decimal| pre_add| | Amount to add after pre multiply values, but before any other buff values. |
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
-
-
-
 
 ### badger:modifier_aimable_range
 
@@ -3077,19 +3033,21 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_area_overlays_range
 
 Buffs an area overlay's range.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| modifiers| | List of modifications to make to area overlays.<br/><h5><p id="post_add">post_add</p></h5>Amount to add after all other modifier values.</br><br><h5><p id="post_multiply">post_multiply</p></h5>Percentage to multiply the value by after all pre modifier values are applied.</br><br><h5><p id="pre_add">pre_add</p></h5>Amount to add after pre multiply values, but before any other modifier values.</br><br><h5><p id="pre_multiply">pre_multiply</p></h5>Percentage to multiply the value by before any other modifier values are applied.</br><br><h5><p id="shape">shape</p></h5>The area overlays shape to buff.</br><br><h5><p id="type">type</p></h5>The area overlays type to buff.</br><br> |
+| **Type** | **Name**     | **Description**                                                                                         |
+|----------|--------------|---------------------------------------------------------------------------------------------------------|
+| **Array**| **modifiers**| List of modifications to apply to area overlays.                                                       |
+|          | post_add     | Amount to add after all other modifier values.                                                         |
+|          | post_multiply | Percentage to multiply the value by after all pre-modifier values are applied.                         |
+|          | pre_add      | Amount to add after pre-multiply values but before any other modifier values.                          |
+|          | pre_multiply  | Percentage to multiply the value by before any other modifier values are applied.                      |
+|          | shape        | The shape of the area overlay to buff.                                                                  |
+|          | type         | The type of the area overlay to buff.                                                                   |
 
-
-
+---
 
 ### badger:modifier_autostep
 
@@ -3103,9 +3061,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_block_revert
 
 Reverts any changed blocks to the original version
@@ -3113,9 +3068,6 @@ Reverts any changed blocks to the original version
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| duration_percentage| | What percentage of the time this block revert process should take |
-
-
-
 
 ### badger:modifier_block_swap
 
@@ -3129,9 +3081,6 @@ Converts any listed blocks to a modified version
 | JSON Object| modifiers| | Key value pairs that describe which keywords should be replaced with other strings in block names |
 | Boolean| top_to_bottom| | Changes the order of block conversion to top to bottom |
 
-
-
-
 ### badger:modifier_build_speed
 
 Buffs an entity's stats.
@@ -3143,9 +3092,6 @@ Buffs an entity's stats.
 | Decimal| pre_add| | Amount to add after pre multiply values, but before any other buff values. |
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
-
-
-
 
 ### badger:modifier_cooldown
 
@@ -3159,9 +3105,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_damage
 
 Buffs an entity's stats.
@@ -3174,9 +3117,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_damage_type
 
 Buffs an entity's damage types.
@@ -3184,9 +3124,6 @@ Buffs an entity's damage types.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| types| | List of the damage types to add. |
-
-
-
 
 ### badger:modifier_deconstruction_speed
 
@@ -3200,9 +3137,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_fall_distance
 
 Buffs an entity's stats.
@@ -3214,9 +3148,6 @@ Buffs an entity's stats.
 | Decimal| pre_add| | Amount to add after pre multiply values, but before any other buff values. |
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
-
-
-
 
 ### badger:modifier_gravity
 
@@ -3230,9 +3161,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_health_regen
 
 The amount of health that regenerates per second
@@ -3243,9 +3171,6 @@ The amount of health that regenerates per second
 | Decimal| health_regen_amount| | The amount of HP (per second) the entity can regenerate |
 | Decimal| regen_cooldown_seconds| | The cooldown between each health regeneration |
 | Boolean| regen_while_suspended| | Whether or not the entity regens health while suspended |
-
-
-
 
 ### badger:modifier_jump_height
 
@@ -3259,9 +3184,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_knockback_force
 
 Buffs an entity's stats.
@@ -3273,9 +3195,6 @@ Buffs an entity's stats.
 | Decimal| pre_add| | Amount to add after pre multiply values, but before any other buff values. |
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
-
-
-
 
 ### badger:modifier_knockback_resistance
 
@@ -3289,9 +3208,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_max_health
 
 Buffs an entity's stats.
@@ -3303,9 +3219,6 @@ Buffs an entity's stats.
 | Decimal| pre_add| | Amount to add after pre multiply values, but before any other buff values. |
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
-
-
-
 
 ### badger:modifier_movement_speed
 
@@ -3319,9 +3232,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_projectile_payload
 
 Defines a list of entities to spawn for a projectile.
@@ -3330,9 +3240,6 @@ Defines a list of entities to spawn for a projectile.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | List| entity_ids| | The list of entities to spawn. |
 
-
-
-
 ### badger:modifier_resistance
 
 Buffs an entity's damage resistances.
@@ -3340,9 +3247,6 @@ Buffs an entity's damage resistances.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| resistances| | List of the damage resistances to add. |
-
-
-
 
 ### badger:modifier_saddle
 
@@ -3354,9 +3258,6 @@ Granted as a buff to indicated when an entity is seeking out mounts or riders
 | Decimal| mount_range| 1.0| The minimum distance that an entity with a Saddle buff must be before activating a mount action |
 | Decimal| search_range| 10.0| The maximum distance that an entity with a Saddle buff will search for a mount or rider |
 
-
-
-
 ### badger:modifier_size
 
 Controls the size of this entity
@@ -3364,9 +3265,6 @@ Controls the size of this entity
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| scale| | The scaling factor for the size of this entity |
-
-
-
 
 ### badger:modifier_stamina_depletion
 
@@ -3380,9 +3278,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_stamina_regen
 
 Buffs an entity's stats.
@@ -3394,9 +3289,6 @@ Buffs an entity's stats.
 | Decimal| pre_add| | Amount to add after pre multiply values, but before any other buff values. |
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
-
-
-
 
 ### badger:modifier_stamina_regen_cooldown
 
@@ -3410,9 +3302,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_targeting_range
 
 Buffs an entity's stats.
@@ -3424,9 +3313,6 @@ Buffs an entity's stats.
 | Decimal| pre_add| | Amount to add after pre multiply values, but before any other buff values. |
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
-
-
-
 
 ### badger:modifier_wind_up
 
@@ -3440,9 +3326,6 @@ Buffs an entity's stats.
 | Decimal| pre_multiply| | Percentage to multiply the value by before any buff values are applied. |
 | Boolean| scalable| | More performance costly, but allows this modifier's effect to be scaled up or down. An example would be ramping-down a status effect as it ends. |
 
-
-
-
 ### badger:modifier_zone_size
 
 Controls the zone size of this entity
@@ -3450,9 +3333,6 @@ Controls the zone size of this entity
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| scale| | The scaling factor for the zone size of this entity |
-
-
-
 
 ### badger:mount
 
@@ -3465,9 +3345,6 @@ Indicates that an entity can be mounted
 | Array| include_tags| | The tags required to be on an entity for an effect to trigger. |
 | String| unlock_requirement| | Name of the unlock resource needed to unlock this as a player mount. If not defined, the mount will not appear as a player mount. |
 
-
-
-
 ### badger:move_on_spawn
 
 Makes the entity move after spawn
@@ -3476,9 +3353,6 @@ Makes the entity move after spawn
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Boolean| destroy_on_arrival| | When set to true, the entity will destroy itself after it has travelled to the maximum move distance |
 | Decimal| movement_distance| | How far forward the entity will travel after spawn |
-
-
-
 
 ### badger:movement
 
@@ -3492,22 +3366,46 @@ Behavior modifications for movement
 | Decimal| swim_speed| | How fast this entity moves in meters (cubes) per second while touching water. If left undefined, will default to matching move_speed. |
 | Decimal| turn_rate| | Speed at which the entity will rotate to face a new direction, in degrees per second. |
 
-
-
-
 ### badger:movement_speed_camera_effects
 
 Defines FOV and camera distance effects that scale off of player move speed.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| camera_distance| | Defines effects on the camera follow distance caused by movement speed bonuses.<br/><h5><p id="effect_strength">effect_strength</p></h5>Strength of effect. With a value of 1, adds 1% effect for every 1% of move speed above default.</br><br><h5><p id="enter_easing_function">enter_easing_function</p></h5>Easing function used for transitions away from the default. Options are: linear, spring, quad, cubic, quart, quint, sine, expo, circ, bounce, or back. Most of these need to be prefixed with in_, out_ or in_out_. Ex. 'in_out_sine'</br><br><h5><p id="enter_time">enter_time</p></h5>Time the transition takes when moving away from the default, i.e. 1.0x</br><br><h5><p id="exit_easing_function">exit_easing_function</p></h5>Easing function used for transitions returning to default. Options are: linear, spring, quad, cubic, quart, quint, sine, expo, circ, bounce, or back. Most of these need to be prefixed with in_, out_ or in_out_. Ex. 'in_out_sine'</br><br><h5><p id="exit_time">exit_time</p></h5>Time the transition takes when moving toward the default, i.e. 1.0x</br><br><h5><p id="max_multiplier">max_multiplier</p></h5>Maximum multiplier value that can be reached due to lower than standard movespeed. Recommeded value [>=1]</br><br><h5><p id="min_multiplier">min_multiplier</p></h5>Minimum multiplier value that can be reached due to lower than standard movespeed. Recommended value [0-1]</br><br> |
-| JSON Object| field_of_view| | Defines effects on the field of view caused by movement speed bonuses. Effects are a multiplier on the base value.<br/><h5><p id="effect_strength">effect_strength</p></h5>Strength of effect. With a value of 1, adds 1% effect for every 1% of move speed above default.</br><br><h5><p id="enter_easing_function">enter_easing_function</p></h5>Easing function used for transitions away from the default. Options are: linear, spring, quad, cubic, quart, quint, sine, expo, circ, bounce, or back. Most of these need to be prefixed with in_, out_ or in_out_. Ex. 'in_out_sine'</br><br><h5><p id="enter_time">enter_time</p></h5>Time the transition takes when moving away from the default, i.e. 1.0x</br><br><h5><p id="exit_easing_function">exit_easing_function</p></h5>Easing function used for transitions returning to default. Options are: linear, spring, quad, cubic, quart, quint, sine, expo, circ, bounce, or back. Most of these need to be prefixed with in_, out_ or in_out_. Ex. 'in_out_sine'</br><br><h5><p id="exit_time">exit_time</p></h5>Time the transition takes when moving toward the default, i.e. 1.0x</br><br><h5><p id="max_multiplier">max_multiplier</p></h5>Maximum multiplier value that can be reached due to lower than standard movespeed. Recommeded value [>=1]</br><br><h5><p id="min_multiplier">min_multiplier</p></h5>Minimum multiplier value that can be reached due to lower than standard movespeed. Recommended value [0-1]</br><br> |
-| Decimal| max_fov_degrees| | Extra safeguard parameter to account for variation in FOV due to user settings. FOV will be clamped within this range regardless of multiplier. |
-| Decimal| min_fov_degrees| | Extra safeguard parameter to account for variation in FOV due to user settings. FOV will be clamped within this range regardless of multiplier. |
+| **Type**       | **Name**                      | **Description**                                                                                                                                                          |
+|----------------|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **camera_distance**           | Defines effects on the camera follow distance caused by movement speed bonuses.                                                                                         |
+|                | **effect_strength**           | Strength of effect. With a value of 1, adds 1% effect for every 1% of move speed above default.                                                                         |
+|                | **enter_easing_function**     | Easing function for transitions away from the default. Options include: linear, spring, quad, cubic, quart, quint, sine, expo, circ, bounce, or back. Prefix with in_, out_, or in_out_ (e.g., 'in_out_sine'). |
+|                | **enter_time**                | Duration of the transition when moving away from the default (e.g., 1.0x).                                                                                            |
+|                | **exit_easing_function**      | Easing function for transitions returning to default, with the same options as the enter easing function.                                                                |
+|                | **exit_time**                 | Duration of the transition when moving towards the default (e.g., 1.0x).                                                                                             |
+|                | **max_multiplier**            | Maximum multiplier value due to lower than standard move speed. Recommended value [>= 1].                                                                             |
+|                | **min_multiplier**            | Minimum multiplier value due to lower than standard move speed. Recommended value [0-1].                                                                               |
 
+---
 
+#### **Field of View Effects**
 
+| **Type**       | **Name**                      | **Description**                                                                                                                                                          |
+|----------------|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **field_of_view**             | Defines effects on the field of view caused by movement speed bonuses. Effects are a multiplier on the base value.                                                     |
+|                | **effect_strength**           | Strength of effect. With a value of 1, adds 1% effect for every 1% of move speed above default.                                                                         |
+|                | **enter_easing_function**     | Easing function for transitions away from the default. Options include: linear, spring, quad, cubic, quart, quint, sine, expo, circ, bounce, or back. Prefix with in_, out_, or in_out_ (e.g., 'in_out_sine'). |
+|                | **enter_time**                | Duration of the transition when moving away from the default (e.g., 1.0x).                                                                                            |
+|                | **exit_easing_function**      | Easing function for transitions returning to default, with the same options as the enter easing function.                                                                |
+|                | **exit_time**                 | Duration of the transition when moving towards the default (e.g., 1.0x).                                                                                             |
+|                | **max_multiplier**            | Maximum multiplier value due to lower than standard move speed. Recommended value [>= 1].                                                                             |
+|                | **min_multiplier**            | Minimum multiplier value due to lower than standard move speed. Recommended value [0-1].                                                                               |
+
+---
+
+#### **FOV Safeguards**
+
+| **Type**       | **Name**                      | **Description**                                                                                                                                                          |
+|----------------|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Decimal**    | **max_fov_degrees**          | Extra safeguard parameter to account for variation in FOV due to user settings. The FOV will be clamped within this range regardless of multiplier.                     |
+| **Decimal**    | **min_fov_degrees**          | Extra safeguard parameter to account for variation in FOV due to user settings. The FOV will be clamped within this range regardless of multiplier.                     |
+
+---
 
 ### badger:multistep_buildable
 
@@ -3541,19 +3439,13 @@ Defines the entity as a multi segmented buildable.
 | String| stepup_name| | (Optional) Name of step-up mid section archetype |
 | String| style| | How is this multipart laid out 'floating' or 'grounded'? 'floating_follow_terrain' can be used for a connected multistep buildable that attempts to avoid intersecting terrain. |
 
-
-
-
-### badger:music_emitter_states
+### badger:music_emitter_states (BP)
 
 Defines the current state of this music emitter entity.
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | List| badger:music_emitter_states| | A list of the current states this emitter can be in. This must match the resource_pack music_states for badger:music_2d_emitter. |
-
-
-
 
 ### badger:navigation
 
@@ -3569,9 +3461,6 @@ Description of how this entity can navigate.
 | Decimal| max_distance_to_ignore_space_occupancy| | The max distance to ignore crowd avoidance |
 | Decimal| max_height_to_ignore_space_occupancy| | The max height to ignore crowd avoidance |
 
-
-
-
 ### badger:nbt_decorator
 
 Defines an NBT to place into the world.
@@ -3579,9 +3468,6 @@ Defines an NBT to place into the world.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| nbt_file| | Name of the nbt file to place. |
-
-
-
 
 ### badger:nbt_parts
 
@@ -3593,14 +3479,9 @@ Defines NBTs to place in a certain location on a structure.
 | String| locator| | Name of the locator at which the nbt is to be placed. |
 | String| nbt_file| | Name of the nbt file to place. |
 
-
-
-
 ### badger:near_death_telemetry_tracking
 
 Defines the settings used when tracking telemetry for near death experiences.
-
-
 
 ### badger:negate_status
 
@@ -3610,9 +3491,6 @@ Defines a set of status that this status will negate.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| negated_status| | List of negated status names (strings). |
 
-
-
-
 ### badger:netherrack_spreading
 
 Describes how far netherrack and denether spreaders will travel from the source entity.
@@ -3621,9 +3499,6 @@ Describes how far netherrack and denether spreaders will travel from the source 
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| denether_spreader_distance| | Manhattan distance that denether spreaders will travel from the outer edges of the source entity. |
 | Decimal| nether_spreader_distance| | Manhattan distance that netherrack spreaders will travel from the outer edges of the source entity. |
-
-
-
 
 ### badger:objective_health_bar
 
@@ -3635,9 +3510,6 @@ Causes the entity's health to appear on a dedicated health bar on the player's s
 | Integer| priority| | Higher priority will occupy the healthbar over lower priority entities. |
 | Boolean| show_at_full_health| | Whether the health bar should always be show neven if it's at 100%. |
 | String| type| | The type of the health bar. This affects the icon and the text of the healthbar. |
-
-
-
 
 ### badger:offline_traits
 
@@ -3653,46 +3525,43 @@ This allows an entity to be turned offline, and determines what components get d
 | Boolean| visualize_constructing| true| When true, constructing structures will be visualized with a yellow box around them. |
 | Array| visualize_offline| false| When true, offline structures will be visualized with a yellow box around them. |
 
-
-
-
 ### badger:omit_blocks_outline
 
 This flags a buildable entity to not render with an outline.
-
-
 
 ### badger:omit_team_id
 
 This flags a buildable entity to not render with a team ID, which makes it appear like normal terrain.
 
-
-
 ### badger:owned_territory
 
 the zone of owned territory created by building this structure
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| override_localization_for_prevent_overlap_tags| | Add overrides for localization strings per tag to display building error messages for the overlapped zone type.<br/><h5><p id="localizationId">localizationId</p></h5>The localized error message ID.</br><br><h5><p id="tag">tag</p></h5>The tag to override the error message.</br><br> |
-| Array| prevent_overlap_tag_set| | The tags that will prevent a entity's ZoC from overlapping |
-| Decimal| village_gen_zone_control_score_threshold| | This threshold is subtracted from the zone control score (0.0 to 1.0 value) while scoring buildable options during village generation. |
-| Boolean| village_zone| | Whether structures placed in this zone should be become owned by the same village that owns this structure. |
-| Integer| zone| | side length in blocks of owned zone area created by building this structure |
-
-
-
+| **Category**              | **Type**       | **Name**                                          | **Description**                                                                                                                 |
+|---------------------------|----------------|---------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| 🏷️ **Localization**       | **Array**      | **override_localization_for_prevent_overlap_tags**| Overrides for localization strings per tag to show building error messages for overlapped zone types.                         |
+|                           |                | **localizationId**                                | The localized error message ID.                                                                                               |
+|                           |                | **tag**                                          | The tag to override the error message.                                                                                         |
+| 🚫 **Overlap Prevention**  | **Array**      | **prevent_overlap_tag_set**                       | Tags that prevent an entity's zone of control (ZoC) from overlapping.                                                         |
+| 📏 **Zone Control Score**  | **Decimal**    | **village_gen_zone_control_score_threshold**      | This threshold is subtracted from the zone control score (0.0 to 1.0) when scoring buildable options during village generation. |
+| 🏡 **Ownership**          | **Boolean**    | **village_zone**                                  | Determines if structures placed in this zone are owned by the same village that owns this structure.                          |
+| 🔲 **Zone Dimensions**     | **Integer**    | **zone**                                         | Side length in blocks of the owned zone area created by building this structure.                                             |
 
 ### badger:persistent_entity_influence_source
 
 Provides a list of sources of additive or subtractive PERSISTENT influence for an entity.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| List| sensors| | List of persistent influence for entity sources.<br/><h5><p id="damage_receiver_filter">damage_receiver_filter</p></h5>Track particular types of entities</br><br><h5><p id="alliance_rule_filter">alliance_rule_filter</p></h5>Team Alliance rules for this tracking</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Excule tags for entities</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for entities</br><br><h5><p id="multiplier">multiplier</p></h5>The weight of the heat stamp for this entity will persist at</br><br><h5><p id="propagation_decay">propagation_decay</p></h5>The propagation/spread decay of the heat stamp for this entity source</br><br> |
+| **Type**   | **Name**                           | **Description**                                                                                                                                                      |
+|------------|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **List**   | **sensors**                        | List of persistent influences for entity sources.                                                                                                                   |
+|            | **damage_receiver_filter**         | Track particular types of entities.                                                                                                                                 |
+|            | **alliance_rule_filter**           | Team alliance rules for this tracking.                                                                                                                               |
+|            | **exclude_tags**                   | Exclude tags for entities.                                                                                                                                         |
+|            | **include_tags**                   | Include tags for entities.                                                                                                                                         |
+|            | **multiplier**                     | The weight of the heat stamp for this entity will persist at.                                                                                                       |
+|            | **propagation_decay**              | The propagation/spread decay of the heat stamp for this entity source.                                                                                              |
 
-
-
+---
 
 ### badger:physics
 
@@ -3706,9 +3575,6 @@ Defines whether the entity has physics properties.
 | Decimal| water_drag| 0.1| Slows down an object velocity. |
 | Decimal| water_submerged_ratio| 0.75| How deep a character is submerged when floating in deep water (0.0 means not submerged at all, 0.5 is roughly waist height, 1.0 is completely sumberged). |
 
-
-
-
 ### badger:pop_cap_anchor
 
 This allows an entity to be used as a frame of reference for heuristic calculations when determining which pop capped entities to cull. Can also define a number of units nearby that will not be culled by the pop cap system.
@@ -3720,25 +3586,17 @@ This allows an entity to be used as a frame of reference for heuristic calculati
 | Positive Integer| min_pop_cap| | The number of units near the anchor that will be exempt from pop cap culling. |
 | Positive Integer| min_pop_cap_range| | The maximum range for cull exemption. |
 
-
-
-
 ### badger:pop_capped
 
 Whether or not this entity counts for team popcap.
 
-
-
-### badger:presentation_event
+### badger:presentation_event (_unsure if good_)
 
 Defines the triggers this entity can respond to, and the entities to spawn (with optional probabilities for success).
 
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| spawn_entity| | If the handler is a single string, then it's spawning only a single entity with 100% chance of success. |
-
-
-
 
 ### badger:preview_snapping
 
@@ -3750,9 +3608,6 @@ Causes a buildable preview to snap to nearby snap-point structures.
 | Decimal| mouse_snap_range| | How far away the structure will snap from using a mouse. |
 | Decimal| snap_to_top| | When true, snaps the structure to the tops of other structures rather than the bottom. |
 
-
-
-
 ### badger:projectile
 
 Defines the entity's projectile properties.
@@ -3762,9 +3617,6 @@ Defines the entity's projectile properties.
 | Decimal| horizontal_speed| | The projectiles speed in meters per second across the terrain. |
 | Decimal| min_flight_time| | The minimum time in seconds that a projectile should take to reach it's target. This will lower the ground speed in order to make the timing match. |
 
-
-
-
 ### badger:projectile_physics
 
 Defines the entity's projectile physics properties.
@@ -3773,14 +3625,9 @@ Defines the entity's projectile physics properties.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| gravity| | The projectile gravity in meters per second squared. |
 
-
-
-
 ### badger:pvp_win_condition
 
 Flag used to track victory-critical entities. Currently used in PvP to mark the player's main base.
-
-
 
 ### badger:queueing
 
@@ -3795,9 +3642,6 @@ Defines this entity's ability to queue up entities.
 | Array| queue_heads| | The labelled positions (relative to this entity) where influenced entities will go and wait. The number of positions determines the number of entities that can simultaneously be at the head of the queue. |
 | Integer| queue_size| | The number of entities that can queue up. -1 means infinite queue size. |
 
-
-
-
 ### badger:quick_direct_aim
 
 Defines any parameters used to spawn a quick direct order.
@@ -3805,9 +3649,6 @@ Defines any parameters used to spawn a quick direct order.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| distance| | Defines the distance ahead of the player to place the destination. |
-
-
-
 
 ### badger:ranged_target
 
@@ -3817,9 +3658,6 @@ Defines where on the entity ranged attacks should aim for
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| target_positions| | The list of local positions where ranged attacks should land on this entity |
 
-
-
-
 ### badger:recall_prevention
 
 Tunable timers for entities to be prevent being recalled by other players during actions.
@@ -3828,14 +3666,9 @@ Tunable timers for entities to be prevent being recalled by other players during
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| on_lured_disabled_duration| | Duration in seconds for the mob to be unrecallable after being directed. |
 
-
-
-
 ### badger:recallable_entity
 
 Flag component that marks entity as recallable
-
-
 
 ### badger:refundable
 
@@ -3845,9 +3678,6 @@ Marks this unit as refundable, and gives their priority
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Integer| priority| | Refund priority. Lower values will be refunded first |
 | Decimal| refund_multiplier| | How much of the units cost is refunded |
-
-
-
 
 ### badger:refunding_spawner
 
@@ -3860,10 +3690,7 @@ A spawner that can be used to refund mobs
 | Array| exclude_tags| | Forbidden tags on entities to refund. |
 | Array| include_tags| | Required tags on entities to refund. |
 
-
-
-
-### badger:removal_time
+### badger:removal_time (possible _Duplicate_)
 
 destroys an entity after a given period of time
 
@@ -3873,9 +3700,6 @@ destroys an entity after a given period of time
 | Boolean| sync_presentation_event| | Whether or not the event should be synced over the server, or if it should be local only |
 | Decimal| time| | Amount of time in seconds before the entity is destroyed |
 
-
-
-
 ### badger:reports_buildable_state
 
 Defines the settings for what state is reported when placing buildables.
@@ -3884,14 +3708,9 @@ Defines the settings for what state is reported when placing buildables.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| reports_state| | Defines the state to report. |
 
-
-
-
 ### badger:reports_hit_reaction
 
 Whether or not this entity reports hit reactions for visual feedback.
-
-
 
 ### badger:reset_heartbeat_in_range
 
@@ -3901,19 +3720,16 @@ An entity with this component will prevent other entities in range of it from de
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| range| | The range that prevents entities from despawning due to heartbeat. |
 
-
-
-
 ### badger:resist_status
 
 Defines entity's ability to resist being affected by status effects.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| | JSON Object| | status_effect_name<br/><h5><p id="resistance_persist_time">resistance_persist_time</p></h5>Defines how long the status effect will be blocked from reactivating after ending. A value of -1 allows the status effect to be refreshed even before the active effect ends.</br><br><h5><p id="resisted">resisted</p></h5>Sets whether or not this status effect is resisted completely.</br><br><h5><p id="time">time</p></h5>Sets how long this status effect lasts for, in seconds.</br><br> |
-
-
-
+| **Type**       | **Name**              | **Description**                                                                                                        |
+|----------------|-----------------------|------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object**| **status_effect_name** | Defines the name of the status effect and its associated properties.                                                   |
+|                | resistance_persist_time| Specifies the duration (in seconds) that the status effect is blocked from reactivating after it ends. A value of -1 allows the status effect to be refreshed before the current effect ends. |
+|                | resisted               | Indicates whether this status effect is completely resisted.                                                           |
+|                | time                   | Sets the duration (in seconds) for how long this status effect will last.                                              |
 
 ### badger:resource_cost_multiplier
 
@@ -3924,19 +3740,15 @@ This value scales resource costs for the player it is attached to, including bui
 | String| building_cost_multiplier| | The multiplier that is applied to all building costs, increasing it or lowering it. Default value 1.0. |
 | String| spawning_cost_multiplier| | The multiplier that is applied to all mob spawn costs, increasing it or lowering it. Default value 1.0. |
 
-
-
-
 ### badger:resource_modifier
 
 Modify the Pop Cap for a list of resources
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| modifiers| | Key value pairs that describe which resources we are modifing<br/><h5><p id="amount">amount</p></h5>The amount to modify the resource cap by.</br><br><h5><p id="resource">resource</p></h5>The name of the resource to modify</br><br> |
-
-
-
+| **Type** | **Name**    | **Description**                                                                 |
+|----------|-------------|---------------------------------------------------------------------------------|
+| **Array** | **modifiers** | Key-value pairs that describe which resources are being modified.               |
+|          | amount      | The amount by which to modify the resource cap.                                   |
+|          | resource    | The name of the resource to be modified.                                          |
 
 ### badger:resource_trader
 
@@ -3946,21 +3758,20 @@ Marks this entity as a place to exchange resources for other resources.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| successful_resource_trade_trigger| | The trigger event to send when a successful resource trade is made using the resource trader |
 
-
-
-
 ### badger:respawn_point
 
 Makes this entity act as a respawn point for players.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| String| alliance_rule| | Alliance rule tag name. |
-| String| player_respawned_trigger| | The trigger event to send when a player respawns at a respawn point |
-| JSON Object| spawn_blocking| | Settings to control what blocks a spawn point<br/><h5><p id="blocking_alliance_rule">blocking_alliance_rule</p></h5>The Alliance rule tag name for checking respawn blocking.</br><br><h5><p id="blocking_radius">blocking_radius</p></h5>The radius around the respawn point to check for entities potentially blocking respawning</br><br><h5><p id="tag_filter">tag_filter</p></h5>The tag filter used to determine if an entity should block a respawn point</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>Array of tags to exlucde for entities blocking respawn points</br><br><h5><p id="include_tags">include_tags</p></h5>Array of tags required for entities blocking respawn points</br><br> |
-
-
-
+| **Type**       | **Name**                   | **Description**                                                                                             |
+|----------------|----------------------------|-------------------------------------------------------------------------------------------------------------|
+| **String**     | **alliance_rule**           | The tag name that defines the alliance rule.                                                                |
+| **String**     | **player_respawned_trigger**| The event trigger to send when a player respawns at a respawn point.                                         |
+| **JSON Object**| **spawn_blocking**          | Settings that control what blocks a respawn point.                                                          |
+|                | blocking_alliance_rule      | The alliance rule tag name used to check for respawn blocking.                                               |
+|                | blocking_radius             | The radius around the respawn point used to check for entities that may block respawning.                    |
+|                | tag_filter                  | The tag filter used to determine whether an entity should block a respawn point.                             |
+|                | exclude_tags                | An array of tags to exclude from entities that block respawn points.                                         |
+|                | include_tags                | An array of tags that must be present for entities to block respawn points.                                  |
 
 ### badger:rewards
 
@@ -3969,9 +3780,6 @@ states what rewards will be granted when this entity is created.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| reward| | The items that will be awarded to player when entity is created. |
-
-
-
 
 ### badger:rider
 
@@ -3982,26 +3790,17 @@ Marks an entity as one that can ride on mounts.
 | Array| exclude_tags| | The tags required to NOT be on an entity for an effect to trigger. |
 | Array| include_tags| | The tags required to be on an entity for an effect to trigger. |
 
-
-
-
 ### badger:scriptable_buildable_spawner
 
 Denotes whether or not this entity can have its spawner settings overwritten by scripts.
-
-
 
 ### badger:server_block_source_removal
 
 Remove the BlockSourceComponent because this entity doesn't need one.
 
-
-
 ### badger:show_debug_health
 
 Show the Debug Health of the entity
-
-
 
 ### badger:spawn_costs
 
@@ -4012,14 +3811,9 @@ In cases where it could cost to use this entity this will be cost.
 | Array| costs| | The items that will be deducted from the player when this entity is spawned. |
 | Array| tickets| | The ticket type that will be deducted from the player or team when this entity is spawned. |
 
-
-
-
 ### badger:spawn_tracking
 
 Dictates whether this entity has its spawning tracked.
-
-
 
 ### badger:spawner_add_loot_override
 
@@ -4029,9 +3823,6 @@ Units spawned from this spawner will utilize an override loot table.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | List| name| | The override type name (NOT a loot table ID). This should resolve to a loot table on the entity. |
 
-
-
-
 ### badger:spawner_add_tags
 
 Tags added on top of entities existing tags spawned by this spawner.
@@ -4040,23 +3831,32 @@ Tags added on top of entities existing tags spawned by this spawner.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| tags| | Additional tags to be added to the spawned entity. |
 
-
-
-
 ### badger:spawner_rules
 
 Defines the rules for when or where to spawn entities.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| JSON Object| block_type_rule| | Defines optional block type spawner rule.<br/><h5><p id="valid_types">valid_types</p></h5>Defines a list of valid block types names to spawn entities on.</br><br> |
-| JSON Object| bsharp_rule| | Defines optional bSharp global variable spawner rule.<br/><h5><p id="value">value</p></h5>Defines the value of the global variable that causes the spawner to stop spawning.</br><br><h5><p id="variable">variable</p></h5>Defines name of the bSharp global variable.</br><br> |
-| JSON Object| distance_rule| | Defines optional distance spawner rule.<br/><h5><p id="distance_data">distance_data</p></h5>Defines optional entity distance rule.</br><br><h5><p id="alliance_rule">alliance_rule</p></h5>Defines the alliance rule of an entity that can prevent spawning.</br><br><h5><p id="max_distance">max_distance</p></h5>Defines the distance that entities have to be within before the spawner can start spawning.</br><br><h5><p id="min_distance">min_distance</p></h5>Defines the distance that entities cannot be within before the spawner can start spawning.</br><br><h5><p id="tag_filter">tag_filter</p></h5>filter object</br><br><h5><p id="exclude_tags">exclude_tags</p></h5>list of exclude tags</br><br><h5><p id="include_tags">include_tags</p></h5>list of include tags</br><br><h5><p id="village_bounds_distance_data">village_bounds_distance_data</p></h5>Defines optional village bounds distance spawner rule.</br><br><h5><p id="destruction_spawn_delay">destruction_spawn_delay</p></h5>Defines the duration of time waited after the destruction of a village in range before applying the isDestroyed rule.</br><br><h5><p id="horde_names">horde_names</p></h5>Defines the hordes to check. Do not define to check all villages of any horde.</br><br><h5><p id="is_destroyed">is_destroyed</p></h5>Defines if this rule only applies to destroyed villages. Do not define to check both alive and destroyed villages.</br><br><h5><p id="max_distance">max_distance</p></h5>Defines the padding from village bounds the spawner can start spawning.</br><br><h5><p id="min_distance">min_distance</p></h5>Defines the padding from village bounds the spawner cannot be in.</br><br><h5><p id="village_distance_data">village_distance_data</p></h5>Defines optional village distance spawner rule.</br><br><h5><p id="destruction_spawn_delay">destruction_spawn_delay</p></h5>Defines the duration of time waited after the destruction of a village in range before applying the isDestroyed rule.</br><br><h5><p id="horde_names">horde_names</p></h5>Defines the hordes to check. Do not define to check all villages of any horde.</br><br><h5><p id="is_destroyed">is_destroyed</p></h5>Defines if this rule only applies to destroyed villages. Do not define to check both alive and destroyed villages.</br><br><h5><p id="max_distance">max_distance</p></h5>Defines the distance that any village has to be within before the spawner can start spawning.</br><br><h5><p id="min_distance">min_distance</p></h5>Defines the distance that a village cannot be within before the spawner can start spawning.</br><br> |
-| Boolean| spawn_if_village_occupied| | Defines optional flag for whether this spawner should spawn when a village is occupied or not. Omitting this option allows spawning regardless of the occupation state. |
-| JSON Object| time_of_day_rule| | Defines optional time of day spawner rule.<br/><h5><p id="times">times</p></h5>Defines the times of day that this spawner is allowed to spawn during.</br><br> |
-
-
-
+| **Type**       | **Name**                         | **Description**                                                                                                                                                                         |
+|----------------|----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **JSON Object** | **block_type_rule**              | Defines an optional block type spawner rule.                                                                                                                                             |
+|                | **valid_types** _(Array)_        | List of valid block type names that the spawner can use for spawning entities.                                                                                                           |
+| **JSON Object** | **bsharp_rule**                  | Defines an optional `bSharp` global variable spawner rule.                                                                                                                               |
+|                | **value** _(Number)_             | Value of the global variable that causes the spawner to stop spawning.                                                                                                                   |
+|                | **variable** _(String)_          | Name of the `bSharp` global variable used in this rule.                                                                                                                                  |
+| **JSON Object** | **distance_rule**                | Defines an optional distance spawner rule.                                                                                                                                               |
+|                | **distance_data** _(Object)_     | Specifies the optional entity distance rule.                                                                                                                                            |
+|                | **alliance_rule** _(String)_     | Defines an entity's alliance rule, determining whether the spawner should prevent spawning based on the entity’s alliance.                                                               |
+|                | **max_distance** _(Number)_      | Maximum distance that entities have to be within for the spawner to start spawning.                                                                                                       |
+|                | **min_distance** _(Number)_      | Minimum distance that entities cannot be within for the spawner to start spawning.                                                                                                        |
+|                | **tag_filter** _(Object)_        | Filter object defining conditions based on tags.                                                                                                                                          |
+|                | **exclude_tags** _(Array)_       | List of tags that must be excluded from the spawning process.                                                                                                                            |
+|                | **include_tags** _(Array)_       | List of tags that must be included for spawning to occur.                                                                                                                                |
+|                | **village_bounds_distance_data** _(Object)_ | Specifies village bounds distance-based rules for spawning.                                                                                                                              |
+|                | **destruction_spawn_delay** _(Number)_ | Duration of time (in seconds) waited after the destruction of a village before applying the "isDestroyed" rule.                                                                         |
+|                | **horde_names** _(Array)_        | Defines the hordes to check. If not defined, all villages of any horde are checked.                                                                                                      |
+|                | **is_destroyed** _(Boolean)_     | Determines whether this rule applies only to destroyed villages. If not defined, the rule checks both alive and destroyed villages.                                                       |
+| **Boolean**    | **spawn_if_village_occupied**    | Specifies whether this spawner should spawn when a village is occupied. Omitting this option allows spawning regardless of the occupation state.                                          |
+| **JSON Object** | **time_of_day_rule**             | Defines an optional time-of-day-based spawner rule.                                                                                                                                      |
+|                | **times** _(Array)_              | Defines the specific times of day during which the spawner is allowed to spawn entities.                                                                                                 |
 
 ### badger:sprint
 
@@ -4069,9 +3869,6 @@ Defines the settings required for an entity to sprint.
 | Decimal| idle_time_to_deactivate| | Amount of time the player must be stopped/walking before sprint ends automatically. A value of -1 disables this feature. |
 | String| sprint_negate_status| | The name of the status effect to apply to negate the sprinting effect. |
 | String| sprint_status| | The name of the status effect to apply when sprinting. |
-
-
-
 
 ### badger:stamina
 
@@ -4088,9 +3885,6 @@ Defines the settings required for stamina depletion.
 | Decimal| regen_rate| | Defines the rate at which stamina will regenerate (per tick). |
 | Decimal| stamina_replenish_audio_threshold| | Stamina must drop below this value in order for the stamina replenished audio event to trigger when it refills. |
 
-
-
-
 ### badger:state_reporting
 
 Defines the settings for game state reporting.
@@ -4101,26 +3895,21 @@ Defines the settings for game state reporting.
 | Decimal| states| | Defines the list of states that can be reported. |
 | Decimal| tag| | Defines the tag for this state. |
 
-
-
-
 ### badger:static_entity
 
 Controls if this entity should only be partitioned on demand.
-
-
 
 ### badger:status
 
 Defines this entity as a status effect prototype.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| String| applied_name| | The name given to this status effect. |
-| JSON Object| default_resistance| | Sets the default resistance parameters, which are used if the affected entity does not have a resistance defined for this status effect (see badger:resist_status).<br/><h5><p id="resistance_persist_time">resistance_persist_time</p></h5>Defines how long this status effect will be blocked from reactivating after ending. A value of -1 allows the status effect to be refreshed even before the active effect ends.</br><br><h5><p id="resisted">resisted</p></h5>Sets whether or not this status effect is resisted completely by default.</br><br><h5><p id="time">time</p></h5>Sets the default time this status effect lasts for.</br><br> |
-
-
-
+| **Type**       | **Name**            | **Description**                                                                                                                                             |
+|----------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **String**     | **applied_name**     | The name assigned to this status effect.                                                                                                                    |
+| **JSON Object**| **default_resistance** | Sets the default resistance parameters, used if the entity does not have a specific resistance for this status effect (refer to `badger:resist_status`).      |
+|                | resistance_persist_time | Duration (in seconds) for which the status effect is blocked from reactivating after it ends. A value of `-1` allows the effect to refresh before ending.    |
+|                | resisted             | Determines if this status effect is completely resisted by default.                                                                                          |
+|                | time                 | Specifies the default duration (in seconds) for which this status effect lasts.                                                                              |
 
 ### badger:status_effect_ramp_off
 
@@ -4130,25 +3919,19 @@ Causes a gradual reduction of numerical effects, leading up to the expiry of the
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| transition_duration| | Time, in seconds, over which the status effect will ramp down (before the standard end time). |
 
-
-
-
 ### badger:status_effect_telemetry_tracking
 
 Defines the settings used when tracking telemetry for certain status effects.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| track| | List of status effect names to track.<br/><h5><p id="status_effect_applied_name">status_effect_applied_name</p></h5>Applied name of the status effect to track.</br><br><h5><p id="telemetry_id">telemetry_id</p></h5>Name of the telemetry event.</br><br> |
-
-
-
+| **Type** | **Name**                          | **Description**                                                                                       |
+|----------|-----------------------------------|-------------------------------------------------------------------------------------------------------|
+| Array    | **track**                         | List of status effect names to track.                                                                 |
+|          | **status_effect_applied_name**    | The name of the status effect that has been applied and is being tracked.                             |
+|          | **telemetry_id**                  | The name of the telemetry event associated with the tracking of the status effect.                     |
 
 ### badger:sub_objective_health_bar
 
 Causes the entity to display sub-objective information on the dedicated objective health bar on the player's screen.
-
-
 
 ### badger:suppress_target_action
 
@@ -4159,14 +3942,9 @@ suppresses target actions for a period of time.
 | Decimal| max_time| | max amount of time in seconds to suppress target actions for. |
 | Decimal| min_time| | (optional) min amount of time in seconds to suppress target actions for. If specified, a random value between min and max will be chosen. |
 
-
-
-
 ### badger:swaps_mounts
 
 Indicates that this entity allows an interactor to swap their mount.
-
-
 
 ### badger:swaps_team
 
@@ -4177,23 +3955,19 @@ Defines this entity as a status effect that causes its host to temporary switch 
 | Boolean| swap_to_inflictor| | If true, swaps the host to the inflicting entity's team. |
 | String| team| | The name of the team to specifically swap to (when not swapping to the inflicting entity's team). |
 
-
-
-
 ### badger:tag_modifier_source
 
 Modifies the tags of entities within a certain radius, for as long as they are in that radius
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| String| alliance_rule_filter| | Alliance rule filter to determine who to apply tags to |
-| Decimal| radius| | Range to apply tag modifications to |
-| JSON Object| tag_filter| | Tag filter to determine who to apply tags to<br/><h5><p id="exclude_tags">exclude_tags</p></h5>Exclude tags for filter</br><br><h5><p id="include_tags">include_tags</p></h5>Include tags for filter</br><br> |
-| Array| tags_to_add| | Tags to add |
-| Array| tags_to_remove| | Tags to remove |
-
-
-
+| **Type**       | **Name**                     | **Description**                                                            |
+|----------------|------------------------------|----------------------------------------------------------------------------|
+| **String**     | **alliance_rule_filter**     | Alliance rule filter to determine who to apply tags to.                   |
+| **Decimal**    | **radius**                   | Range to apply tag modifications to.                                      |
+| **JSON Object**| **tag_filter**               | Tag filter to determine who to apply tags to.                             |
+|                | exclude_tags                 | Tags to exclude from the filter.                                          |
+|                | include_tags                 | Tags to include in the filter.                                           |
+| **Array**      | **tags_to_add**              | Tags to add.                                                              |
+| **Array**      | **tags_to_remove**           | Tags to remove.                                                           |
 
 ### badger:tags
 
@@ -4203,14 +3977,9 @@ Designer prescribed tags that can be used to filter or discern this entity from 
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| tags| | Add as many different tags to allow to filter this entity by having or not having certain tasks. |
 
-
-
-
 ### badger:take_block_space
 
 This description means this entity takes the space of a block and should be removed if a new block want the space
-
-
 
 ### badger:target_actions
 
@@ -4220,28 +3989,26 @@ Defines the actions that get carried out when a target is selected by a targetin
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | List| actions| | List of actions. |
 
-
-
-
 ### badger:target_assigner
 
 Defines this entity as a target assigner which pushes priority targets to influenced entities.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| String| alliance_rule_filter| | Alliance rule to filter target by. |
-| Boolean| despawn_on_target_lost| | When true, the entire order will end when the target is destroyed, cancelling movement. |
-| Decimal| drop_target_range| | How far a selected target needs to be from the assigner before it is dropped. |
-| Decimal| find_target_range| | How far will the assigner will search for a target to select/assign. |
-| Boolean| force_move| | If this command is a force move command, will adjust enemy highlighting to match the action. |
-| Decimal| force_target_range| | Within this range, mobs will go directly to attack the target, ignoring any secondary targets that are closer. |
-| Boolean| parent_self_to_target| | When true, the target assigner entity will parent itself to the targeted entity. |
-| JSON Object| pre_redirect_target_filter| | Early phase alliance and tag filter BEFORE redirection. Redirector hurtboxes that get found in this phase will redirect you to target the default hurtbox, which will get further filtered by the main tag filter. Don't change this without coder approval.<br/><h5><p id="exclude_tags">exclude_tags</p></h5>Array of tags to exclude (any of) when filtering targets.</br><br><h5><p id="include_tags">include_tags</p></h5>Array of tags to require (all of) when filtering targets.</br><br> |
-| Boolean| single_target| | When true, the target assigner will stop searching for targets after its first selected target is destroyed. |
-| JSON Object| target_filter| | Alliance and tag filter used by this assigner to filter targets.<br/><h5><p id="exclude_tags">exclude_tags</p></h5>Array of tags to exclude (any of) when filtering targets.</br><br><h5><p id="include_tags">include_tags</p></h5>Array of tags to require (all of) when filtering targets.</br><br> |
-
-
-
+| **Type**       | **Name**                         | **Description**                                                                                                                       |
+|----------------|----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| **String**     | **alliance_rule_filter**         | Alliance rule used to filter the target by.                                                                                          |
+| **Boolean**    | **despawn_on_target_lost**       | When true, the entire order ends when the target is destroyed, cancelling movement.                                                   |
+| **Decimal**    | **drop_target_range**            | The distance a selected target must be from the assigner before it is dropped.                                                       |
+| **Decimal**    | **find_target_range**            | The distance the assigner will search for a target to select or assign.                                                               |
+| **Boolean**    | **force_move**                   | If true, this command is a force move command, adjusting enemy highlighting to match the action.                                     |
+| **Decimal**    | **force_target_range**           | Within this range, mobs will directly attack the target, ignoring any secondary targets that are closer.                               |
+| **Boolean**    | **parent_self_to_target**        | When true, the target assigner entity will parent itself to the targeted entity.                                                      |
+| **JSON Object**| **pre_redirect_target_filter**    | Early phase alliance and tag filter before redirection. Redirector hurtboxes found in this phase will redirect to target the default hurtbox, which will be further filtered by the main tag filter. Changes require coder approval. |
+|                | exclude_tags                     | Array of tags to exclude (any of) when filtering targets.                                                                             |
+|                | include_tags                     | Array of tags to require (all of) when filtering targets.                                                                             |
+| **Boolean**    | **single_target**                | When true, the target assigner will stop searching for targets after its first selected target is destroyed.                          |
+| **JSON Object**| **target_filter**                | Alliance and tag filter used by this assigner to filter targets.                                                                       |
+|                | exclude_tags                     | Array of tags to exclude (any of) when filtering targets.                                                                             |
+|                | include_tags                     | Array of tags to require (all of) when filtering targets.                                                                             |
 
 ### badger:targeting
 
@@ -4252,9 +4019,6 @@ Defines the entity's targeting behaviour. Used to drive what the entity can targ
 | Array| targeting_priorities| | Entries defining what the entity can target at a specified range. Entries are in order of high-to-low priority. |
 | Boolean| update_targeting_every_tick| | When true, the entity checks for targets constantly, instead of a couple of times per second. Doing so is more costly for performance and should be avoided outside of special cases. |
 
-
-
-
 ### badger:telemetry_category
 
 Settings used when reporting telemetry info.
@@ -4262,9 +4026,6 @@ Settings used when reporting telemetry info.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| category_name| | Defines the category name used when reporting telemetry. |
-
-
-
 
 ### badger:telemetry_game_zone
 
@@ -4276,9 +4037,6 @@ Determines if a village will trigger game zone telemetry and additional informat
 | Integer| alt_id| | An alternate game zone ID to use if the main id isn't sufficient. |
 | Integer| id| | The game zone ID/index to use when entering the area. |
 
-
-
-
 ### badger:telemetry_lure_direct
 
 Determines if a village will trigger game zone telemetry and additional information regarding it.
@@ -4288,9 +4046,6 @@ Determines if a village will trigger game zone telemetry and additional informat
 | Boolean| is_advanced| | for directors specifically, is it a simple or targeted director? |
 | String| order_type| | Is this a lure or director? |
 
-
-
-
 ### badger:telemetry_track_banner_order
 
 Determines if a mob should be tracked when given a banner order for telemetry purposes.
@@ -4299,9 +4054,6 @@ Determines if a mob should be tracked when given a banner order for telemetry pu
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Boolean| enabled| | Is this entity being tracked for banner order |
 
-
-
-
 ### badger:text_markup_icon_name
 
 Defines the name of the icon to be used in HUD error messages.
@@ -4309,9 +4061,6 @@ Defines the name of the icon to be used in HUD error messages.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| name| | Full name of icon. |
-
-
-
 
 ### badger:ticket_cap_modifier
 
@@ -4323,9 +4072,6 @@ Modify the cap for a list of tickets
 | String| ticket| | The name of the ticket cap to modifying |
 | Array| ticket_modifiers| | Key value pairs that describe which ticket cap we are modifying |
 
-
-
-
 ### badger:track_damage
 
 Dictates whether this entity will track damage it receives or delivers.
@@ -4335,20 +4081,13 @@ Dictates whether this entity will track damage it receives or delivers.
 | Boolean| dealt| | Whether the village should track the damage it deals. |
 | Boolean| taken| | Whether the village should track the damage it takes. |
 
-
-
-
 ### badger:track_influenced_group_position
 
 Flags a lure or director to track the centroid of its group of influenced entities.
 
-
-
 ### badger:tracks_health_change
 
 Enables tracking of client-side changes in health. Useful for interrupting certain player actions.
-
-
 
 ### badger:trigger_criteria
 
@@ -4358,9 +4097,6 @@ Flag Attribute that indicates this entity is used as a trigger section.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | List| filters| | List of filter include and exclude tags |
 
-
-
-
 ### badger:unit_direct_tags
 
 Tags that are used to filter entities for advanced direct groups.
@@ -4369,19 +4105,16 @@ Tags that are used to filter entities for advanced direct groups.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Array| tags| | Tags to add to this entity for advanced direct groupings. |
 
-
-
-
 ### badger:unlockable_buffs
 
 When applied to an entity, buffs itself under certain unlock conditions.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| buffs| | The list of unlockable buffs used by this entity.<br/><h5><p id="buff_id">buff_id</p></h5>The buff to be applied to this entity.</br><br><h5><p id="has_unlock">has_unlock</p></h5>If true, this buff will only be active when this resource is acquired. If false, this buff will only be active if this resource is not acquired.</br><br><h5><p id="resource">resource</p></h5>The name of a resource used to enable or disable this buff.</br><br> |
-
-
-
+| **Type** | **Name** | **Description** |
+|----------|----------|------------------|
+| Array    | **buffs** | The list of unlockable buffs used by this entity. |
+|          | buff_id  | The specific buff to be applied to this entity. |
+|          | has_unlock | If true, this buff is active only when the specified resource is acquired. If false, the buff is active only when the resource is not acquired. |
+|          | resource | The name of the resource used to enable or disable this buff. |
 
 ### badger:village
 
@@ -4392,9 +4125,6 @@ Some general attributes that describe a village.
 | Integer| generation_priority| | Villages with a higher generation priority will be planned and built first. If no priority is provided, 0 is the default. |
 | String| name| | Identifies the type of village. |
 
-
-
-
 ### badger:village_bounds_trigger_volume_size
 
 Defines the size of the village bounds trigger volume. This is also the size which village trigger volumes are relative to.
@@ -4402,9 +4132,6 @@ Defines the size of the village bounds trigger volume. This is also the size whi
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| padding| | The distance in blocks to expand the trigger volume beyond the village bounds. |
-
-
-
 
 ### badger:village_bridge
 
@@ -4418,9 +4145,6 @@ Determines how villages build bridges.
 | String| bridge_id| | The entity identifier for the bridge that should be placed. |
 | Decimal| bridge_vertical_distance_max| | The largest Y difference allowed between the start and end of the bridge. |
 | Decimal| diagonal_bridge_degree_tolerance| | The number of degrees a bridge can deviate from right angles before being considered diagonal. |
-
-
-
 
 ### badger:village_building_path
 
@@ -4449,9 +4173,6 @@ Determines how villages build paths from buildings.
 | Decimal| path_width| | The width of the path in meters. |
 | Decimal| prevent_buildable_placement| | Setting this to false will allow buildable to be placed on top of paths. |
 
-
-
-
 ### badger:village_building_placement
 
 Settings for placing buildings inside of village zones.
@@ -4464,9 +4185,6 @@ Settings for placing buildings inside of village zones.
 | Decimal| placement_jitter_max| | The maximum distance that the placement will can be offset from a village zone face site. This value will be clamped if it's large enough to push the placement outside of a zone. |
 | Decimal| placement_jitter_min| | The minimum distance that the placement will can be offset from a village zone face site. This value will be clamped if it's large enough to push the placement outside of a zone. |
 
-
-
-
 ### badger:village_construction
 
 Determines which buildings will be placed during village generation.
@@ -4474,9 +4192,6 @@ Determines which buildings will be placed during village generation.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| start_logic| | The deck logic to run on startup |
-
-
-
 
 ### badger:village_district_path
 
@@ -4505,14 +4220,9 @@ Determines how villages build paths from districts.
 | Decimal| path_width| | The width of the path in meters. |
 | Decimal| prevent_buildable_placement| | Setting this to false will allow buildable to be placed on top of paths. |
 
-
-
-
 ### badger:village_do_not_clear_on_slot_overlap
 
 If this attribute is present, then if any village will generate on the same slot, then this village will not be despawned.
-
-
 
 ### badger:village_hanging_decoration_placement
 
@@ -4523,9 +4233,6 @@ Settings for placing hanging decorations between village zones.
 | Decimal| minimum_edge_width| | The minimum shared edge width between two zone considered for placement. |
 | Decimal| minimum_height_delta| | The minimum height difference between two zone considered for placement. |
 
-
-
-
 ### badger:village_heart
 
 A structure that must remain for the village to continue existing.
@@ -4534,19 +4241,16 @@ A structure that must remain for the village to continue existing.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | | badger:village_heart| |  |
 
-
-
-
 ### badger:village_heart_destruction
 
 Customized destruction behaviour when all Village Hearts are destroyed in a village.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| | List| | groups<br/><h5><p id="Decimal">Decimal</p></h5>delay</br><br><h5><p id="Decimal">Decimal</p></h5>interval</br><br><h5><p id="Boolean">Boolean</p></h5>disable_vfx</br><br> |
-
-
-
+| **Type**       | **Name**           | **Description**                                                                                         |
+|----------------|--------------------|---------------------------------------------------------------------------------------------------------|
+| **List**       | **groups**         | A list containing various group configurations.                                                        |
+|                | **delay** (Decimal)  | The delay before the group effect starts.                                                              |
+|                | **interval** (Decimal)| The interval between successive group effects.                                                          |
+|                | **disable_vfx** (Boolean)| A flag that determines whether visual effects should be disabled for this group.                       |
 
 ### badger:village_heart_disabled_actions
 
@@ -4556,9 +4260,6 @@ Actions that will occur to village structures when the village heart is disabled
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| village_structures_action| | The action that will occur to the structures of the village |
 
-
-
-
 ### badger:village_height_change
 
 Influences the village height changes.
@@ -4567,9 +4268,6 @@ Influences the village height changes.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| clamp_size| | The number of blocks above a height change that are not changed to air. |
 
-
-
-
 ### badger:village_influence
 
 This gives an entity an influence with which it can apply to a portion of the map. This influence can be used for things such as placing buildings in areas of high or low influence.
@@ -4577,9 +4275,6 @@ This gives an entity an influence with which it can apply to a portion of the ma
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| amount| | The amount of influence exerted by this entity. |
-
-
-
 
 ### badger:village_moat
 
@@ -4590,9 +4285,6 @@ Determines how villages build paths from districts.
 | Decimal| edge_noise_amplitude| | The noise amplitude determines the maximum distance that moat zone edges can shifted inward. |
 | Decimal| edge_noise_scale_factor| | A smaller scale factor will produce a more gradual change along the moat zone edges. |
 
-
-
-
 ### badger:village_wall
 
 Determines which buildings will be placed during village generation.
@@ -4600,9 +4292,6 @@ Determines which buildings will be placed during village generation.
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| wall_offset| | How far to move the walls away from their zone edges. |
-
-
-
 
 ### badger:village_weathering
 
@@ -4623,9 +4312,6 @@ Determines how villages apply weathering effects to terraformed zone edges.
 | Decimal| wave_noise_scale| | The magnitude of noise used to soften the wave function. |
 | Decimal| wave_period_scale| | A smaller scale factor will reduce the frequency of the weathering wave for a smoother effect. |
 
-
-
-
 ### badger:village_zone
 
 Influences the villages topology.
@@ -4640,9 +4326,6 @@ Influences the villages topology.
 | Decimal| zone_jitter_max| | The maximum amount that a village zone will be offset in world units. |
 | Decimal| zone_jitter_min| | The maximum amount that a village zone will be offset in world units. |
 | Decimal| zone_spacing| | The default distance between village zones before jitter is applied. |
-
-
-
 
 ### badger:village_zone_scoring
 
@@ -4664,9 +4347,6 @@ Describes how village zones are prioritized during building placement.
 | Decimal| far_from_weight| | The weight applied to the score provided to zones nearby the far from position. |
 | Decimal| random_weight| | The weight applied to the random score (between 0 and 1) provided to zones. |
 
-
-
-
 ### badger:wander
 
 Dictates entity's idle behaviour.
@@ -4675,9 +4355,6 @@ Dictates entity's idle behaviour.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | Decimal| wander_frequency| | How many times per second on average this entity will idle wander, instead of remaining still. |
 | Decimal| wander_radius| | How far will this entity wander around a fixed point. |
-
-
-
 
 ### badger:waypoint_marker
 
@@ -4695,26 +4372,22 @@ Entity will have a waypoint marker on the HUD
 | Boolean| use_faction_name| | If true, the waypoint's text will be the name of its faction. |
 | Vector [a, b, c]| world_position_offset| | Waypoint marker world position offset. |
 
-
-
-
 ### badger:waypoint_marker_visibility
 
 Entity will have a waypoint marker on the HUD
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Integer| compass_level| | Determines which compass level a non-team icon is shown in (-1 => onscreen and bottom, 0 => bottom, 1 => top) |
-| String| compass_max_range| | Maximum range value to be shown on compass (short, medium, long) |
-| Array| filter_tagsets| | Array of paired include and exclude tag arrays for choosing when this icon can appear.<br/><h5><p id="exclude_tags">exclude_tags</p></h5>Array of tags to exclude (any of) when filtering compass icons.</br><br><h5><p id="include_tags">include_tags</p></h5>Array of tags to require (any of) when filtering compass icons.</br><br> |
-| Boolean| hide_from_non_alliance| | Determines if waypoint should be hidden from opponents |
-| Decimal| waypoint_max_range| | Maximum range value |
-| Decimal| waypoint_max_range_alliance| | Maximum range value for opponent waypoint |
-| Decimal| waypoint_min_range| | Minimum range value |
-| Decimal| waypoint_min_range_alliance| | Minimum range value for opponent waypoint |
-
-
-
+| **Type**       | **Name**                          | **Description**                                                                                                   |
+|----------------|-----------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| **Integer**    | **compass_level**                 | Determines the compass level where a non-team icon is displayed. Values: -1 (onscreen and bottom), 0 (bottom), 1 (top). |
+| **String**     | **compass_max_range**             | Maximum range value to be displayed on the compass (options: short, medium, long).                               |
+| **Array**      | **filter_tagsets**                | Array of paired include and exclude tag arrays for determining when this icon can appear.                        |
+|                | **exclude_tags**                  | Array of tags to exclude (any of) when filtering compass icons.                                                  |
+|                | **include_tags**                  | Array of tags to require (any of) when filtering compass icons.                                                  |
+| **Boolean**    | **hide_from_non_alliance**        | Determines if the waypoint should be hidden from opponents.                                                      |
+| **Decimal**    | **waypoint_max_range**            | Maximum range value for the waypoint.                                                                             |
+| **Decimal**    | **waypoint_max_range_alliance**   | Maximum range value for opponent waypoints.                                                                       |
+| **Decimal**    | **waypoint_min_range**            | Minimum range value for the waypoint.                                                                             |
+| **Decimal**    | **waypoint_min_range_alliance**   | Minimum range value for opponent waypoints.                                                                       |
 
 ### badger:world_collision
 
@@ -4725,9 +4398,6 @@ Defines the entity's world collision properties.
 | Decimal| auto_step| | The maximum height of an object that an entity can automatically step on while walking. |
 | Decimal| interpolation_speed| | The speed at which the auto speed will interpolate. |
 
-
-
-
 ### badger:world_request
 
 World request information associated with a particular entity archetype.
@@ -4736,9 +4406,6 @@ World request information associated with a particular entity archetype.
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| world_request_type| | Determines the priority of the world requests dispatched. |
 
-
-
-
 ### badger:world_single_spawn
 
 Used to place a single unique entity during world gen, that won't get double placed when saveloading/reloading chunks
@@ -4746,9 +4413,6 @@ Used to place a single unique entity during world gen, that won't get double pla
 | Type| Name| Default Value| Description |
 |:-----------:|:-----------:|:-----------:|:-----------:|
 | String| entity| | The name of the entity to spawn |
-
-
-
 
 ### badger:zone_type
 
@@ -4759,22 +4423,20 @@ Specifies the type of zone that this buildable provides.
 | Boolean| non_blocking| | When true, this zone will be used for 'must be in zone' checks but not 'must NOT be in zone' checks. Useful for not blocking placement of enemy structures. |
 | String| zone_type| | This is the type of zone that this buildable provides. Ex. Utopia, Village, etc. |
 
-
-
-
 ### badger:zone_type_requirement
 
 Defines the different types of zones of control which allows this building to be constructed/online.
 
-| Type| Name| Default Value| Description |
-|:-----------:|:-----------:|:-----------:|:-----------:|
-| Array| exclude_tags| | the zones types that can not be overlapped for this placement. |
-| Array| include_tags| | the different types of zones of control which allows this building to be constructed/online. |
-| JSON Object| invalid_zone_block_conversion| | Block conversion data for when the structure is no longer in the required zone.<br/><h5><p id="duration_percentage">duration_percentage</p></h5>Percentage of build time it takes to perform block conversion.</br><br><h5><p id="modifiers">modifiers</p></h5>List of block conversion modifiers.</br><br><h5><p id="reversal_duration_percentage">reversal_duration_percentage</p></h5>Percentage of build time it takes to reverse block conversion.</br><br><h5><p id="top_to_bottom">top_to_bottom</p></h5>If true, block conversion happens from top to bottom, rather than bottom to top.</br><br> |
-| Boolean| set_offline_when_no_zone| | If set to true, this structure will be set offline instead of being destroyed if it's no longer in the required zone at any point. |
-
-
-
+| **Type**       | **Name**                           | **Description**                                                                                                                                                  |
+|----------------|------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Array**      | **exclude_tags**                   | The zone types that cannot overlap for this placement.                                                                                                         |
+| **Array**      | **include_tags**                   | The different types of zones of control that allow this building to be constructed or come online.                                                             |
+| **JSON Object**| **invalid_zone_block_conversion**  | Block conversion data for when the structure is no longer in the required zone.                                                                                |
+|                | duration_percentage                 | The percentage of build time required to perform block conversion.                                                                                             |
+|                | modifiers                           | A list of block conversion modifiers.                                                                                                                           |
+|                | reversal_duration_percentage        | The percentage of build time required to reverse block conversion.                                                                                              |
+|                | top_to_bottom                       | If true, block conversion occurs from top to bottom, rather than bottom to top.                                                                                |
+| **Boolean**    | **set_offline_when_no_zone**       | If set to true, this structure will be set offline instead of being destroyed if it is no longer in the required zone at any point.                           |
 
 ### badger:zone_visualization
 
@@ -4785,9 +4447,6 @@ Specifies which types of zones are displayed when previewing the building.
 | String| group| | The zone group name (one of the zone groups from the zone group service) |
 | String| zone_alliance_rule| | The alliance rule that specifies which zone(s) should be displayed |
 
-
-
-
 ### capped_spawner
 
 If this entity spawns entities, it will be bound by the cap of the type specified here.
@@ -4797,11 +4456,3 @@ If this entity spawns entities, it will be bound by the cap of the type specifie
 | String| cap_type| | The cap type that entities shot or spawned by this spawner contribute towards. |
 | Integer| individual_cap| | If the total cap type is not reached, how many entities can any one instance of this spawner spawn individually. |
 | Array| toggled_actions| | List of action names on this entity that are disabled when either the cap type limit or the individual limit are reached. |
-
-
-
-
-## identifier
-
-The identifier is used to register the entity with the server. The matching identifier in the Entity Behavior JSON in the Resource Pack is what gives the entity its appearance.
-

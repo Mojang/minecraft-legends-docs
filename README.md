@@ -1,30 +1,67 @@
-# Minecraft Legends Documentation
-This repository houses the documentation for Minecraft Legends. It will help you understand how the data is laid out and how to make your own mods for the game.
 
-Watch this space as we're planning on releasing more documentation in the future. For now, you can check out the entry below which describes all of the behaviours available to entities in the game.
+# Minecraft Legends Documentation
+
+![Minecraft Legends Logo](images/minecraftlegends_logo.jpg)
+
+Welcome to the official Minecraft Legends documentation repository! Here, you'll find everything you need to understand the game's data structure and create your own mods. Whether you're a seasoned modder or just getting started, this documentation is designed to provide clear guidance.
+
+We’re constantly expanding our documentation, so stay tuned for updates. Currently, you can explore the various behaviors that define entities in Minecraft Legends.
+
+## Table of Contents
+
+1. [Entities](#entities)
+   - [Event Triggers](#event-triggers)
+2. [Blockbench Plugin](#blockbench-plugin)
+3. [World Generation](#world-generation)
+   - [Village Generation](#village-generation)
+   - [Geology Service](#geology-service)
+4. [Barrier Blocks](#barrier-blocks)
+5. [BSharp Scripting](#bsharp-scripting)
+6. [Wolverine](#wolverine)
+7. [Contributing](CONTRIBUTING.md)
+
+## 📖 Overview
 
 ## Entities
-From Piglins invading the overworld to allays gathering resources, all of the Minecraft Legends gameplay comes from entities. You can think of them as things that have behavior and may or may not have a visual representation. They are defined in JSON files and split across Behavior packs and Resource packs.
 
-More documentation can be found on the [entities page](Entities.md).
+In Minecraft Legends, gameplay revolves around entities — from Piglins attacking the overworld to allays gathering resources. Entities can be thought of as objects with behavior, whether or not they have a visual representation. These entities are configured using JSON files, which are divided between **Behavior Packs** (defining logic) and **Resource Packs** (defining visuals and assets).
 
-### Event Triggers
-[Event Triggers](EventTriggers.md) give entities life by allowing them to react to changes in gameplay state. Things like animations, audio, particles are driven through event triggers.
+For a detailed explanation of entities, check out the [Entities Documentation](Entities.md).
 
-## Blockbench
-[Blockbench](https://www.blockbench.net/) is a free tool used to create models and animations for Minecraft. We have created a new Minecraft Legends plugin for this tool that will be able to export these models and animations as JSON files for use in Minecraft Legends Resource Packs! Referencing these models and animations in Entity JSON definitions (Behavior Pack and Resource Pack) as well as animation and render controllers (Resource Pack only) allows users to easily create new visuals for their own custom enemies and allies. For information on how to use the new Minecraft Legends plugin, see our documentation [here](BlockBench.md)
+## Event Triggers
+
+[Event Triggers](EventTriggers.md) breathe life into entities by enabling them to react to gameplay events. Whether it's triggering animations, playing audio, or spawning particles, event triggers are responsible for all of these in-game interactions.
+
+## Blockbench Plugin
+
+[Blockbench](https://www.blockbench.net/) is a free, powerful tool for creating models and animations for Minecraft. We’ve developed a specialized Minecraft Legends plugin for Blockbench that allows seamless export of models and animations into JSON format for use in Minecraft Legends Resource Packs. To learn more about using this plugin and how to integrate models into the game, visit our [Blockbench Documentation](BlockBench.md).
 
 ## World Generation
-All of the [biomes](Biomes.md) and interesting things in the world use locations determined by the [World Placement](WorldPlacement.md) system. It is the core of the procedural world generation system in Minecraft Legends and is the starting place for creating the whole world. These rules drive the placement of [blocks](Blocks.md) in the voxel world.
+
+Minecraft Legends’ world is procedurally generated, making every adventure unique. The [World Placement](WorldPlacement.md) system is at the heart of this process, controlling how biomes and features are distributed. This system determines the placement of [blocks](Blocks.md) across the voxel-based world.
 
 ### Village Generation
-Villages and Bases are key components to the campaign mode in Minecraft Legends. These locations are procedurally generated using the deck system which draws actions cards to create the final set of structures. This system is described on the [village generation page](VillageGeneration.md).
+
+Villages and enemy bases play crucial roles in Minecraft Legends’ campaign mode. They are procedurally generated using the deck system, which leverages a card-drawing mechanism to create a dynamic set of structures. Learn more on the [Village Generation](VillageGeneration.md) page.
 
 ### Geology Service
-[The Geology Service](GeologyService.md) is a system that lets us place special “geology” textures in the world. It allows us to generate terrain features that we could not easily achieve with our standard procedural terrain generation.
+
+The [Geology Service](GeologyService.md) lets us add special geology textures and features into the game world. This system enables terrain generation that goes beyond standard voxel terrain and adds distinct features.
 
 ## Barrier Blocks
-Structures in Minecraft Legends can use special variations of [barrier blocks](BarrierBlocks.md) to control how entities collide with them.
 
-## BSharp
-The bulk of the heavy lifting in the campaign mode is accomplished through our scripting language called BSharp. It is built on JavaScript and can do quite a lot of powerful things in the game. Check out the [BSharp Reference Sheet](BSharpReferenceSheet.md) for more information.
+Special types of [barrier blocks](BarrierBlocks.md) are used to create collision systems for various structures in Minecraft Legends, helping to control entity movement and interactions.
+
+## BSharp Scripting
+
+Our custom scripting language, **BSharp**, built on JavaScript, handles the bulk of campaign mode logic. BSharp provides modders with powerful tools for scripting in-game mechanics. For details, see the [BSharp Reference Sheet](BSharpReferenceSheet.md).
+
+## Wolverine
+
+**NOTE**: The Wolverine tool itself has yet to be released, but for those curious they may access the documentation in the meanwhile.
+
+[Wolverine](Wolverine.md) is a versatile structure conversion tool for converting structures between Minecraft (Bedrock and Java) and Minecraft Lengeds. Taking `.nbt`, `.mcstructure`, or `.schematic` files made in Minecraft as input, this tool will create Minecraft Legends formatted structures to be used by creators in making their own Packs!
+
+---
+
+We hope you find this documentation helpful and encourage you to explore the additional resources listed throughout. Stay tuned for further updates, and don’t hesitate to contribute!

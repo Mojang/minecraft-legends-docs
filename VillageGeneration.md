@@ -1,10 +1,12 @@
 # Minecraft Legends Village Generation
-## Village Planning 
-### Order of Operations 
 
-Village planning is done in the following sequence of steps.
+## Village Planning
 
-![](images/village_generation/image01.png)
+### Order of Operations
+
+Village planning is done in the following sequence of steps:
+
+**Generate Map** ⟶ **Sample Terrain** ⟶ **Districts & Zones** ⟶ **Plan Walls** ⟶ **Plan Paths** ⟶ **Finalize Wall Plan** ⟶ **Plan Buildings**
 
 These steps often correspond to different kinds of cards. When a village deck is processed, the village generator will handle particular kinds of cards during different steps. For instance, all the District and Zone cards are handled during the Districts & Zones phase. This is true regardless of where those cards exist in the deck.
 
@@ -12,1515 +14,1696 @@ Cards of the same type will be handled in the order that they’re pulled off th
 
 To increase readability of B# scripts, it is best practice to organize B# scripts so that village generation decks are assembled in this order even though the village generator will automatically enforce an order regardless.
 
-## Village Features 
-### Districts 
+## Village Features
+
+### Districts
+
 All villages are composed of one or more districts. Each district is a collection of zones, but when a new district is placed, it will just exist as a position with a district name until zones are added to it. When a village is first created, a main district will be automatically created at the village’s starting position. Every zone that gets added to the village, will belong to a particular district.
 
-#### District Cards 
+---
+
+#### District Cards
+
+* **Card Library Name**: `district_cards`
+
 To create a new district, add a card from the district_cards library to the deck. Multiply that card with some placement preference cards to influence where the new district should go relative to the main district.
 After creating a new district, to add zones, buildables, walls, moats, etc to the district, multiply the card for the new request with the district card. If no district card is multiplied, the main district will be used as the default.
 
-Card Library Name
+**Settings**:
 
-**district_cards**
+* **`district`**: The unique name that identifies the district. When zones are added to a district, the district name will be added to their zone tag set. Every zone that belongs to the district will have the district name as part of their tag set.
 
-Settings
+**Example**:
 
-**district**
+```json
+// JSON
+    {
+        "district_cards": [
+            {
+                "cost": 0,
+                "tags": ["example_district_card"],
+                "district": "example_district"
+            }
+        ]
+    }
+```
 
-The unique name that identifies the district. When zones are added to a district, the district name will be added to their zone tag set. Every zone that belongs to the district will have the district name as part of their tag set.
+```jsx
+// B#
+    // Request a new district.
+    const farDistrict = DistrictCard("example_district_card")
 
-Example
+    // Add zones to the far district and then wrap them in walls.
+    const farDistrictDeck = DECK_Empty()
+    DECK_PutOnBottomOf(WallsCard("addWallWithGatesAndTower", 1), farDistrictDeck)
+    DECK_PutOnBottomOf(LayerOfZonesCard("addLayerOfZones", 2), farDistrictDeck)
+    DECK_PutOnBottomOf(ZonesCard("addThreeZones", 2), farDistrictDeck)
+    DECK_MultiplyBySingle(farDistrictDeck, farDistrict)
 
-![](images/village_generation/image02.png)
-![](images/village_generation/image03.png)
+    // Place the new district far away from the main district.
+    const placeFarFromVillageCenter = PlacementPreferenceCard("placeFarFromVillageCenter")
+    DECK_MultiplyBySingle(farDistrict, placeFarFromVillageCenter)
+    DECK_PutOnBottomOf(farDistrict, baseDeck)
 
-### Zones 
-The zones that belong to the village districts organize the area inside the village and they provide the space to place village features like buildables. To add zones to a village district, there are two types of cards available, zones_cards and layer_of_zones_cards.
+    // Add the requests for the new district to the base deck.
+    DECK_PutOnBottomOf(farDistrictDeck, baseDeck)
 
-#### Zone Cards 
+    OUTPUT_SetNamedDeck("instantBuildDeck" + villageID, baseDeck)
+```
+
+---
+
+### Zones
+
+The zones that belong to the village districts organize the area inside the village and they provide the space to place village features like buildables. To add zones to a village district, there are two types of cards available, `zones_cards` and `layer_of_zones_cards`.
+
+---
+
+#### Zone Cards
+
+* **Card Library Name**: `zones_cards`
+
 These cards will add one or more zones to a village. The first zone added will use any placement preferences multiplied with the zone card to find the best zone (the zone with the highest score). If the number of zones requested is greater than one, we’ll continue trying to add zones that are adjacent to the first zone added until we’ve either run out of connected zones that aren’t already part of the village, or we’ve added the requested number of zones.
 
-Card Library Name
+**Settings**:
 
-**zones_cards**
+* **`number_of_zones`**: The number of zones that should be added to the village.
 
-Settings
+**Example**:
 
-**number_of_zones**
+```json
+// JSON
+    // ZONES
+    {
+        "zones_cards": [
+            {
+                "cost": 0,
+                "tags": ["add24Zones"],
+                "number_of_zones": 24
+            },
+            {
+                "cost": 0,
+                "tags": ["add18Zones"],
+                "number_of_zones": 18
+            }
+        ]
+    }
+```
 
-The number of zones that should be added to the village.
+```jsx
+// B#
+    // INITIAL ZONES
+    const initialSmallZonesPartOne = ZonesCard("addZone", 5);
+    DECK MultiplyBySingle(initialSmallZonesPartOne, ZoneHeightChangeCard("4DownRelativeToCentre"));
+```
 
-Example
+* _Notes_:
+  * Zones are always added to a district. If no explicit district is specified, the main district is used by default.
+  * Placement preferences can be used to specify where zones should be added to the village.
+  * If `number_of_zones` is greater than 1, after the first zone is added, the zones neighboring that zones will be added until the amount requested has been added.
+  * Only zones that aren’t already part of the existing village will be considered.
+  * `zone_tag_cards` can be combined with `zones_cards` to reserve zones for particular features like paths, structures, etc.
 
-![](images/village_generation/image04.png)
+---
 
-![](images/village_generation/image05.png)
+#### Layer of Zones Cards
 
-Note
+* **Card Library Name**: `layer_of_zones_cards`
 
-* Zones are always added to a district. If no explicit district is specified, the main district is used by default.
-* Placement preferences can be used to specify where zones should be added to the village.
-* If **number_of_zones** is greater than 1, after the first zone is added, the zones neighboring that zones will be added until the amount requested has been added.
-* Only zones that aren’t already part of the existing village will be considered.
-* **zone_tag_cards** can be combined with **zones_cards** to reserve zones for particular features like paths, structures, etc.
-
-
-#### Layer of Zones Cards 
 When this card is handled, it will add all the zones that border the existing village district that this card is being applied to. If no district card is specified, the default main district will be used.
 
-Card Library Name
+**Example**:
 
-**layer_of_zones_cards**
+```json
+// JSON
+    {
+        "layer_of_zones_cards": [
+            {
+            "cost": 0,
+            "tags": ["addLayerOfZones"]
+            }
+        ]
+    }
+```
 
-Settings
+```jsx
+// B#
+const ring1Zones = LayerOfZonesCard(
+  "addLayerOfZones",
+  _GetLayerOfZoneSize(villageId, 1)
+);
+DECK_MultiplyByMultipleRules(ring1Zones, [
+  ZoneTagCard("attackRing1"),
+  ZoneHeightChangeCard("3DownRelativeToCentre"),
+]);
+```
 
-None
+* _Notes_:
+  * Layers of zones are always added to a district. If no explicit district is specified, the main district is used by default.
+  * The outer layer of zones around all the district zones that aren’t part of the village yet will be added to the district.
+  * `zone_tag_cards` can be combined with `layer_of_zones_cards` to reserve zones for particular features like paths, structures, etc.
+  * If your layers of zones get weird zones that stick out from them, look into the `minimum_loz_connection_width` setting. (Found in the village_zone component. e.g `badger:village_zone` within `piglin_obstacle_large.json`)
+  * Layers of zones by default try to avoid having tight pinch points in the ring it creates, and tries to add zones to pad out thin sections.  It can cause issues specifically with hex based zones.
 
-Example
+![Example Visual](images/village_generation/image08.png)
 
-![](images/village_generation/image06.png)
+```jsx
+// B#
+  const northZone = ZonesCard("addZone", 1);
+  DECK_MultiplyByMultipleRules(northZone, [
+    ZoneHeightChangeCard("20Height"),
+    PlacementPreferenceCard("placeInDirectionNorthWithWedgeBrush"),
+  ]);
 
-![](images/village_generation/image07.png)
+  const southZone = ZonesCard("addZone", 1);
+  DECK_MultiplyByMultipleRules(southZone, [
+    ZoneHeightChangeCard("SHeight"),
+    PlacementPreferenceCard("placeInDirectionSouthWithWedgeBrush"),
+  ]);
 
-Note
+  const eastZone = ZonesCard("addZone", 1);
+  DECK_MultiplyByMultipleRules(eastZone, [
+    ZoneHeightChangeCard("10Height"),
+    PlacementPreferenceCard("placeInDirectionEastWithWedgeBrush"),
+  ]);
 
-* Layers of zones are always added to a district. If no explicit district is specified, the main district is used by default.
-* The outer layer of zones around all the district zones that aren’t part of the village yet will be added to the district.
-* **zone_tag_cards** can be combined with **layer_of_zones_cards** to reserve zones for particular features like paths, structures, etc.
-* If your layers of zones get weird zones that stick out from them, look into the **minimum_loz_connection_width** setting. 
-(Found in the village_zone component.  ie. in piglin_obstacle_large.json under **badger:village_zone**)
-Layers of zones by default try to avoid having tight pinch points in the ring it creates, and tries to add zones to pad out thin sections.  It can cause issues specifically with hex based zones.
-
-![](images/village_generation/image08.png)
-
-![](images/village_generation/image09.png)
+  const westZone = ZonesCard("addZone", 1);
+  DECK_MultiplyByMultipleRules(westZone, [
+    ZoneHeightChangeCard("15Height"),
+    PlacementPreferenceCard("placeInDirectionWestWithWedgeBrush"),
+  ]);
+```
 
 _In this example, four raised zones are added to the north, south, east, and west using directional placement preference cards._
 
-#### Zone Tag Cards 
-When zones are added to a village district, they can be given one or more tags so that they can be identified later with a card from the zone_filter_cards library. Multiply a card from the zones_cards library or the layer_of_zones_cards library with a card from the zone_tag_cards library to add that tag to the zone tag set.
+---
 
-Library Card Name
+#### Zone Tag Cards
 
-**zone_tag_cards**
+* **Card Library Name**: `zone_tag_cards`
 
-Settings
+When zones are added to a village district, they can be given one or more tags so that they can be identified later with a card from the `zone_filter_cards` library. Multiply a card from the `zones_cards` library or the `layer_of_zones_cards` library with a card from the `zone_tag_cards` library to add that tag to the zone tag set.
 
-**zone_tag**
+**Settings**:
 
-The name of the tag that should be added to the tag set of the zone(s) that it’s applied to.
+* **`zone_tag`**: The name of the tag that should be added to the tag set of the zone(s) that it's applied to.
 
-#### Zone Filter Cards 
-When a village feature needs to be placed in zones that have been given a specific zone tag (see zone_tag_cards), a card from the zone_filter_cards library with a zone_filter that matches the zone tag should be multiplied with the village feature card. For example, if a group of zones have been multiplied with a zone tag card with a zone_tag of “tower town”, multiplying a card from the buildable_cards library with a zone_filter_cards card that has a zone_filter of “tower town” (and exclude set to false) will limit the zones that the buildable can place in to the “tower town” zones.
+---
 
-Card Library Name
+#### Zone Filter Cards
 
-**zone_filter_cards**
+**Card Library Name**: `zone_filter_cards`
 
+When a village feature needs to be placed in zones that have been given a specific zone tag (see `zone_tag_cards`), a card from the `zone_filter_cards` library with a `zone_filter` that matches the zone tag should be multiplied with the village feature card. For example, if a group of zones have been multiplied with a zone tag card with a `zone_tag` of `tower_town`, multiplying a card from the `buildable_cards` library with a `zone_filter_cards` card that has a `zone_filter` of `tower_town` (and exclude set to false) will limit the zones that the buildable can place in to the `tower_town` zones.
 
-Settings
+**Settings**:
 
-**zone_filter**
+* **`zone_filter`**: The zone tag name to filter zones by.
 
-The zone tag name to filter zones by.
+* **`exclude`**: Specifies where the `zone_filter` zone tag name should be used to exclude or include zones. This can be true or false.
 
+---
 
-**exclude**
+#### Zone Height Change Cards
 
-Specifies where the zone_filter zone tag name should be used to exclude or include zones. This can be true or false.
+**Card Library Name**: `zone_height_change_cards`
 
-#### Zone Height Change Cards 
+When multiplied with cards from the `zones_cards` and `layer_of_zones_cards` libraries, the zones added to the village will raise or lower the height of the terrain inside the zone depending on the settings specified on the zone height change card.
 
-When multiplied with cards from the zones_cards and layer_of_zones_cards libraries, the zones added to the village will raise or lower the height of the terrain inside the zone depending on the settings specified on the zone height change card.
+**Settings**:
 
-Card Library Name
-**zone_height_change_cards**
+* **`zone_height_change`**: The distance in blocks that the terrain inside this zone will be raised or lowered. This value can be positive or negative.
 
-Settings
+* **`biome`**: The name of the biome that this zone should be changed to. This is optional.
 
-**zone_height_change**
+* **`zone_height_control`**: This specifies how the zone_height_change should be applied. The options are:
 
-The distance in blocks that the terrain inside this zone will be raised or lowered. This value can be positive or negative.
+  * **`height_control_centered`**: Relative to the original zone height of the first zone that was added to the village.
+  * **`height_control_averaged`**: Relative to the village average zone height of all the zones in the entire village map. This includes zones that haven’t been added to the village.
+  * **`height_control_lowest`**: Relative to the lowest zone in the group of zones being added with this particular request.
+  * **`height_control_none`**: Relative to the original zone height of the zone being raised or lowered.
 
-**biome**
+---
 
-The name of the biome that this zone should be changed to. This is optional.
+#### Moats and Pools
 
-**zone_height_control**
-
-This specifies how the zone_height_change should be applied. The options are:
-
-* “height_control_centered” - Relative to the original zone height of the first zone that was added to the village.
-* “height_control_averaged” - Relative to the village average zone height of all the zones in the entire village map. This includes zones that haven’t been added to the village.
-* “height_control_lowest” - Relative to the lowest zone in the group of zones being added with this particular request.
-* “height_control_none” - Relative to the original zone height of the zone being raised or lowered.
-
-#### Moats and Pools 
 Moat cards can be used to either create a moat that encircles a village district or a bunch of individual lava pools.
 
-#### Moat Cards 
-Card Library Name
+#### Moat Cards
 
-**moat_cards**
+**Card Library Name**: `moat_cards`
 
-Settings
+**Settings**:
 
-**biome**
+* **`biome`**: The name of the biome that will exist inside of the moat zones that get added when this card is played. The particular types of blocks that will exist inside of these moat zones will be determined by the biome.
 
-The name of the biome that will exist inside of the moat zones that get added when this card is played. The particular types of blocks that will exist inside of these moat zones will be determined by the biome.
-
-**width_in_blocks**
-
-How wide the moat should be in blocks. The moat will claim as many zones as it needs to meet the requested block width and then the edges of the moat will be displaced inward to reduce the width of the moat if the zone additions resulted in a width that's larger than the requested width.
+* **`width_in_blocks`**: How wide the moat should be in blocks. The moat will claim as many zones as it needs to meet the requested block width and then the edges of the moat will be displaced inward to reduce the width of the moat if the zone additions resulted in a width that's larger than the requested width.
 
 There are a number of other village generation settings that affect the zone sizes (grid shape, zone jitter) and the moat edges (edge noise) so this new setting will need to be tuned with those others in mind.
 
+* **`distance_in_zones`**: The distance in zones from the district that the moat will be placed around.
 
-**filling_depth**
+* **`filling_depth`**: [**DEPRECATED**] The **`biome`** now determines what blocks go where inside the moat zone.
 
-[not used] The **biome** now determines what blocks go where inside the moat zone.
+**Example**:
 
+```json
+// JSON
+  {
+    "moat_cards": [
+      {
+        "cost": 0,
+        "tags": ["DBBMoat"],
+        "biome": "lava moat",
+        "width_in_blocks": 10,
+        "filling_depth": 5,
+        "distance_in_zones": 1
+      }
+    ]
+  }
+```
 
-**distance_in_zones**
+* _Notes_:
+  * If `distance_in_zones` is 0, a moat will not be placed. Instead, all the zones that have been tagged (using `zone_tag_cards`) with a `lava_option` tag will be turned into a pool.
+  * If `distance_in_zones` is greater than 0, an external moat will be placed around the district specified. If no district has been explicitly specified using one of the `district_cards`, the main district will be used by default.
+  * Use `zone_height_change_cards` to control the height of the moat zones.
 
-The distance in zones from the district that the moat will be placed around.
+---
 
-Example
+### Walls
 
-![](images/village_generation/image10.png)
+**Card Library Name**: `wall_cards`
 
-Note
-* If distance_in_zones is 0, a moat will not be placed. Instead, all the zones that have been tagged (using zone_tag_cards) with a **“lava_option”** tag will be turned into a pool.
-* If distance_in_zones is greater than 0, an external moat will be placed around the district specified. If no district has been explicitly specified using one of the **district_cards**, the main district will be used by default.
-* Use **zone_height_change_cards** to control the height of the moat zones.
-
-
-### Walls 
 Wall cards can be used to place walls along the edges of village zones.
 
-#### Wall Cards 
-To place walls, first multiply all the zone cards that you want to place walls around with a zone tag card. Then multiply a wall card with a zone tag filter card with the same zone_tag_filter tag.
+#### Wall Cards
 
-(Optional) If you want wall fragments / gaps in the wall, you can multiply the wall card with a placement preference card(s) and a threshold card. This will score the zones that the wall would be placed around and if a zone score is less than the threshold, that zone won’t get a wall.
+To place walls, first multiply all the zone cards that you want to place walls around with a zone tag card. Then multiply a wall card with a zone tag filter card with the same `zone_tag_filter` tag.
+
+* (Optional): If you want wall fragments / gaps in the wall, you can multiply the wall card with a placement preference card(s) and a threshold card. This will score the zones that the wall would be placed around and if a zone score is less than the threshold, that zone won’t get a wall.
 
 The best way to create a gate or entrance in a set of walls is to request a path that connects the zones inside the walls (using the same zone tag) to some zones that are outside of the walls. The wall that the path crosses will be replaced with a gate.
 
+* _Note_: When terrain weathering is applied, walls can slip off the side of weathered edges. To avoid this, there is a `wall_offset` setting in the `badger:village_wall` component. This offset will move walls away from the edge. If it’s tuned greater than the maximum terrain weathering amount, that should ensure walls don’t slip.
 
-Note
-* When terrain weathering is applied, walls can slip off the side of weathered edges. To avoid this, there is a wall_offset setting in the badger:village_wall component. This offset will move walls away from the edge. If it’s tuned greater than the maximum terrain weathering amount, that should ensure walls don’t slip.
+```json
+// JSON
+  {
+    "badger_village_wall": {
+      "wall_offset": 3.0
+    }
+  }
+```
 
-![](images/village_generation/image11.png)
+**Settings**:
 
-Card Library Name
-**wall_cards**
+* `wall_buildable`: The name of the buildable to place for the wall.
 
-Settings
+* `path_entrance`: The name of a buildable. If a path crosses this wall, the wall segment that’s crossed will be removed and replaced with this entrance buildable. Usually this is a gate buildable.
 
-**wall_buildable**
+* `embedded_buildables`: A list of buildable names. When the wall is placed, each one of them will be placed at random locations along the wall if there’s room. It’s not recommended to use these for entrances. It’s better to use path cards so that gates will be placed in locations that can connect with the path.
 
-The name of the buildable to place for the wall.
+---
 
-**path_entrance**
+### Paths
 
-The name of a buildable. If a path crosses this wall, the wall segment that’s crossed will be removed and replaced with this entrance buildable. Usually this is a gate buildable.
+Path cards are used to place paths that connect village zones. To connect a buildable to a path, see the `build_from_district_path` and `connect_to_path` placement preference cards.
 
-**embedded_buildables**
+#### Path Cards
 
-A list of buildable names. When the wall is placed, each one of them will be placed at random locations along the wall if there’s room. It’s not recommended to use these for entrances. It’s better to use path cards so that gates will be placed in locations that can connect with the path.
+**Card Library Name**: `path_cards`
 
-### Paths 
-Path cards are used to place paths that connect village zones. To connect a buildable to a path, see the build_from_district_path and connect_to_path placement preference cards.
+`path_cards` need to be set up in a particular way before they’re added to the deck so that they’re handled correctly later when the deck is processed. For this reason, there is a special `B#` helper method to request a path that will connect two village zones, `CreatePathRequestOnBottomOf`.
 
-#### Path Cards 
-path_cards need to be set up in a particular way before they’re added to the deck so that they’re handled correctly later when the deck is processed. For this reason, there is a special B# helper method to request a path that will connect two village zones, CreatePathRequestOnBottomOf.
+```jsx
+// B#
 
-![](images/village_generation/image12.png)
+  const southPathStartRules = [PlacementPreferenceCard("closeToDistrictStart")];
+  const southPathEndRules = [
+    ZoneFilterCard("southPathZone"),
+    PlacementPreferenceCard("closeToDistrictStart"),
+    PlacementPreferenceCard("placeInDirectionSouthWithRectangleBrush"),
+  ];
+  CreatePathRequestOnBottomOf(
+    "defend_district_path",
+    southPathStartRules,
+    southPathEndRules,
+    baseDeck
+  );
+```
 
-The first parameter takes a tag identifier for the path card that will be used. In this case “defend_district_path”. The second and third parameters take arrays of rule cards that will be used to identify the best start and end zone for the path. The final parameter takes the deck which this new path request will be put on the bottom of.
+The first parameter takes a tag identifier for the path card that will be used. In this case `defend_district_path`. The second and third parameters take arrays of rule cards that will be used to identify the best start and end zone for the path. The final parameter takes the deck which this new path request will be put on the bottom of.
 
 The rule cards function in the same way as when they’re multiplied with zone, district, or buildable request cards. Zones will first be filtered and any placement preferences will be used to score the remaining zones so that we can find the best / highest scoring zone. This is done for the path start and path end.
 
-There is also another special B# helper function if you want a path that connects a village zone to the closest path to that zone, CreatePathFromZoneRequestOnBottomOf.
+There is also another special B# helper function if you want a path that connects a village zone to the closest path to that zone, `CreatePathFromZoneRequestOnBottomOf`.
 
-![](images/village_generation/image13.png)
+```jsx
+// B#
+  const northwestPathStartRules = [
+    ZoneFilterCard("outsideBaseZone"),
+    PlacementPreferenceCard(PLACEMENT_CLOSE_TO_VILLAGE_START),
+    PlacementPreferenceCard("placeInDirectionNorthWestWithRectangleBrush"),
+  ];
 
-The first parameter takes a tag identifier for the path card that will be used. In this case “defend_district_path”. The second parameter takes an array of rule cards that will be used to identify the best zone for the path to start in. Since the path will connect to the closest existing path, there’s no need for the additional array of rule cards that the CreatePathRequestOnBottomOf method takes. The final parameter takes the deck which this new path request will be put on the bottom of.
+  CreatePathFromZoneRequestOnBottomOf(
+    "attack_district_path",
+    northwestPathStartRules,
+    baseDeck
+  );
+```
 
-Note
-* Bridges will be placed when the path connects two zones with a body of water or when the path connects two zones that have a large enough height change.
-* Gates will be placed when the path crosses a wall.
-* Bridges failing to place can cause paths to fail too.  Adding a **force_building_placement_cards** card on either set of path rules passed into the CreatePathRequestOnBottomOf call will place the path without bridges if it would fail otherwise.  This is currently used by defend bases to ensure gates appear even if bridges won’t.
+The first parameter takes a tag identifier for the path card that will be used. In this case `defend_district_path`. The second parameter takes an array of rule cards that will be used to identify the best zone for the path to start in. Since the path will connect to the closest existing path, there’s no need for the additional array of rule cards that the `CreatePathRequestOnBottomOf` method takes. The final parameter takes the deck which this new path request will be put on the bottom of.
 
-Card Library Name
+* _Notes_:
+  * Bridges will be placed when the path connects two zones with a body of water or when the path connects two zones that have a large enough height change.
+  * Gates will be placed when the path crosses a wall.
+  * Bridges failing to place can cause paths to fail too.  Adding a `force_building_placement_cards` card on either set of path rules passed into the CreatePathRequestOnBottomOf call will place the path without bridges if it would fail otherwise.  This is currently used by defend bases to ensure gates appear even if bridges won’t.
 
-**path_cards**
+**Settings**:
 
-Settings
+* `is_district_path`: If this is set to true, the path created with this request will use the path settings defined in the `village_district_path` component on the village entity. Otherwise the settings in the `village_building_path` will be used. An assert will be triggered if the component needed doesn't exist.
 
-**is_district_path**
+**Example**:
 
-If this is set to true, the path created with this request will use the path settings defined in the village_district_path component on the village entity. Otherwise the settings in the village_building_path will be used. An assert will be triggered if the component needed doesn't exist.
+```json
+// JSON
+  {
+    "path_cards": [
+      {
+        "cost": 0,
+        "tags": ["village_district_path"],
+        "is_district_path": true
+      },
+      {
+        "cost": 0,
+        "tags": ["village_building_path"],
+        "is_district_path": true
+      }
+    ]
+  }
+```
 
-Example
+![Old Dev Village](images/village_generation/image14.png)
+![Old Dev Path](images/village_generation/image15.png)
 
-![](images/village_generation/image14.png)
+---
 
-![](images/village_generation/image15.png)
+### Terrain Weathering
 
-![](images/village_generation/image16.png)
+**Card Library Name**: `terrain_weathering_cards`
 
-### Terrain Weathering 
 Without terrain weathering, zone height changes will result in a lot of straight and perfectly smooth cliffs. Village weathering cards help rough them up a bit. The effect is a combination of a sawtooth wave layered with gradients and a lot of noise.
 
-#### Terrain Weathering Cards 
-Adding this card to a village generation deck will apply terrain weathering to all the edges of zones that have been raised or lowered with height change or moat cards. The terrain weathering card doesn’t have any settings. See the badger:village_weathering component for the terrain weathering settings.
+#### Terrain Weathering Cards
 
-Card Library Name
+Adding this card to a village generation deck will apply terrain weathering to all the edges of zones that have been raised or lowered with height change or moat cards. The terrain weathering card doesn’t have any settings. See the `badger:village_weathering` component for the terrain weathering settings.
 
-**terrain_weathering_cards**
+**Example**:
 
-Settings
+![Terrain Weathering](images/village_generation/image17.png)
+![Terrain Weathering 2](images/village_generation/image18.png)
 
-None
+---
 
-Example
+### Buildables
 
-![](images/village_generation/image17.png)
-
-![](images/village_generation/image18.png)
-
-### Buildables 
 Buildables (aka structures or buildings) are requested using buildable cards.
 
-#### Buildable Cards 
-Cards from the buildable_cards library are often multiplied with district, placement preference, and zone filter cards to control where they get placed in the village.
+#### Buildable Cards
 
-Note
-* It’s best practice to add the largest, most important buildable cards to the deck first. Buildables will be placed in the order that the cards are pulled from the deck. If smaller non-critical structures are placed first, they might space out and take up the room needed to place the larger structures.
-* Buildable cards are the only kind of village feature card that can be handled after a village is done in generating for the first time. For example, when piglin bases respond to player attacks in campaign or when they rebuild in PvP.
+**Card Library Name**: `buildable_cards`
 
-Card Library Name
+Cards from the `buildable_cards` library are often multiplied with district, placement preference, and zone filter cards to control where they get placed in the village.
 
-**buildable_cards**
+* _Notes_:
+  * It’s best practice to add the largest, most important buildable cards to the deck first. Buildables will be placed in the order that the cards are pulled from the deck. If smaller non-critical structures are placed first, they might space out and take up the room needed to place the larger structures.
+  * Buildable cards are the only kind of village feature card that can be handled after a village is done in generating for the first time. For example, when piglin bases respond to player attacks in campaign or when they rebuild in PvP.
 
-Settings
+**Settings**:
 
-**buildable**
+* `buildable`: The identifier of the buildable.
 
+---
 
-## Placement Preference Cards 
+## Placement Preference Cards
+
+**Card Library Name**: `placement_preference_cards`
+
 In general, placement preference cards should be multiplied with other cards like district, path, wall, zone, and buildable cards to change how those cards get handled.
 
-Card Library Name
+---
 
-**placement_preference_cards**
+### Circle Sine Wave
 
-### Circle Sine Wave 
-This placement preference will use the angle between the zone positions and the district start position to sample from a sine wave. The result from that sine wave is shifted so that the placement preference will by default add a score between 0 and 1 to the zone being scored.
+**Card Name**: `circle_sine_wave`
 
-Name
+This placement preference will use the angle between the zone positions and the district start position to sample from a sine wave. The result from that sine wave is shifted so that the placement preference will by default add a score between `0` and `1` to the zone being scored.
 
-**circle_sine_wave**
+**Settings**:
 
-Settings
+* **`amplitude`**: By default, the `circle_sine_wave` placement preference will add a score between 0 and 1. This score will be multiplied with the amplitude. As a result, the amplitude can be used to increase or decrease the effect that this placement preference has on the final score.
 
-**amplitude**
+* **`frequency`**: The frequency determines the number of times the sine wave oscillates between 0 and 1 over the 0 to 360 degree range.
 
-By default, the circle_sine_wave placement preference will add a score between 0 and 1. This score will be multiplied with the amplitude. As a result, the amplitude can be used to increase or decrease the effect that this placement preference has on the final score.
+**Example**:
 
-**frequency**
+```json
+//JSON
+  {
+    "cost": 0,
+    "tags": ["example_circle_sine_wave"],
+    "placement_preference": "circle sine wave",
+    "amplitude": 0.45,
+    "frequency": 5.0
+  }
+```
 
-The frequency determines the number of times the sine wave oscillates between 0 and 1 over the 0 to 360 degree range.
+![Circle Sine Wave Example](images/village_generation/image20.png)
 
-Example
+_When combined with a wall request card and a threshold card, `circle_sine_wave` can be used to create fragmented walls. The yellow lines in the example image above are an easy way to visualize the sine wave as it affects the scores of the zones._
 
-![](images/village_generation/image19.png)
+---
 
-![](images/village_generation/image20.png)
+### Close to Buildable
 
-When combined with a wall request card and a threshold card, circle_sine_wave can be used to create fragmented walls. The yellow lines are how I like to visualize the sine wave as it affects the scores of the zones.
+**Card Name**: `close_to_buildable`
 
-### Close to Buildable 
-Zones will be scored higher if they're close to the buildable specified.
+This placement preference will score zones higher if they are close to the specified buildable area.
 
-Name
+**Settings**:
 
-**close_to_buildable**
+**`buildable`**: The tag for the buildable to place close to. This should match one of the tags in the `tags` list in the `badger:tags` component for the buildable entity being used.
 
-Settings
+**Example**:
 
-**buildable**
+```json
+// JSON
+  {
+    "cost": 0,
+    "tags": ["example_close_to_pig_tower"],
+    "placement_preference": "close_to_buildable",
+    "buildable": "pigTower"
+  }
+```
 
-The tag for the buildable to place close to. This should match one of the tags in the “tags” list in the badger:tags component for that buildable entity.
+![Close to Buildable Example](images/village_generation/image22.png)
 
-Example
+_In this example, the towers are requested close to the buildable with the `pigGate` tag._
 
-![](images/village_generation/image26.png)
+---
 
-![](images/village_generation/image22.png)
+### Close to District Center
 
-In this example, the towers are requested close to the buildable with the “pigGate” tag. 
+**Card Name**: `close_to_district_center`
 
-### Close to District Center 
-This placement preference will score zones higher if they’re closer to the barycenter of all the district zones. The closest zone(s) will be given a score of 1, the farthest zone(s) a score of 0, and all the other district zones will be given a score in between 0 and 1 depending on how far they are from the center.
+This placement preference will score zones higher if they're closer to the center point of all the district zones. The closest zone(s) will receive a score of 1, the farthest zone(s) will receive a score of 0, and all other district zones will receive a score in between 0 and 1 based on their distance from the center point.
 
-Note
-* The district center will update each time a new zone is added to the district. That means the center will be continuously changing until all the zones have been added. Using the close_to_district_center before all the zones have been added may have some surprising results.
+* _Note_: The district center will update each time a new zone is added to the district. That means the center will be continuously changing until all the zones have been added. Using the `close_to_district_center` before all the zones have been added may have some surprising results.
 
-Name
+**Example**:
 
-**close_to_district_center**
+```json
+// JSON
+  {
+    "cost": 0,
+    "tags": ["example_close_to_district_center"],
+    "placement_preference": "close to district center"
+  }
+```
 
-Settings
+![close_to_district_center Example](images/village_generation/image24.png)
 
-None
+_This example base has a main district in the center, a separate district on the left that's lower than the main district, and a separate district on the right that’s higher than the main district. All the zones in the district on the left were added with the `close_to_district_start` placement preference. All the zones in the district on the right were added with the `close_to_district_center` placement preference. Likewise, the tower in the district on the left was requested with the `close_to_district_start` placement preference and the tower in the district on the right was requested with the `close_to_district_center` placement preference._
 
-Example
+---
 
-![](images/village_generation/image23.png)
+### Close to District Start
 
-![](images/village_generation/image24.png)
+**Card Name**: `close_to_district_start`
 
-This example base has a main district in the center, a separate district on the left that's lower than the main district, and a separate district on the right that’s higher than the main district. All the zones in the district on the left were added with the close_to_district_start placement preference. All the zones in the district on the right were added with the close_to_district_center placement preference. Likewise, the tower in the district on the left was requested with the close_to_district_start placement preference and the tower in the district on the right was requested with the close_to_district_center placement preference.
+The `close_to_district_start` placement preference will score zones higher if they’re closer to the zone that was added first to the district. The zone that was added first will contain the starting position and will be given a score of 1. The farthest zone(s) from the starting position will be given a score of 0 and all the zones in between will be given a score between 0 and 1 depending on how far they are from the start.
 
+**Example**:
 
-### 
-Close to District Start 
+```json
+// JSON
+  {
+    "cost": 0,
+    "tags": ["example_close_to_district_start"],
+    "placement_preference": "close_to_district_start"
+  }
+```
 
-The close_to_district_start placement preference will score zones higher if they’re closer to the zone that was added first to the district. The zone that was added first will contain the starting position and will be given a score of 1. The farthest zone(s) from the starting position will be given a score of 0 and all the zones in between will be given a score between 0 and 1 depending on how far they are from the start.
+---
 
-Name
+### Close to Influence
 
-**close_to_district_start**
+**Card Name**: `close_to_influence`
 
-Settings
+This placement preference will score zones higher if they’re close to a particular unit that has the `badger:village_influence` component. This can be used to place buildables near attacking enemy mobs or friendly mobs during gameplay.
 
-None
+**Settings**:
 
-Example
+**`alliance_rule_filter`**: Indicates what units should influence this placement preference. Possible values include “enemy”, “friendly”, and “any_team”.
 
-![](images/village_generation/image25.png)
+---
 
-### Close to Influence 
-This placement preference will score zones higher if they’re close to a particular unit that has the “badger:village_influence” component. This can be used to place buildables near attacking enemy mobs or friendly mobs during gameplay.
+### Close to Village Start
 
-Name
-
-**close_to_influence**
-
-Settings
-
-**alliance_rule_filter**
-
-Indicates what units should influence this placement preference. Possible values include “enemy”, “friendly”, and “any_team”.
-
-Close to Village Start
+**Card Name**: `close_to_village_start`
 
 The placement preference is the same as the close_to_district_start placement preference. It exists because it was added before it was possible to have multiple districts in a village.
 
-Name
+* _Miclee Note_:
+  * I have been using `close_to_village_start` a lot in the past, is it really the same? I need to test.
 
-**close_to_village_start**
+---
 
-Settings
+### Close to Walls
 
-None
+**Card Name**: `close_to_walls`
 
+This placement preference scores zones higher based on the number of walls bordering them.
 
-### Close to Walls 
-Score zones higher based on the number of walls bordering them.
+* _Note_: The `close_to_buildable` placement preference can be used for the same purpose if a wall tag is specified for the `buildable` setting. This `close_to_wall` placement preference will only score zones higher if the zones actually have walls bordering them whereas the `close_to_buildable` placement preference will also score nearby zones higher even if they don’t have walls actually bordering them.
 
-Note
-* The close_to_buildable placement preference can be used for the same purpose if a wall tag is specified for the “buildable” setting. This close_to_wall placement preference will only score zones higher if the zones actually have walls bordering them whereas the close_to_buildable placement preference will also score nearby zones higher even if they don’t have walls actually bordering them.
+---
 
-Name
+### Close to Water
 
-**close_to_walls**
+**Card Name**: `close_to_water`
 
-Settings
+This placement preference scores zones higher when they are in proximity to a zone containing water.
 
-None
+**Example**:
 
-### Close to Water 
-Zones will be scored higher if they're close to a zone containing water.
+```json
+// JSON
+  {
+    "cost": 0,
+    "tags": ["example_close_to_water"],
+    "placement_preference": "close_to_water"
+  }
+```
 
-Name
-
-**close_to_water**
-
-Settings
-
-None
-
-Example
-
-![](images/village_generation/image26.png)
-
-![](images/village_generation/image27.png)
+![Close to Water Example](images/village_generation/image27.png)
 
 In this example, the nether spreaders were requested outside the village and close to water.
 
+---
 
-### Connect to Path 
-This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the “connect_to_path” placement preference will try to generate a path from the position of the buildable to the nearest path.
+### Connect to Path
 
+**Card Name**: `connect_to_path`
 
-Note
-* Since the buildable is placed and then the path is created, it’s common for the path to not be able to find or connect to an existing path because of the buildables placement. For instance, if the buildable is placed such that it’s facing another buildable, it’s likely the path won’t have enough space to place.
-* The “build_from_district_path” placement preference is generally a better method for connecting buildables to paths.
+This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the `connect_to_path` placement preference will try to generate a path from the position of the buildable to the nearest path.
 
-Name
+* _Notes_:
+  * Since the buildable is placed and then the path is created, it’s common for the path to not be able to find or connect to an existing path because of the buildables placement. For instance, if the buildable is placed such that it’s facing another buildable, it’s likely the path won’t have enough space to place.
+  * The `build_from_district_path` placement preference is generally a better method for connecting buildables to paths.
 
-**connect_to_path**
+**Example**:
 
-Settings
-None
+```json
+//JSON
+    {
+        "cost": 0,
+        "tags": ["connectToPath"],
+        "placement_preference": "connect_to_path"
+    }
+```
 
-Example
+---
 
-![](images/village_generation/image28.png)
+### Clear Resources In Zone
 
-### Clear Resources In Zone 
+**Card Name**: `clear_resources_in_zone`
+
 This placement preference can be multiplied with a zone request card. Zone request cards with this placement preference will remove all the world features that overlap the zone(s) that get added to the village when the zone request card is handled.
 
-Note
-* It’s not necessary to use this card to clear world features for buildables. World features will be removed if they overlap buildables regardless.
+* _Note_: It is **not** necessary to use this card to clear world features for buildables. World features will be removed if they overlap buildables regardless by default.
 
-Name
+---
 
-**clear_resources_in_zone**
+### Disable Spacing
 
-Settings
+There is a default spacing behavior that tries to distribute structures so that they don’t bunch up too much when they have a lot of room to place in. That spacing behavior is turned off for a particular buildable request if the `disable_spacing` placement preference is multiplied with that buildable request.
 
-None
+**Card Name**: `disable_spacing`
 
-### Disable Spacing 
-There is a default spacing behavior that tries to distribute structures so that they don’t bunch up too much when they have a lot of room to place in. That spacing behavior is turned off for a particular buildable request if the “disable_spacing” placement preference is multiplied with that buildable request.
+---
 
-Name
+### Distance From District Start
 
-**disable_spacing**
+**Card Name**: `distance_from_district_start`
 
-Settings
-
-None
-
-### Distance From District Start 
 This placement preference will score zones higher if the distance between the zone site and the district start is close to a specified distance. This placement preference can be multiplied with district, buildable, and path requests.
 
-Note
-* This preference will be most reliable in low jitter bases. This is especially true if you are using smaller distances and tight tolerances with this preference.
+* _Note_: This preference will be most reliable in low jitter bases. This is especially true if you are using smaller distances and tight tolerances with this preference.
 
+**Settings**:
 
-Name
+* **`distance_from_district_start`**: The distance (range or single value) in blocks from the district starting position that the placement should ideally be placed.
 
-**distance_from_district_start**
+* **`distance_to_zero_score`**: The distance from the `distance_from_district_start` until the score added to zones by this placement preference is reduced to 0. For the example card below, with placement preference will add 1 to the zones that are between 80-90 blocks from the district start. At 70-80 and 90-100 blocks the score added will be a value between 0 and 1 depending on how far it is from 80 and 90 blocks away.
 
+**Example**:
 
-Settings
+```json
+// JSON
+  {
+    "unique_card_id": "example_distance_district_start",
+    "cost": 0,
+    "tags": ["example_distance_district_start"],
+    "placement_preference": "distance_from_district_start",
+    "distance_from_district_start": [80, 90],
+    "distance_to_zero_score": [10, 10]
+  }
+```
 
-**distance_from_district_start**
+```jsx
+// B#
+  // North District
+  const districtNorth = DistrictCard("district1");
+  DECK_MultiplyByMultipleRules(districtNorth, [
+    PlacementPreferenceCard("example_distance_from_district_start"),
+    PlacementPreferenceCard("placeInDirectionNorthwithRectangleBrush"),
+    PlacementPreferenceCard("withScoreThresholdSmall")
+  ]);
+  DECK_PutOnBottomOf(districtNorth, baseDeck);
+```
 
-The distance (range or single value) in blocks from the district starting position that the placement should ideally be placed.
+_In this example the placement preference is being used to place a district a specific distance from the village start/center._
 
-**distance_to_zero_score**
+![distance_from_district_start Visual](images/village_generation/image31.png)
 
-The distance from the **distance_from_district_start** until the score added to zones by this placement preference is reduced to 0. For the example card below, with placement preference will add 1 to the zones that are between 80-90 blocks from the district start. At 70-80 and 90-100 blocks the score added will be a value between 0 and 1 depending on how far it is from 80 and 90 blocks away.
+---
 
-Example
+### Elevation Range
 
-![](images/village_generation/image29.png)
+**Card Name**: `elevation_range`
 
-![](images/village_generation/image30.png)
-
-Sorry, you’ll likely need to zoom in 200% to see this one. In this example the placement preference is being used to place a district a specific distance from the village start/center. (This was used to make the screenshot below.)
-
-![](images/village_generation/image31.png)
-
-### Elevation Range 
 This placement preference will score zones higher if the normalized height at the zone site is close to the specified target height.
 
-Note
-* If you aren't using a score threshold, zones that fall outside the range can still be used once good zones are exhausted, so be careful.
+* _Note_:
+  * If you aren't using a score threshold, zones that fall outside the range can still be used once good zones are exhausted, so be careful.
 
-Name
+**Settings**:
 
-**elevation_range**
+* **`elevation_target`**: This can be a value between 0 and 1. If a zone has a normalized height of 1, that zone is the highest zone in the village.
 
-Settings
+* **`elevation_max`**: This can be a value between 0 and 1. It’s the upper limit for zone heights. If a zone has a normalized height that’s higher, this placement preference won’t add any score.
 
-**elevation_target**
+* **`elevation_min`**: This can be a value between 0 and 1. It’s the lower limit for zone heights. If a zone has a normalized height that’s lower, this placement preference won’t add any score.
 
-This can be a value between 0 and 1. If a zone has a normalized height of 1, that zone is the highest zone in the village.
+**Example**:
 
-**elevation_max**
+```json
+// JSON
+  {
+    "cost": 0,
+    "tags": ["elevationTargetMax"],
+    "placement_preference": "elevation_range",
+    "elevation_target": 1.0
+  },
+  {
+    "cost": 0,
+    "tags": ["elevationRangeLow"],
+    "placement_preference": "elevation_range",
+    "elevation_target": 0.1,
+    "elevation_max": 0.4,
+    "elevation_min": 0.0
+  }
+```
 
-This can be a value between 0 and 1. It’s the upper limit for zone heights. If a zone has a normalized height that’s higher, this placement preference won’t add any score.
+![elevation_range Visual](images/village_generation/image33.png)
 
-**elevation_min**
-This can be a value between 0 and 1. It’s the lower limit for zone heights. If a zone has a normalized height that’s lower, this placement preference won’t add any score.
+---
 
-Example
+### Facing Buildable
 
-![](images/village_generation/image32.png)
+**Card Name**: `facing_buildable`
 
-![](images/village_generation/image33.png)
-
-### Facing Buildable 
 This placement preference can be multiplied with buildable request cards. Buildable request cards with this placement preference will try to place with an orientation that faces the nearest specified buildable if one exists.
 
-Note
-* Buildables can only face cardinal directions due to their blocky nature. If the buildable to face is north west of the buildable being placed, the placed buildable should face north or west.
-* Without an orientation placement preference, buildables will choose their facing direction randomly.
+* _Notes_:
+  * Buildables can only face cardinal directions due to their blocky nature. If the buildable to face is north west of the buildable being placed, the placed buildable should face north or west.
+  * Without an orientation placement preference, buildables will choose their facing direction randomly.
 
-Name
+**Settings**:
 
-**facing_buildable**
+* **buildable** The tag for the buildable to face towards. For example, if we wanted to create a `facing_buildable` card that makes buildables face the nearest fountain, we would set this setting to `fountain` because the fountain buildable has the `fountain` tag in its `badger:tags` component `tags` list.
 
-Settings
+**Example**:
 
-**buildable**
+![facing_buildable Example](images/village_generation/image34.png)
 
-The tag for the buildable to face towards. For example, if we wanted to create a facing_buildable card that makes buildables face the nearest fountain, we would set this setting to “fountain” because the fountain buildable has the “fountain” tag in its badger:tags component “tags” list.
+_All these buildings have a `facing_buildable` placement preference with fountain specified as the building to face._
 
-Example
+---
 
-![](images/village_generation/image34.png)
+### Facing Influence
 
-All these buildings have a facing_buildable placement preference with fountain specified as the building to face.
+**Card Name**: `facing_influence`
 
-### Facing Influence 
-This placement preference can be multiplied with buildable request cards. Buildable request cards with this placement preference will try to place with an orientation that faces the nearest source of influence that passes the specified alliance rule filter. Sources of influence will have the “badger:village_influence” component. This can be used to place buildables that face towards attacking enemy mobs or friendly mobs during gameplay.
+This placement preference can be multiplied with buildable request cards. Buildable request cards with this placement preference will try to place with an orientation that faces the nearest source of influence that passes the specified alliance rule filter. Sources of influence will have the `badger:village_influence` component. This can be used to place buildables that face towards attacking enemy mobs or friendly mobs during gameplay.
 
-Name
+**Settings**:
 
-**facing_influence**
+* **`alliance_rule_filter`**: Indicates what units should influence this placement preference. Possible values include `enemy`, `friendly`, and `any_team`.
 
-Settings
+---
 
-**alliance_rule_filter**
+### Facing Water
 
-Indicates what units should influence this placement preference. Possible values include “enemy”, “friendly”, and “any_team”.
+**Card Name**: `facing_water`
 
-### Facing Water 
 This placement preference can be multiplied with buildable request cards. Buildable request cards with this placement preference will try to place with an orientation that faces the nearest body of water if one exists.
 
-Note
-* Buildables can only face cardinal directions due to their blocky nature. If the body of water to face is north west of the buildable being placed, the placed buildable should face north or west.
-* Without an orientation placement preference, buildables will choose their facing direction randomly.
+* _Notes_:
+  * Buildables can only face cardinal directions due to their blocky nature. If the body of water to face is north west of the buildable being placed, the placed buildable should face north or west.
+  * Without an orientation placement preference, buildables will choose their facing direction randomly.
 
-Name
+**Example**:
 
-**facing_water**
+![facing_water Example](images/village_generation/image35.png)
 
-Settings
+_All of these buildings have the `facing_water` placement preference._
 
-None
+---
 
-Example
+### Facing Cardinal Direction
 
-![](images/village_generation/image35.png)
+**Card Name**: `facing_cardinal_direction`
 
-All these buildings have the facing_water placement preference.
+This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the `facing_cardinal_direction` placement preference will be rotated to face the specified cardinal direction.
 
-### Facing Cardinal Direction 
-This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the “facing_cardinal_direction” placement preference will be rotated to face the specified cardinal direction.
+**Settings**:
 
-Name
+* **`cardinal_direction`**: The cardinal direction that the buildable should face. The options are north, south, east, or west.
 
-**facing_cardinal_direction**
+**Example**:
 
-Settings
+```json
+// JSON
+  {
+    "cost": 0,
+    "tags": ["facingNorth"],
+    "placement_preference": "facing_cardinal_direction",
+    "cardinal_direction": "north"
+  }
+```
 
-**cardinal_direction**
+```jsx
+// B#
+  DECK_MultiplyBySingle(WoF, PlacementPreferenceCard("facingNorth"))
+```
 
-The cardinal direction that the buildable should face. The options are north, south, east, or west.
+---
 
-Example
+### Far From Buildable
 
-![](images/village_generation/image36.png)
+**Card Name**: `far_from_buildable`
 
-![](images/village_generation/image37.png)
+The `far_from_buildable` placement preference is the inverse of the `close_to_buildable` placement preference.
 
-### Far From Buildable 
-The far_from_buildable placement preference is the inverse of the close_to_buildable placement preference.
+**Settings**:
 
-Name
+* **`buildable`**: The tag for the buildable to place close to. This should match one of the tags in the `tags` list in the `badger:tags` component for the buildable entity desired.
 
-**far_from_buildable**
+**Example**:
 
-Settings
+![far_from_buildable Example](images/village_generation/image38.png)
 
-**buildable**
+_The barracks in this example were requested far from buildables with the tag `pigTower`._
 
-The tag for the buildable to place close to. This should match one of the tags in the “tags” list in the badger:tags component for that buildable entity.
+---
 
-Example
+### Far From District Center
 
-![](images/village_generation/image38.png)
+**Card Name**: `far_from_district_center`
 
-The barracks in this example were requested far from buildables with the tag “pigTower”.
+The `far_from_district_center` placement preference is the inverse of the `close_to_district_center` placement preference.
 
-### Far From District Center 
-The far_from_district_center placement preference is the inverse of the close_to_district_center placement preference.
+**Example**:
 
-Name
+```json
+// JSON
+  {
+    "cost": 0,
+    "tags": ["example_far_from_district_center"],
+    "placement_preference": "far_from_district_center"
+  }
+```
 
-**far_from_district_center**
+---
 
-Settings
+### Far From District Start
 
-None
+**Card Name**: `far_from_district_start`
 
-Example
+The `far_from_district_start` placement preference is the inverse of the `close_to_district_start` placement preference.
 
-![](images/village_generation/image39.png)
+**Example**:
 
-### Far From District Start 
-The far_from_district_start placement preference is the inverse of the close_to_district_start placement preference.
+```json
+// JSON
+  {
+    "cost": 0,
+    "tags": ["example_far_from_district_start"],
+    "placement_preference": "far_from_district_start"
+  }
+```
 
-Name
+---
 
-**far_from_district_start**
+### Far From Influence
 
-Settings
+**Card Name**: `far_from_influence`
 
-None
+The `far_from_influence` placement preference is the inverse of the `close_to_influence` placement preference.
 
-Example
+**Settings**:
 
-![](images/village_generation/image40.png)
+* **`alliance_rule_filter`**: Indicates what units should influence this placement preference. Possible values include `enemy`, `friendly`, and `any_team`.
 
-### Far From Influence 
-The far_from_influence placement preference is the inverse of the close_to_influence placement preference.
+---
 
-Name
+### Far From Water
 
-**far_from_influence**
+**Card Name**: `far_from_water`
 
-Settings
+The `far_from_water` placement preference is the inverse of the `close_to_water` placement preference.
 
-**alliance_rule_filter**
+---
 
-Indicates what units should influence this placement preference. Possible values include “enemy”, “friendly”, and “any_team”.
+### Far From Village Start
 
-### Far From Water 
-The far_from_water placement preference is the inverse of the close_to_water placement preference.
+**Card Name**: `far_from_village_start`
 
-Name
+The placement preference is the same as the `far_from_district_start` placement preference. It exists because it was added before it was possible to have multiple districts in a village.
 
-**far_from_water**
+---
 
-Settings
+### Noise
 
-None
+**Card Name**: `noise`
 
-### Far From Village Start 
-The placement preference is the same as the “far_from_district_start” placement preference. It exists because it was added before it was possible to have multiple districts in a village.
-
-Name
-
-**far_from_village_start**
-
-Settings
-
-None
-
-### Noise 
 The noise placement preference will sample a 2D noise map at village zone positions and add the result to the zone scores.
 
-Name
+**Settings**:
 
-**noise**
+* **`amplitude`**: By default, the `noise` placement preference will add a score between 0 and 1. This score will be multiplied with the amplitude. As a result, the `amplitude` can be used to increase or decrease the effect that this placement preference has on the final score.
 
-Settings
+* **`scale`**: A lower value will result in a noise map with more gradual changes. A higher value will have the opposite effect.
 
-**amplitude**
+**Example**:
 
-By default, the noise placement preference will add a score between 0 and 1. This score will be multiplied with the amplitude. As a result, the amplitude can be used to increase or decrease the effect that this placement preference has on the final score.
+```json
+{
+    "cost": 0,
+    "tags": [ "example_noise" ],
+    "placement_preference": "noise",
+    "amplitude": 0.45,
+    "scale": 0.02
+}
+```
 
-**scale**
+![noise placement_preference](images/village_generation/image42.png)
 
-A lower value will result in a noise map with more gradual changes. A higher value will have the opposite effect.
+_When combined with a wall request card and a threshold card, noise can be used to create fragmented walls._
 
-Example
+---
 
-![](images/village_generation/image41.png)
+### Build From District Path
 
-![](images/village_generation/image42.png)
+**Card Name**: `build_from_district_path`
 
-When combined with a wall request card and a threshold card, noise can be used to create fragmented walls.
+This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the `build_from_district_path` placement preference will place buildables that are connected to a specified district path. This guarantees that the placed buildable is connected to a path and not facing the side of another buildable.
 
-### Build From District Path 
-This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the “build_from_district_path” placement preference will place buildables that are connected to a specified district path. This guarantees that the placed buildable is connected to a path and not facing the side of another buildable.
+* _Notes_:
+  * In `village.json`, there is a setting for the maximum distance allowed from the starting path zone.  This is to keep the buildable from running too far away, but tags and filters will usually kick in first.
 
-Note
-* In village.json, there is a setting for the maximum distance allowed from the starting path zone.  This is to keep the buildable from running too far away, but tags and filters will usually kick in first.
-  
-![](images/village_generation/image43.png)
+    ```json
+    {
+        "village_building": {
+            "build_from_path_max_range_in_blocks": 100
+        }
+    }
+    ```
 
-* In the village definition json (eg villager_village_001.json) the district paths need to "prevent buildable placement".  If this is turned off, paths will start cutting through buildables and removing the bottom layers of blocks.
+  * In the village definition json (eg `villager_village_001.json`) the district paths need to "prevent buildable placement".  If this is turned off, paths will start cutting through buildables and removing the bottom layers of blocks.
 
-![](images/village_generation/image44.png)
+    ```json
+    {
+        "prevent_buildable_placement": true
+    }
+    ```
 
-* The card is just a placement preference, and is multiplied like usual.  The main things to watch out for are that you have a valid district path to connect to, and that your tag filters/tags all agree on that.
+  * The card is just a placement preference, and is multiplied like usual.  The main things to watch out for are that you have a valid district path to connect to, and that your tag filters/tags all agree on that.
 
-Name
+**Example**:
 
-**build_from_district_path**
+```json
+// JSON:
+    {
+        "cost": 0,
+        "tags": [ "example_build_from_district_path" ],
+        "placement_preference": "build_from_district_path"
+    }
+```
 
-Settings
+```jsx
+//B#
+    // North Houses
+    DECK_MultiplyByMultipleRules(comboVillageDeckNorth, [
+    PlacementPreferenceCard("example_build_from_district_path"),
+    DistrictCard("district1"),
+    ]);
+    DECK_PutOnBottomOf(comboVillageDeckNorth, villageDeck);
 
-None
+```
 
-Example
+![build_from_district_path example](images/village_generation/image47.png)
 
-![](images/village_generation/image45.png)
+---
 
-![](images/village_generation/image46.png)
+### Across Path
 
-![](images/village_generation/image47.png)
+**Card Name**: `across_path`
 
-### Across Path 
+This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the `across_path` placement preference will place buildables on the path.
 
-This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the “across_path” placement preference will place buildables on the path.
+* _Notes_:
+  * This placement preference lets buildables place on top of paths. Usually our collision checks prevent that.
+  * Make sure you have a path requested.
 
+**Example**:
 
-Note
-* This placement preference lets buildables place on top of paths. Usually our collision checks prevent that.
-* Make sure you have a path requested.
+```json
+// JSON
+    {
+        "cost": 0,
+        "tags": [ "example_across_path" ],
+        "placement_preference": "across_path"
+    }
+```
 
-Name
+![Arches use across_path](images/village_generation/image49.png)
 
-**across_path**
+_The arches use the `across_path` placement preference._
 
-Settings
+### Along Path
 
-None
+**Card Name**: `along_path`
 
-Example
+This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the `along_path` placement preference will place buildables next to a path.
 
-![](images/village_generation/image48.png)
+* _Notes_:
+  * This placement preference lets buildables place closer to paths than our collision checks would usually allow.
+  * Make sure you have a path requested.
 
-![](images/village_generation/image49.png)
+**Settings**:
 
-The arches use the across_path placement preference.
+* **`offset_from_path`**: The distance from the path in blocks that the buildable should place.
 
-### Along Path 
-This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the “along_path” placement preference will place buildables next to a path.
+**Example**:
 
-Note
-* This placement preference lets buildables place closer to paths than our collision checks would usually allow.
-* Make sure you have a path requested.
+```json
+// JSON
+    {
+        "cost": 0,
+        "tags": [ "example_along_path" ],
+        "placement_preference": "along_path"
+    }
+```
 
-Name
+![Benches use along_path](images/village_generation/image49.png)
 
-**along_path**
+_The benches use the `along_path` placement preference._
 
-Settings
+---
 
-**offset_from_path**
+### Ignore Zone Filter For Overlapping Zones
 
-The distance from the path in blocks that the buildable should place.
+**Card Name**: `ignore_zone_filter_for_overlapping_zones_card`
 
-Example
-
-![](images/village_generation/image48.png)
-
-![](images/village_generation/image49.png)
-
-The benches use the along_path placement preference.
-
-### Ignore Zone Filter For Overlapping Zones 
 This placement preference can be multiplied with buildable request cards. By default, when we’re checking if a buildable request with a zone filter card can be placed in a zone, if that buildable overlaps a neighboring zone that doesn’t pass the filter, the buildable won’t be placed in that location.
 
-Note
-* If the structures are failing to place, but the village looks like it has a lot of open space where they intuitively should be placed, this placement preference might help.
-* The placed buildable center will still be inside a zone that passes the filter. It’s just the overlapping zones that might not pass the filter.
+* _Notes_:
+  * If the structures are failing to place, but the village looks like it has a lot of open space where they intuitively should be placed, this placement preference might help.
+  * The placed buildable center will still be inside a zone that passes the filter. It’s just the overlapping zones that might not pass the filter.
 
-Name
+---
 
-**ignore_zone_filter_for_overlapping_zones_card**
+### In Direction Of Influence
 
-Settings
+**Card Name**: `in_direction_of_influence`
 
-None
+This placement preference can be multiplied with buildable request cards. Buildable request cards with this placement preference will try to place in the direction of a source of influence that passes the specified alliance rule filter. Sources of influence will have the `badger:village_influence` component. This is similar to the `wedge_brush` placement preference except the direction is going to be towards the source of influence. This can be used to place buildables in the direction of an enemy attack.
 
-### In Direction Of Influence 
-This placement preference can be multiplied with buildable request cards. Buildable request cards with this placement preference will try to place in the direction of a source of influence that passes the specified alliance rule filter. Sources of influence will have the “badger:village_influence” component. This is similar to the wedge_brush placement preference except the direction is going to be towards the source of influence. This can be used to place buildables in the direction of an enemy attack.
+**Settings**:
 
-Name
+* **`alliance_rule_filter`**: Indicates what units should influence this placement preference. Possible values include `enemy`, `friendly`, and `any_team`.
 
-**in_direction_of_influence**
+* **`wedge_angle`**: The angle between the two sides of the wedge. This determines how wide the wedge area is. See the wedge_brush placement preference for an example.
 
-Settings
+---
 
-**alliance_rule_filter**
+### Random
 
-Indicates what units should influence this placement preference. Possible values include “enemy”, “friendly”, and “any_team”.
+**Card Name**: `random`
 
-**wedge_angle**
-
-The angle between the two sides of the wedge. This determines how wide the wedge area is. See the wedge_brush placement preference for an example.
-
-### Random 
 The random placement preference will sample a random value between 0 and 1 and add the result to the zone scores.
 
-Name
+---
 
-**random**
+### Rectangle Brush
 
-Settings
+**Card Name**: `rectangle_brush`
 
-None
-
-### Rectangle Brush 
 Zones contained inside the rectangle brush will be scored higher the closer the zone is to the middle of the rectangle. The score added is between 0 and 1.
 
-Note
-* The rectangle has an infinite length. Use this placement preference with the distance_from_district_start to limit the distance.
-* Multiply this placement preference with a district card to specify the starting position of the rectangle.
-* Don’t make the width smaller than the village zone_spacing or it might be possible for no zone sites to exist inside the area.
+* _Notes_
+  * The rectangle has an infinite length. Use this placement preference with the distance_from_district_start to limit the distance.
+  * Multiply this placement preference with a district card to specify the starting position of the rectangle.
+  * Don’t make the width smaller than the village zone_spacing or it might be possible for no zone sites to exist inside the area.
 
-Name
+**Settings**:
 
-**rectangle_brush**
+* **`direction_angle`**: The direction that the rectangular area will extend towards.
 
-Settings
+* **`rectangle_width`**: The width of the rectangular area.
 
-**direction_angle**
+**Example**:
 
-The direction that the rectangular area will extend towards.
+```json
+// JSON
+  {
+    "cost": 0,
+    "tags": ["placeInDirectionWestWithRectangleBrush"],
+    "placement_preference": "rectangle_brush",
+    "direction_angle": 180.0,
+    "rectangle_width": 60.0
+  }
+```
 
-**rectangle_width**
+![rectangle_brush](images/village_generation/image53.png)
 
-The width of the rectangular area.
+---
 
-Example
+### Score Threshold
 
-![](images/village_generation/image52.png)
+**Card Name**: `score_threshold`
 
-![](images/village_generation/image53.png)
-
-### Score Threshold 
 Zones with a score less than the threshold specified on this placement preference will not be considered for the buildable, district, path, or wall being requested. If no zone exists that passes the threshold, the request will be canceled.
 
-Note
-* Only use this placement preference if it’s ok for the request to fail.
+* _Note_:
+  * Only use this placement preference if it’s ok for the request to fail.
 
-Name
+**Settings**:
 
-**score_threshold**
+**`threshold`**: Only zones that have a score that is higher than this threshold value will be considered.
 
-Settings
+**Example**:
 
-**threshold**
+```json
+// JSON
+  {
+    "cost": 0,
+    "tags": ["withScoreThresholdSmall"],
+    "placement_preference": "score_threshold",
+    "threshold": 0.3
+  }
+```
 
-Only zones that have a score that is higher than this threshold value will be considered.
+---
 
-Example
+### Wedge Brush
 
-![](images/village_generation/image54.png)
+**Card Name**: **`wedge_brush`**
 
-### Wedge Brush 
-Zones contained inside the wedge brush will be scored higher if the direction aligns with the requested direction. The score added is between 0 and 1. 
+Zones contained inside the wedge brush will be scored higher if the direction aligns with the requested direction. The score added is between 0 and 1.
 
-Note
-* The wedge has an infinite length. Use this placement preference with the distance_from_district_start to limit the distance.
-* Multiply this placement preference with a district card to specify the starting position of the wedge.
-* Don’t make the wedge_angle so small that the distance between the wedge sides might be smaller than the village zone_spacing or it might be possible for no zone sites to exist inside the area.
+* _Notes_:
+  * The wedge has an infinite length. Use this placement preference with the distance_from_district_start to limit the distance.
+  * Multiply this placement preference with a district card to specify the starting position of the wedge.
+  * Don’t make the wedge_angle so small that the distance between the wedge sides might be smaller than the village zone_spacing or it might be possible for no zone sites to exist inside the area.
 
-Name
+**Settings**:
 
-**wedge_brush**
+**`direction_angle`**: The direction that the triangular area will extend towards.
 
-Settings
+**`wedge_angle`**: The angle between the two sides of the wedge. This determines how wide the wedge area is.
 
-**direction_angle**
+**Example**:
 
-The direction that the triangular area will extend towards.
+```json
+// JSON
+  {
+    "cost": 0,
+    "tags": ["placeInDirectionEastWithWedgeBrush"],
+    "placement_preference": "wedge_brush",
+    "direction_angle": 0.0,
+    "wedge_angle": 45.0
+  }
+```
 
-**wedge_angle**
+![wedge_brush](images/village_generation/image56.png)
 
-The angle between the two sides of the wedge. This determines how wide the wedge area is.
+---
 
-Example
+### Facing Invasion Target
 
-![](images/village_generation/image55.png)
+**Card Name**: **`facing_invasion_target`**
 
-![](images/village_generation/image56.png)
+This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the `facing_invasion_target` placement preference will be rotated to face the village being invaded.
 
-### Facing Invasion Target 
-This placement preference card can be multiplied with a buildable request card. Buildable request cards that have the “facing_invasion_target” placement preference will be rotated to face the village being invaded.
+* _Note_:
+  * This placement preference can only be used in villages that are participating in an invasion. (they need the `InvasionAttack_OwnedComponent`)
 
-Note
-* This placement preference can only be used in villages that are participating in an invasion. (they need the InvasionAttack_OwnedComponent)
+---
 
-Name
+## Other Cards
 
-**facing_invasion_target**
+### Force Building Placement Cards
 
-Settings
+**Card Library Name**: `force_building_placement_cards`
 
-None
-
-## Other Cards 
-### Force Building Placement Cards 
 Building request cards that have been multiplied with a force building placement card will ignore these constraints:
 
 * Buildables can’t place in water
-* Buildables with a zone filter card cannot place such that they overlap zones that don’t pass the filter (see **ignore_zone_filter_for_overlapping_zones_card**)
-* Buildables can’t overlap paths if the path has **prevent_buildable_placement** set to true
+* Buildables with a zone filter card cannot place such that they overlap zones that don’t pass the filter (see `ignore_zone_filter_for_overlapping_zones_card`)
+* Buildables can’t overlap paths if the path has `prevent_buildable_placement` set to true
 
-When creating a path request with the CreatePathRequestOnBottomOf helper, if a force building placement card is added to either set of path rules, gates will still be placed along the path where the path crosses walls even if bridges fail to place. By default, if bridges fail to place, that will cause the entire path to fail which results in no gates.
+When creating a path request with the `CreatePathRequestOnBottomOf` helper, if a force building placement card is added to either set of path rules, gates will still be placed along the path where the path crosses walls even if bridges fail to place. By default, if bridges fail to place, that will cause the entire path to fail which results in no gates.
 
-Card Library Name
+**Example**:
 
-**force_building_placement_cards**
+```jsx
+// B#
+  // determine portal size
+  if (IsSmall(baseSize)) {
+      portal = BuildableCard("addPortalSmall");
+      DECK_MultiplyBySingle(portal, ZoneHeightChangeCard("4Height"));
+      DECK_MultiplyBySingle(portal, ForceBuildingPlacementCard("forcePlacement"));
+    } else if (IsMedium(baseSize)) {
+      portal = BuildableCard("addPortalMedium");
+      DECK_MultiplyBySingle(portal, ZoneHeightChangeCard("9Height"));
+      DECK_MultiplyBySingle(portal, ForceBuildingPlacementCard("forcePlacement"));
+    } else if (IsLarge(baseSize)) {
+      portal = BuildableCard("addPortalLarge");
+      DECK_MultiplyBySingle(portal, ZoneHeightChangeCard("16Height"));
+      DECK_MultiplyBySingle(portal, ForceBuildingPlacementCard("forcePlacement"));
+    }
+```
 
-Settings
+### Heart Cards
 
-None
-
-Example
-
-![](images/village_generation/image57.png)
-
-### 
-Heart Cards 
+**Card Library Name**: `heart_cards`
 
 Multiplying a buildable card with a heart card will make that structure a village heart. If all the village hearts get destroyed, that will destroy the village.
 
-Library Card Name
+### Appearance Override Cards
 
-**heart_cards**
+**Card Library Name**: `appearance_override_cards`
 
-Settings
-
-None
-
-### Appearance Override Cards 
 Multiplying a buildable card with an appearance override card will override the visuals of the buildable. Multiplying a path card with an appearance override card will override the visuals of any bridge buildables placed by the path.
 
-Library Card Name
-**appearance_override_cards**
+**Settings**:
 
-Settings
-**horde**
+* **`horde`**: The horde visuals that should be applied.
 
-The horde visuals that should be applied.
+**Example**:
 
-Example
+![appearance_override_cards](images/village_generation/image58.png)
 
-![](images/village_generation/image58.png)
+_The bridge belongs to the `DBB` horde, but the appearance is overridden with the `obstacle` horde visuals._
 
-The bridge belongs to the DBB horde, but the appearance is overridden with the Obstacle horde visuals.
+### Hanging Decoration Cards [Not used, may still function]
 
-### Hanging Decoration Cards 
-[not used] Could be used to decorate the sides of zones that have been raised or lowered.
+**Card Library Name**: `hanging_decoration_cards`
 
-Library Card Name
+Could be used to decorate the sides of zones that have been raised or lowered.
 
-**hanging_decoration_cards**
+**Settings**:
 
-Settings
+* **`hanging_decoration`**: The name of the block type to place on the side of the raised zone.
 
-**hanging_decoration**
+### Tag Cards
 
-[not used] The name of the block type to place on the side of the raised zone.
+**Card Library Name**: `tag_cards`
 
-Example
-
-![](images/village_generation/image59.png)
-
-Note that we don’t have flowing liquid anymore so these lava falls won’t work anymore.
-
-### Tag Cards 
 Multiplying a tag card with a buildable card will add the specified tag to the buildable when it’s placed in the world. This tag card can also be multiplied with wall cards to add the tag to the wall and gate buildables when they’re placed.
 
-Card Library Name
+**Settings**:
 
-**tag_cards**
+* **`tag`**: The name of the tag to add to the buildable tag set when the buildable is placed.
 
-Settings
+### Entity Clearing Cards
 
-**tag**
+**Card Library Name**: `entity_clearing_cards`
 
-The name of the tag to add to the buildable tag set when the buildable is placed.
-
-### Entity Clearing Cards 
 The entity clearing card will remove entities that have the right tags. Only entities inside the village bounding rectangle will be considered.
 
-Card Library Name
+**Settings**:
 
-**entity_clearing_cards**
+* **`entity_include_tag_set`**: Entities with these tags will be removed.
 
-Settings
+* **`entity_exclude_tag_set`**: Entities with these tags won’t be removed.
 
-**entity_include_tag_set**
+```json
+//JSON
+  {
+    "entity_clearing_cards": [
+      {
+        "cost": 0,
+        "tags": ["debugEntityClearing"],
+        "entity_include_tag_set": ["animal"],
+        "entity_exclude_tag_set": []
+      }
+    ]
+  }
+```
 
-Entities with these tags will be removed.
+```jsx
+// B#
+  const baseDeck = DECK_Empty();
+  DECK_PutOnBottomOf(EntityClearingCard("debugEntityClearing"), baseDeck);
+```
 
-**entity_exclude_tag_set**
+## Village Components
 
-Entities with these tags won’t be removed.
-
-![](images/village_generation/image60.png)
-
-![](images/village_generation/image61.png)
-
-## Village Components 
 Village components contain settings that often affect all the village features and placement preferences for a particular type of village.
 
+### Village Zone
 
-### Village Zone 
-Settings that will determine the amount of zones in the village map and the size and shape of each zone.
+**Component Name**: `badger:village_zone`
 
-Component Name
+The `badger:village_zone` component contains settings that will determine the amount of zones in the village map and the size and shape of each zone.
 
-**Badger:village_zone**
+---
 
-Settings
+**Settings**:
 
-**zone_jitter_min**
+* **`zone_jitter_min`**: The maximum amount that a village zone will be offset in meters.
 
-The maximum amount that a village zone will be offset in meters.
+* **`zone_jitter_max`**: The maximum amount that a village zone will be offset in meters.
 
-**zone_jitter_max**
+* **`is_zone_jitter_bell_curve_enabled`**: The generation of jitter values between the min and max will have a probability distribution that approximates a normal distribution.
 
-The maximum amount that a village zone will be offset in meters.
+* **`zone_spacing`**: The default distance between village zones before jitter is applied.
 
-**is_zone_jitter_bell_curve_enabled**
+* **`expansion_distance`**: The maximum distance that villages can expand from the central starting position.
 
-The generation of jitter values between the min and max will have a probability distribution that approximates a normal distribution.
+* **`water_search_resolution`**: The distance between each check for water while scanning the expansion area for bodies of water.
 
-**zone_spacing**
+* **`is_hexagonal_grid_enabled`**: If false, the village map will be grid with square zones. If true, the village map will be a hexagonal grid with hexagon zones.
 
-The default distance between village zones before jitter is applied.
+* **`minimum_loz_connection_width`**: The minimum edge width between zones in a layer request before padding is added.
 
-**expansion_distance**
+---
 
-The maximum distance that villages can expand from the central starting position.
+### Village Wall
 
-**water_search_resolution**
+**Component Name**: `badger:village_wall`
 
-The distance between each check for water while scanning the expansion area for bodies of water.
+The `badger:village_wall` component contains settings for how walls get placed when the wall cards are handled.
 
-**is_hexagonal_grid_enabled**
+**Settings**:
 
-If false, the village map will be grid with square zones. If true, the village map will be a hexagonal grid with hexagon zones.
+* **`wall_offset`**: How far in meters to move the walls inward and away from the zone edges that they place along by default.
 
-**minimum_loz_connection_width**
+---
 
-The minimum edge width between zones in a layer request before padding is added.
+### Village Height Change
 
-### Village Wall 
-Settings for how walls get placed when the wall cards are handled.
+**Component Name**: `badger:village_height_change`
 
-Component Name
+The `badger:village_height_change` component influences the terrain changes that are applied when the village height change cards are handled.
 
-**Badger:village_wall**
+**Settings**:
 
-Settings
+* **`clamp_size`**: The number of blocks above a height change that are not changed to air.
 
-**wall_offset**
+---
 
-How far in meters to move the walls inward and away from the zone edges that they place along by default.
+### Village Bridge
 
-Village Height Change
+**Component Name**: `badger:village_bridge`
 
-Influences the terrain changes that are applied when the village height change cards are handled.
+The `badger:village_bridge` component determines how bridges are built when the village path cards are handled.
 
-Component Name
+**Settings**:
 
-badger:village_height_change
+* **`diagonal_bridge_degree_tolerance`**: The number of degrees a bridge can deviate from right angles before being considered diagonal.
 
-Settings
+* **`bridge_horizontal_distance_min`**: The smallest XZ difference allowed between the start and end of the bridge.
 
-**clamp_size**
+* **`bridge_horizontal_distance_max`**: The largest XZ difference allowed between the start and end of the bridge.
 
-The number of blocks above a height change that are not changed to air.
+* **`bridge_vertical_distance_max`**: The largest Y difference allowed between the start and end of the bridge.
 
-### Village Bridge 
+* **`bridge_cost_per_meter`**: Used to compare the cost of the bridge to the cost of a path without a bridge (paths have a fixed cost of 1 per meter). If the cost is low, there’s a greater risk of getting bridges placed in weird places.
 
-Determines how bridges are built when the village path cards are handled.
+* **`bridge_id`**: The entity identifier for the bridge that should be placed.
 
-Component Name
+---
 
-**badger:village_bridge**
+### Village Hanging Decoration Placement [not used, may still work]
 
-Settings
+**Component Name**: `badger:village_hanging_decoration_placement`
 
-**diagonal_bridge_degree_tolerance**
+ The `badger:village_hanging_decoration_placement` contains settings for placing hanging decorations between village zones when the hanging decoration cards are handled.
 
-The number of degrees a bridge can deviate from right angles before being considered diagonal.
+**Settings**:
 
-**bridge_horizontal_distance_min**
+* **`minimum_edge_width`**: The minimum shared edge width between two zones considered for placement.
 
-The smallest XZ difference allowed between the start and end of the bridge.
+* **`minimum_height_delta`**: The minimum height difference between two zone considered for placement.
 
-**bridge_horizontal_distance_max**
+---
 
-The largest XZ difference allowed between the start and end of the bridge.
+### Building Placement
 
-**bridge_vertical_distance_max**
+**Component Name**: `badger:village_building_placement`
 
-The largest Y difference allowed between the start and end of the bridge.
+The `badger:village_building_placement` contains settings for placing buildables inside of village zones.
 
-**bridge_cost_per_meter**
+**Settings**:
 
-Used to compare the cost of the bridge to the cost of a path without a bridge (paths have a fixed cost of 1 per meter). If the cost is low, there’s a greater risk of getting bridges placed in weird places.
+* **`max_placement_attempts_with_jitter`**: The maximum number of times that a placement will try placing with jitter, per village zone.
 
-**bridge_id**
+* **`is_placement_jitter_bell_curve`**: The generation of jitter values between the min and max will have a probability distribution that approximates a normal distribution.
 
-The entity identifier for the bridge that should be placed.
+* **`placement_jitter_min`**: The minimum distance that the placement can be offset from a village zone face site. This value will be clamped if it's large enough to push the placement outside of a zone.
 
-### Village Hanging Decoration Placement 
-[not used] Settings for placing hanging decorations between village zones when the hanging decoration cards are handled.
+* **`placement_jitter_max`**: The maximum distance that the placement can be offset from a village zone face site. This value will be clamped if it's large enough to push the placement outside of a zone.
 
-Component Name
+* **`minimum_distance_between_buildings`**: Buildings cannot be placed closer than this distance.
 
-**badger:village_hanging_decoration_placement**
+---
 
-Settings
+### Zone Scoring
 
-**minimum_edge_width**
+**Component Name**: `badger:village_zone_scoring`
 
-The minimum shared edge width between two zones considered for placement.
+The `badger:village_zone_scoring` component houses settings that will adjust the weights and easing functions of different placement preferences.
 
-**minimum_height_delta**
+**Settings**:
 
-The minimum height difference between two zone considered for placement.
+* The easing function for each placement preference will be `linear` by default.
+  * As an example, if the `far_from_district_start` placement preference is used, the farthest zone from the district start position will be assigned a score of 1 and the closest zone will be assigned a score of 0. With the easing set to `linear`, the zone halfway between the two will receive a score of 0.5.
+  * If instead set the easing function to `ease_in_cubic`, the score assigned will be much lower since the easing is more gradual before quickly ramping up (see [https://easings.net/](https://easings.net/) for options and examples).
 
-### Building Placement 
-Settings for placing buildables inside of village zones.
+* The weight for each placement preference is `1.0` by default.
+  * Placement preferences usually each add a score between 0 and 1 to a zone being scored. The weight will be multiplied with that initial score.
+  * As an example, if the random placement preference and the close to district start placement preference is used, but we wanted the random placement preference to have less influence on the zones prioritized for placement, we could give the `random_weight` a lower value than the `close_to_weight`.
 
-Component Name
+**Example**:
 
-**badger:village_building_placement**
+```json
+//JSON
+  {
+    "badger:village_zone_scoring": {
+      // Easing Function
+      "close_to_easing": "linear",
+      "far_from_easing": "linear",
+      "direction_easing": "linear",
+      "close_to_wall_easing": "linear",
+      "spacing_easing": "linear",
+      "elevation_easing": "linear",
+      "distance_from_easing": "linear",
+      // Weights
+      "close_to_weight": 1.0,
+      "far_from_weight": 1.0,
+      "direction_weight": 1.0,
+      "close_to_wall_weight": 1.5,
+      "random_weight": 0.7,
+      "elevation_weight": 1.0,
+      "distance_from_weight": 1.0,
+    }
+  }
 
-Settings
+```
 
-**max_placement_attempts_with_jitter**
+---
 
-The maximum number of times that a placement will try placing with jitter, per village zone.
+### Weathering
 
-**is_placement_jitter_bell_curve**
-
-The generation of jitter values between the min and max will have a probability distribution that approximates a normal distribution.
-
-**placement_jitter_min**
-
-The minimum distance that the placement can be offset from a village zone face site. This value will be clamped if it's large enough to push the placement outside of a zone.
-
-**placement_jitter_max**
-
-The maximum distance that the placement can be offset from a village zone face site. This value will be clamped if it's large enough to push the placement outside of a zone.
-
-**minimum_distance_between_buildings**
-
-Buildings cannot be placed closer than this distance.
-
-### Zone Scoring 
-Settings that will adjust the weights and easing functions of different placement preferences. 
-
-Component Name
-
-**badger:village_zone_scoring**
-
-Settings
-
-The easing function for each placement preference will be linear by default. As an example, if the far_from_district_start placement preference is used, the farthest zone from the district start position will be assigned a score of 1 and the closest zone will be assigned a score of 0. With the easing set to “linear”, the zone halfway between the two will receive a score of 0.5. If instead set the easing function to “ease_in_cubic”, the score assigned will be much lower since the easing is more gradual before quickly ramping up (see [https://easings.net/](https://easings.net/) for options and examples). 
-
-The weight for each placement preference is 1.0 by default. Placement preferences usually each add a score between 0 and 1 to a zone being scored. The weight will be multiplied with that initial score. As an example, if the random placement preference and the close to district start placement preference is used, but we wanted the random placement preference to have less influence on the zones prioritized for placement, we could give the random_weight a lower value than the close_to_weight.
-
-Example
-
-![](images/village_generation/image62.png)
-
-### Weathering 
 This component contains all the terrain weathering settings. This component can be given to any of the village archetypes.
 
-Component Name
+**Component Name**: `badger:village_weathering`
 
-badger:village_weathering 
+**Settings**:
 
-Settings
+* **`is_overhanging_edge`**: Determines if the weathering effect will taper up or down.
 
-**is_overhanging_edge**
+* **`position_noise_scale`**: Lower values will apply smoother xz jitter to weathering effects.
 
-Determines if the weathering effect will taper up or down.
+* **`wave_max_depth`**: The maximum distance in blocks, before noise, that the weathering wave can remove blocks from an edge.
 
-**position_noise_scale**
+* **`wave_min_depth`**: The minimum distance in blocks, before noise, that the weathering wave can remove blocks from an edge.
 
-Lower values will apply smoother xz jitter to weathering effects.
+* **`wave_frequency_scale`**: A smaller scale factor will reduce the frequency of the weathering wave for a smoother effect.
 
-**wave_max_depth**
+* **`wave_noise_scale`**: The magnitude of noise used to break up the wave function.
 
-The maximum distance in blocks, before noise, that the weathering wave can remove blocks from an edge.
+* **`gradient_passes`**: The system supports multiple gradient passes, which determine how many blocks to remove and what height.
 
-**wave_min_depth**
+  * **`gradient_depths`**: A list of how many blocks deep into the terrain should be removed. These are expected to be in descending order. Each of these values corresponds to a value in the `gradient_weight_heights` list.
 
-The minimum distance in blocks, before noise, that the weathering wave can remove blocks from an edge.
+  * **`gradient_weight_heights`**: A list of heights for each gradient depth to be applied. These values should be in descending order for non-overhanging edges, and ascending order for overhanging edges. 1.0 means the top of the edge and 0.0 means the bottom. In the example, at a height of 0.8 and above, the terrain should be removed at a depth of 3.0. At a height of 0.6 and above, the terrain should be removed at a depth of 2.5.
 
-**wave_frequency_scale**
+  * **`gradient_2d_noise_scale`**: The magnitude of vertical noise applied to the gradient pass.  Lower value noise will look more continuous.  Higher will look more random.
 
-A smaller scale factor will reduce the frequency of the weathering wave for a smoother effect.
+  * **`gradient_3d_noise_scale`**: The magnitude of horizontal noise applied to the gradient pass.
 
-**wave_noise_scale**
+  * **`gradient_affected_by_wave`**: Sets whether or not the particular gradient pass should be affected by the sawtooth wave. If they are affected, the gradient is applied only in spots where the sawtooth wave would remove blocks. If they are not, the gradient is applied consistently over the whole edge. Using a combination allows for some interesting weathering effects.
 
-The magnitude of noise used to break up the wave function.
+**Example**:
 
-**gradient_passes** settings:
+```json
+// JSON
+  {
+    "badger:village_weathering": {
+      "is_overhanging_edge": false,
+      "position_noise_scale": 0.6,
+      "wave_depth_max": 3,
+      "wave_depth_min": 0.2,
+      "wave_period_scale": 0.4,
+      "wave_noise_scale": 0.6,
+      "gradient_passes": [
+        {
+          "gradient_depths": [3.0, 2.5, 2.0, 0.8],
+          "gradient_weight_heights": [0.8, 0.6, 0.3, 0.1],
+          "gradient_2d_noise_scale": 2.8,
+          "gradient_3d_noise_scale": 1.0,
+          "gradient_affected_by_wave": true
+        },
+        {
+          "gradient_depths": [1.2, 1.0, 0.5],
+          "gradient_weight_heights": [0.7, 0.3, 0.2],
+          "gradient_2d_noise_scale": 1.8,
+          "gradient_3d_noise_scale": 1.0,
+          "gradient_affected_by_wave": false
+        }
+      ]
+    }
+  }
+```
+
+---
+
+### Path (Building and District)
+
+**Component Name(s)**: `badger:village_building_path` and `badger:village_district_path`
+
+These components contain all the village path settings for building paths and district paths respectively.
+
+**Settings**:
 
-The system supports multiple gradient passes, which determine how many blocks to remove and what height.
+* **`path_blocks`**: A list of block names and their relative weights to be placed for the central portion of the path. Changing the weight influences which block is randomly selected.
+* **`edge_block`**: A list of block names and their relative weights to be placed along the outer edges of the path.
+* **`edge_decoration_blocks`**: A list of block names and their relative weights to be placed on top of the path edge blocks.
+  
+* **`inner_blocks`** and **`outer_blocks`**: `path_blocks`, `edge_blocks`, and `edge_decoration_blocks` can all be divided into `inner` and `outer` sections, as shown in the example for `edge_decoration_blocks`. This allows the inner and outer portions of the path and path edge to have different blocks with different weights.
+  
+  * **`inner_blocks`**: A list of block names and their relative weights for the inner portion of the path or path edge.
 
-**gradient_depths**
+  * **`outer_blocks`**: A list of block names and their relative weights for the outer portion of the path or path edge
 
-A list of how many blocks deep into the terrain should be removed. These are expected to be in descending order. Each of these values corresponds to a value in the `gradient_weight_heights` list.
+* **`path_width`** The number of meters across the main portion of the path should be.
 
-**gradient_weight_heights**
+* **`edge_width`**: The number of meters across the edge on either side of the main path should be.
 
-A list of heights for each gradient depth to be applied. These values should be in descending order for non-overhanging edges, and ascending order for overhanging edges. 1.0 means the top of the edge and 0.0 means the bottom. In the example, at a height of 0.8 and above, the terrain should be removed at a depth of 3.0. At a height of 0.6 and above, the terrain should be removed at a depth of 2.5.
+* **`path_noise_scale_factor`**: A small scale factor will produce more gradual changes in a building path's weathering.
 
-**gradient_2d_noise_scale**
+* **`path_deco_noise_scale_factor`**: A smaller scale factor will cause path edge decorations to alternate less frequently.
 
-The magnitude of vertical noise applied to the gradient pass.  Lower value noise will look more continuous.  Higher will look more random.
+* **`path_block_noise_scale_factor`**: A smaller scale factor will cause path blocks to alternate less frequently.
 
-**gradient_3d_noise_scale**
+* **`path_edge_block_noise_scale_factor`**: A smaller scale factor will cause path edge blocks to alternate less frequently.
 
-The magnitude of horizontal noise applied to the gradient pass.
+* **`path_noise_amplitude`**: The noise amplitude affects the severity of a building path’s weathering.  This affects both the edge and main path, but is capped by the path width + edge width + edge noise amplitude.
 
-**gradient_affected_by_wave**
+* **`edge_noise_amplitude`**: How far noise can extend past the building path’s edge in meters.  
 
-Sets whether or not the particular gradient pass should be affected by the sawtooth wave. If they are affected, the gradient is applied only in spots where the sawtooth wave would remove blocks. If they are not, the gradient is applied consistently over the whole edge. Using a combination allows for some interesting weathering effects.
+* **`diagonal_path_degree_tolerance`**: The number of degrees a building path can deviate from right angles before being considered diagonal.
 
-Example
+* **`prevent_buildable_placement`**: Setting this to false will allow buildables to place so that they overlap paths.
 
-![](images/village_generation/image63.png)
+* **`can_place_under_buildables`**: Setting this to false will force paths to generate around buildables instead of underneath them.
+
+* **`can_resuse_existing_paths`**: Setting this to true will encourage paths to reuse existing paths and bridges. If a path step is reused, it won’t add any additional cost to the path being planned. If this is false, it’s possible for a path to overlap another, but the cost of the path will still be added to the path being planned as normal. If this is false, paths won’t be able to reuse existing bridges.
+
+* **`height_change_needs_bridge`**: If the height change between zones is equal to or larger than this value, a bridge must be placed to connect the two zones.
+
+* **`outer_edge_threshold`**: Sets the proportion of the inner and outer path. A lower setting means a larger outer edge and a higher setting means a larger inner edge.
+
+**Example**:
+
+```json
+// JSON
+  {
+    "badger:village_building_path": {
+      "path_blocks": [
+        ["block_path_mud_04", 2],
+        ["block_mud_var04", 1]
+      ],
+      "edge_blocks": [
+        ["block_path_mud_path", 3],
+        ["block_mud_path", 2],
+        ["grass", 1]
+      ],
+      "edge_decoration_blocks": [
+        {
+          "inner_blocks": [
+            ["block_deco_fol_moss_01", 2],
+            ["block_deco_zombie_mushroom_small", 1],
+            ["block_deco_fol_wofgrass_01", 2],
+            ["block_deco_fol_wofgrass_02", 2],
+            ["block_deco_fol_wofgrass_03", 2],
+            ["air", 6]
+          ],
+          "outer_blocks": [
+            ["block_deco_fol_moss_01", 2],
+            ["block_deco_zombie_mushroom_small", 1],
+            ["block_deco_fol_wofgrass_01", 2],
+            ["block_deco_fol_wofgrass_02", 2],
+            ["block_deco_fol_wofgrass_03", 2],
+            ["block_deco_grass_clump_02", 1],
+            ["block_deco_grass_clump_03", 1],
+            ["air", 6]
+          ]
+        }
+      ],
+      "path_width": 2.0,
+      "edge_width": 2.0,
+      "path_noise_scale_factor": 3.0,
+      "path_deco_noise_scale_factor": 3.0,
+      "path_block_noise_scale_factor": 3.0,
+      "path_edge_block_noise_scale_factor": 5.0,
+      "diagonal_path_degree_tolerance": 45,
+      "prevent_buildable_placement": false,
+      "path_noise_amplitude": 1.0,
+      "edge_noise_amplitude": 1.0,
+      "can_place_bridge_for_height_changes": false,
+      "height_change_needs_bridge": 8.0,
+      "outer_edge_threshold": 0.5
+    }
+  }
+```
+
+---
+
+## Village Service Parsed Data
+
+**File Location**: `data/behavior_packs/badger/gamelayer/server/village/villages.json`
 
-### Path (Building and District) 
-These components contain all the village path settings.
-
-Component Name(s)
-
-**badger:village_building_path** and **badger:village_district_path**
-
-Settings
-
-**path_blocks**
-
-A list of block names and their relative weights to be placed for the central portion of the path. Changing the weight influences which block is randomly selected.
-
-**edge_block**
-
-A list of block names and their relative weights to be placed along the outer edges of the path.
-
-
-**edge_decoration_blocks**
-
-A list of block names and their relative weights to be placed on top of the path edge blocks.
-
-**inner_blocks**
-
-path_blocks, edge_blocks, and edge_decoration_blocks can all be divided into inner and outer sections, as shown in the example for edge_decoration_blocks. This allows the inner and outer portions of the path and path edge to have different blocks with different weights. inner_blocks is a list of block names and their relative weights for the inner portion of the path or path edge.
-
-**outer_blocks**
-
-A list of block names and their relative weights for the outer portion of the path or path edge
-
-**path_width**
-
-The number of meters across the main portion of the path should be.
-
-**edge_width**
-The number of meters across the edge on either side of the main path should be.
-
-**path_noise_scale_factor**
-A small scale factor will produce more gradual changes in a building path's weathering.
-
-**path_deco_noise_scale_factor**
-
-A smaller scale factor will cause path edge decorations to alternate less frequently.
-
-**path_block_noise_scale_factor**
-
-A smaller scale factor will cause path blocks to alternate less frequently.
-
-**path_edge_block_noise_scale_factor**
-
-A smaller scale factor will cause path edge blocks to alternate less frequently.
-
-**path_noise_amplitude**
-The noise amplitude affects the severity of a building path’s weathering.  This affects both the edge and main path, but is capped by the path width + edge width + edge noise amplitude.
-
-**edge_noise_amplitude**
-
-How far noise can extend past the building path’s edge in meters.  
-
-**diagonal_path_degree_tolerance**
-
-The number of degrees a building path can deviate from right angles before being considered diagonal.
-
-**prevent_buildable_placement**
-
-Setting this to false will allow buildables to place so that they overlap paths.
-
-**can_place_under_buildables**
-
-Setting this to false will force paths to generate around buildables instead of underneath them.
-
-**can_resuse_existing_paths**
-
-Setting this to true will encourage paths to reuse existing paths and bridges. If a path step is reused, it won’t add any additional cost to the path being planned. If this is false, it’s possible for a path to overlap another, but the cost of the path will still be added to the path being planned as normal. If this is false, paths won’t be able to reuse existing bridges.
-
-**height_change_needs_bridge**
-
-If the height change between zones is equal to or larger than this value, a bridge must be placed to connect the two zones.
-
-**outer_edge_threshold**
-
-Sets the proportion of the inner and outer path. A lower setting means a larger outer edge and a higher setting means a larger inner edge.
-
-Example
-
-![](images/village_generation/image64.png)
-
-## Village Service Parsed Data 
 The village service parsed data contains global settings that often affect all villages.
 
-File Location
+### Map Settings
 
-gamelayer/server/village/villages.json
+* **`terrain_sampling_fill_step_distance`**: When we sample the terrain data before planning the village, I don’t think we can sample the entire area at once (it used to cause a crash at least) so we do it in pieces that have a width and height equal to this step distance.
 
-Map Settings
+* **`block_query_step_distance`**: This distance defines the resolution that we query the terrain for water and then markup zones with water inside them. Water detection should become more precise if this is a smaller value, but it’s also more expensive.
 
-**terrain_sampling_fill_step_distance**
+### Building Settings
 
-When we sample the terrain data before planning the village, I don’t think we can sample the entire area at once (it used to cause a crash at least) so we do it in pieces that have a width and height equal to this step distance.
+* **`approximate_block_budget_per_tick`**: [not used], _Miclee note_: may be worth looking into.
 
-**block_query_step_distance**
+* **`build_from_path_max_range_in_blocks**`**: When the `build_from_district_path` placement preference is used, zones won’t be considered if their distance to the starting path zone exceeds this max distance.
 
-This distance defines the resolution that we query the terrain for water and then markup zones with water inside them. Water detection should become more precise if this is a smaller value, but it’s also more expensive.
-
-Building Settings
-
-**approximate_block_budget_per_tick**
-
-[not used]
-
-**build_from_path_max_range_in_blocks**
-
-When the build_from_district_path placement preference is used, zones won’t be considered if their distance to the starting path zone exceeds this max distance.
-
-Navigation Map Settings
+### Navigation Map Settings
 
 The village navigation system hasn’t been used in a long time.
 
-**crossable_edge_minimum_length**
+* **`crossable_edge_minimum_length`**: [not used]
 
-[not used]
+* **`path_padding_width`**: [not used]
 
-**path_padding_width**
+* **`path_destination_arrival_distance**`**: [not used]
 
-[not used]
+### Influence Map Settings
 
-**path_destination_arrival_distance**
+* **`planning_influence_map_settings`**: These settings affect the `close_to_buildable`, `far_from_buildable`, `close_to_water`, `far_from_water`, `facing_buildable`, and `facing_water` placement preferences.
 
-[not used]
+* **`alliance_influence_map_settings`**: These settings affect the `close_to_influence`, `far_from_influence`, `facing_influence`, and `in_direction_of_influence` placement preferences.
 
-Influence Map Settings
+* **`decay`**: How much influence is lost as it spreads.
 
-**planning_influence_map_settings**
+* **`resolution`**: The dimensions of the grid that influence will spread through.
 
-These settings affect the close_to_buildable, far_from_buildable, close_to_water, far_from_water, facing_buildable, and facing_water placement preferences.
+* **`initial_influence`**: The initial amount of influence before it decays.
 
-**alliance_influence_map_settings**
+### Placement Preference Settings
 
-These settings affect the close_to_influence, far_from_influence, facing_influence, and in_direction_of_influence placement preferences.
+* **`buildable_tag_for_spacing`**: By default, every buildable request will be given a `far_from_buildable` placement preference with this tag to help ensure buildables space themselves out; However, if the buildable request has the `disable_spacing` placement preference, this tag won’t be used.
 
-**decay**
+### Heart Destruction Settings
 
-How much influence is lost as it spreads.
+* **`world_request_type`**: When a village has been destroyed (e.g. portal destroyed), this world request type is used to load the world. It will determine the priority of the world request.
 
-**resolution**
+* **`tag_for_village_heart_destruction_opt_out`**: [not used]
 
-The dimensions of the grid that influence will spread through.
+### Wall Settings
 
-**initial_influence**
+* **`max_number_of_gate_placement_attempts`**: If a gate collides with another structure (usually a bridge/staircase) we’ll move the gate position 1 meter in the direction of the path entering the wall and then the gate will try to place again. This is the max number of attempts before the gate will fail to place.
 
-The initial amount of influence before it decays.
+* **`minimum_segment_length`**: When a structure is being embedded in a wall, we’ll extend the wall if the original wall isn’t long enough. We’ll skip walls that are less than this length when we’re creating the extended wall.
 
-Placement Preference Settings
+* **`remove_wall_on_placement_failure`**: Specifies if a gap in the village walls should be left when we fail to embed a structure in the walls.
 
-**buildable_tag_for_spacing**
+### Moat Settings
 
-By default, every buildable request will be given a far_from_buildable** **placement preference with this tag to help ensure buildables space themselves out; However, if the buildable request has the disable_spacing placement preference, this tag won’t be used.
-
-Heart Destruction Settings
-
-**world_request_type**
-
-When a village has been destroyed (e.g. portal destroyed), this world request type is used to load the world. It will determine the priority of the world request.
-
-**tag_for_village_heart_destruction_opt_out**
-
-[not used]
-
-Wall Settings
-
-**max_number_of_gate_placement_attempts**
-
-If a gate collides with another structure (usually a bridge/staircase) we’ll move the gate position 1 meter in the direction of the path entering the wall and then the gate will try to place again. This is the max number of attempts before the gate will fail to place.
-
-**minimum_segment_length**
-
-When a structure is being embedded in a wall, we’ll extend the wall if the original wall isn’t long enough. We’ll skip walls that are less than this length when we’re creating the extended wall.
-
-**remove_wall_on_placement_failure**
-
-Specifies if a gap in the village walls should be left when we fail to embed a structure in the walls.
-
-Moat Settings
-
-**noise_levels**
-
-This controls how many levels of detail the moat noise is going to have. At each level, the frequency of noise is doubled and the amplitude is halved. This setting will affect all villages that have the new badger:village_moat component. It’s probably not worth having too many levels because the finer details are going to be lost when converting to block space. Also something to note is that because the end result is normalized to a value between 0 and 1, more levels of noise will have kind of a smoothing effect, mellowing out some of the interesting outliers when all the levels are averaged.
+* **`noise_levels`**: This controls how many levels of detail the moat noise is going to have. At each level, the frequency of noise is doubled and the amplitude is halved. This setting will affect all villages that have the new `badger:village_moat` component. It’s probably not worth having too many levels because the finer details are going to be lost when converting to block space. Also something to note is that because the end result is normalized to a value between 0 and 1, more levels of noise will have kind of a smoothing effect, mellowing out some of the interesting outliers when all the levels are averaged.
 
 ### Performance Settings
 
-#### building_time_budget_in_ms
-The village building system will handle pending placements until this budget is reached or passed.
+* **`building_time_budget_in_ms`**: The village building system will handle pending placements until this budget is reached or passed.
 
-**planning_time_budget_in_ms**
+* **`planning_time_budget_in_ms`**: The village planning system will handle village generation requests until this budget is reached or passed.
 
-The village planning system will handle village generation requests until this budget is reached or passed.
+## Entity Removal Service Parsed Data
 
-## Entity Removal Service Parsed Data 
 Specifies what entities should be removed inside the village bounding area and inside the world reload areas.
 
-File Location
+File Location: `data/behavior_packs/badger/services/entity_removal.json`
 
-data\behavior_packs\badger\services\entity_removal.json
+**Settings**:
 
-Settings
+* **`include_any`**: Entities with these tags should be removed.
 
-**include_any**
+* **`exclude_any`**: Entities with these tags won’t be removed.
 
-Entities with these tags should be removed.
+**Examples**:
 
-**exclude_any**
+* Before (floating chests)
 
-Entities with these tags won’t be removed.
+![Before (floating chests)](images/village_generation/image65.png)
 
+* After (no floating chests)
 
-Examples
-
-Before (floating chests)
-
-![](images/village_generation/image65.png)
-
-After (no floating chests)
-
-![](images/village_generation/image66.png)
+![After (no floating chests)](images/village_generation/image66.png)

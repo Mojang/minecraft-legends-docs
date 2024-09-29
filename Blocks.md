@@ -1,5 +1,9 @@
 # Blocks in Minecraft Legends
+
+We plan to heavily expand on this document. Check this space soon!
+
 ## Block List
+
 Here is a list of all of the blocks that are used in Minecraft Legends. They are used in world generation or in structures.
 
 | Name |
@@ -1664,7 +1668,7 @@ Here is a list of all of the blocks that are used in Minecraft Legends. They are
 | badger:block_tree_icecypress_snow_01 |
 | badger:block_tree_icecypress_top |
 | badger:block_tree_icecypress_upper_mid |
-| badger:block_tree_mang_cinamon_trunk |
+| badger:block_tree_mang_cinamon_trunk (*to be corrected) |
 | badger:block_tree_mang_fallen_01 |
 | badger:block_tree_mang_fallen_moss_01 |
 | badger:block_tree_mang_fallen_moss_02 |

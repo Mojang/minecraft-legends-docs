@@ -1,21 +1,26 @@
 # Biomes in Minecraft Legends
+
 Biomes describe how a local patch of the world should look and behave. By writing custom biome data you could:
+
 1) Change the general shape of terrain for a biome.
 2) Change the ratio of frequency of biome types.
 3) Change the blocks that make up the biome, both at the surface and below.
 4) Change the distribution of decorative features (e.g. trees, grass, etc.) for a biome.
-5) ...and more!
+5) Change the settings for a biome's sub-biomes.
+6) Set UI-related information(e.g. `biome_banner`, `biome_display_name`) for a biome
 
-# JSON format
+## JSON format
 
 All biomes should specify the version that they target via the "format_version" field. The remainder of the biome data is divided up into independent JSON sub-objects, or components. In general you can think of the presence of a component as defining what game behaviors a biome participates in with the component fields defining how it participates. Broadly there are two categories of components:
+
 1) Namespaced components (i.e. those with a 'name:' prefix) map to specific behaviors in-game; they may have member fields that parameterize that behavior; only names that have a valid mapping are supported.
 2) Components with no namespace are treated as 'tags': any name consisting of alphanumeric characters, '.' and '_' is permitted; the tag is attached to the biome so that either code or data may check for its existence; tag components may not have member fields.
 
 See the full biome schema below for additional details and the full list of namespaced components.
 
-**Here is a sample biome**
-```
+**Here is a sample biome**:
+
+```json
 {
    "format_version" : "1.13.0",
    "minecraft:biome" : {
@@ -109,33 +114,30 @@ See the full biome schema below for additional details and the full list of name
 }
 ```
 
+## Adding biomes
 
+Biomes are read from JSON files in the biomes subfolders of behavior packs. Loading enforces one biome per file; the file name and the actual biome name must match. Adding a file with a new name to the biome data location will make it available for the game to use, while existing biomes can be overridden via files that match their existing name. Note that if you add a new biome you'll need to write component data that allows it to participate in world generation (see full schema below), or else it won't show up in your worlds!
 
-# Adding biomes
-
-Biomes are read from JSON files in the biomes subfolders of behavior packs. Loading enforces one biome per file; the file name and the actual biome name must match. Adding a file with a new name to the biome data location will make it available for the game to use, while existing biomes can be overriden via files that match their existing name. Note that if you add a new biome you'll need to write component data that allows it to participate in world generation (see full schema below), or else it won't show up in your worlds!
-
-
-
-# Schema
+## Schema
 
 ****
-```
+
+```json
   {
       object "badger:icewave" : opt // Controls the frostlands snow waves and material transition parameters.
       object "badger:jungle_egg" : opt // Controls the jungle egg rock and material transition parameters.
-      object "badger:rivers"[0,6] : opt // Controls for river density and replacement biome
+      object "badger:rivers"[0,6] : opt // Controls for river density and replacement biome.
       {
-          array "cell_range"[2] : opt // The range of possible IDs this biome's voronoi cells may take. A wider range means more opportunites for rivers to form in this biome, 				and a narrow range means fewer opportunites. (Rivers only form across the borders of cells with different IDs)
+          array "cell_range"[2] : opt // The range of possible IDs this biome's voronoi cells may take. A wider range means more opportunities for rivers to form in this biome, and a narrow range means fewer opportunities. Rivers will only form across the borders of cells with different IDs.
           {
               int "[0..0]"<0-255>
               int "[1..1]"<0-255>
           }
-          float "point_chance"<0.000000-1.000000> : opt // Probability that a river cell spawns in a particular region. Smaller values (close to 0) lead to few large cells (few opportunities for rivers to form), 				while values closer to 1 lead to many small cells (many opportunites for rivers to form)
-          biome_reference "river_biome" : opt // The biome that this biome's rivers transform into
-          int "river_width"<-*-64> : opt // Average river width for this biome in blocks
-          int "river_border_width"<-*-64> : opt // Average border biome width for this biome's rivers
-          biome_reference "river_border_biome" : opt // Border biome for this biome's rivers
+          float "point_chance"<0.000000-1.000000> : opt // Probability that a river cell spawns in a particular region. Smaller values(e.g: closer to 0.0) lead to few large cells (which means few opportunities for rivers to form), while higher values(e.g: closer to 1.0) lead to many small cells (which means many opportunities for rivers to form).
+          biome_reference "river_biome" : opt // The identifier of the biome that this biome's rivers transform into.
+          int "river_width"<-*-64> : opt // Average river width for this biome in blocks.
+          int "river_border_width"<-*-64> : opt // Average border biome width for this biome's rivers.
+          biome_reference "river_border_biome" : opt // The border biome for this biome's rivers.
       }
       object "badger:custom_water_level"[0,1] : opt // Control the height of water, the material used for bottom of water bodies, and the depth of the floor material.
       {
@@ -180,7 +182,7 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
                   int "[0..0]"<0-255>
                   int "[1..1]"<0-255>
               }
-              array "clamp_scales"[2] : opt // The degree to which 'natural' heights in this biome are allowed to go beyond the given bound. 				0.0 means full clamping (i.e. the height cannot go at all beyond the bound), 1.0 means no clamping, 				and >1.0 means the natural height will be amplified beyond the lower bound.
+              array "clamp_scales"[2] : opt // The degree to which 'natural' heights in this biome are allowed to go beyond the given bound.     0.0 means full clamping (i.e. the height cannot go at all beyond the bound), 1.0 means no clamping,     and >1.0 means the natural height will be amplified beyond the lower bound.
               {
                   float "[0..0]"<0.000000-2.000000>
                   float "[1..1]"<0.000000-2.000000>
@@ -214,7 +216,7 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
                   {
                       biome_reference "<any array element>"
                   }
-                  array "denylist" : opt // A list of biomes which, when situated adjacent to this biome, will prevent a transformation to the given border biome. 			If any biomes are specified, the border transformation will occur at the interface of ALL other biomes.
+                  array "denylist" : opt // A list of biomes which, when situated adjacent to this biome, will prevent a transformation to the given border biome.    If any biomes are specified, the border transformation will occur at the interface of ALL other biomes.
                   {
                       biome_reference "<any array element>"
                   }
@@ -255,7 +257,7 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
                           int "[0..0]"
                           int "[1..1]"
                       }
-                      bool "repeat_block_sequence" : opt // Should this block sequence repeat over and over? (Or should we switch to the foundation block once we've iterated the stack once?) 					Not compatible with 'bottom-up' order -- bottom-up always repeats the last block in the stack.
+                      bool "repeat_block_sequence" : opt // Should this block sequence repeat over and over? (Or should we switch to the foundation block once we've iterated the stack once?)      Not compatible with 'bottom-up' order -- bottom-up always repeats the last block in the stack.
                       bool "top_down" : opt // Does this stack start from the top down? (Default is 'bottom up')
                       array "layers"[1,*] // A list of weighted blocks and associated depths ('layers')
                       {
@@ -311,12 +313,12 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
                           float "scale" : opt // Horizontal scaling factor for noise map queries. 40.0 is a good starting value; larger values will result in smoother noise.
                           object "range" : opt // Acceptable noise range for block placement to succeed
                           {
-                              array "min"[1,2] // Minimum 'success' noise value. If two floats are provided, 					a uniform random float in that range will be selected as the minimum value at each block column in the biome.
+                              array "min"[1,2] // Minimum 'success' noise value. If two floats are provided,      a uniform random float in that range will be selected as the minimum value at each block column in the biome.
                               {
                                   float "[0..0]"
                                   float "[1..1]" : opt
                               }
-                              array "max"[1,2] // Maximum 'success' noise value. If two floats are provided, 					a uniform random float in that range will be selected as the maximum value at each block column in the biome.
+                              array "max"[1,2] // Maximum 'success' noise value. If two floats are provided,      a uniform random float in that range will be selected as the maximum value at each block column in the biome.
                               {
                                   float "[0..0]"
                                   float "[1..1]" : opt
@@ -330,7 +332,7 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
                                   float "[1..1]" // Maximum noise band value
                               }
                           }
-                          bool "abs" : opt // If 'true', the absolute value of the noise query will be used instead. 					This is useful for 'mirrored' bands, e.g. [[-0.7, -0.6], [0.6, 0.7]] -- you can just provide the positive band 					and the 'abs' flag to achieve the same result.
+                          bool "abs" : opt // If 'true', the absolute value of the noise query will be used instead.      This is useful for 'mirrored' bands, e.g. [[-0.7, -0.6], [0.6, 0.7]] -- you can just provide the positive band      and the 'abs' flag to achieve the same result.
                           array "wiggle"[2] : opt // A uniform random value to add to the noise query result
                           {
                               float "[0..0]"
@@ -339,12 +341,12 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
                       }
                       object "wetness" : opt // [DEPRECATED] A wetness (distance to nearest water, or 'wet' terrain) range
                       {
-                          array "min"[1,2] // Minimum distance. If two values are provided, the minimum at each 					block column will be uniform randomly selected from the range.
+                          array "min"[1,2] // Minimum distance. If two values are provided, the minimum at each      block column will be uniform randomly selected from the range.
                           {
                               int "[0..0]"
                               int "[1..1]" : opt
                           }
-                          array "max"[1,2] // Minimum distance. If two values are provided, the minimum at each 					block column will be uniform randomly selected from the range.
+                          array "max"[1,2] // Minimum distance. If two values are provided, the minimum at each      block column will be uniform randomly selected from the range.
                           {
                               int "[0..0]"
                               int "[1..1]" : opt
@@ -382,12 +384,12 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
                           float "scale" : opt // Horizontal scaling factor for noise map queries. 40.0 is a good starting value; larger values will result in smoother noise.
                           object "range" : opt // Acceptable noise range for block placement to succeed
                           {
-                              array "min"[1,2] // Minimum 'success' noise value. If two floats are provided, 					a uniform random float in that range will be selected as the minimum value at each block column in the biome.
+                              array "min"[1,2] // Minimum 'success' noise value. If two floats are provided,      a uniform random float in that range will be selected as the minimum value at each block column in the biome.
                               {
                                   float "[0..0]"
                                   float "[1..1]" : opt
                               }
-                              array "max"[1,2] // Maximum 'success' noise value. If two floats are provided, 					a uniform random float in that range will be selected as the maximum value at each block column in the biome.
+                              array "max"[1,2] // Maximum 'success' noise value. If two floats are provided,      a uniform random float in that range will be selected as the maximum value at each block column in the biome.
                               {
                                   float "[0..0]"
                                   float "[1..1]" : opt
@@ -401,7 +403,7 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
                                   float "[1..1]" // Maximum noise band value
                               }
                           }
-                          bool "abs" : opt // If 'true', the absolute value of the noise query will be used instead. 					This is useful for 'mirrored' bands, e.g. [[-0.7, -0.6], [0.6, 0.7]] -- you can just provide the positive band 					and the 'abs' flag to achieve the same result.
+                          bool "abs" : opt // If 'true', the absolute value of the noise query will be used instead.      This is useful for 'mirrored' bands, e.g. [[-0.7, -0.6], [0.6, 0.7]] -- you can just provide the positive band      and the 'abs' flag to achieve the same result.
                           array "wiggle"[2] : opt // A uniform random value to add to the noise query result
                           {
                               float "[0..0]"
@@ -410,12 +412,12 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
                       }
                       object "wetness" : opt // [DEPRECATED] A wetness (distance to nearest water, or 'wet' terrain) range
                       {
-                          array "min"[1,2] // Minimum distance. If two values are provided, the minimum at each 					block column will be uniform randomly selected from the range.
+                          array "min"[1,2] // Minimum distance. If two values are provided, the minimum at each      block column will be uniform randomly selected from the range.
                           {
                               int "[0..0]"
                               int "[1..1]" : opt
                           }
-                          array "max"[1,2] // Minimum distance. If two values are provided, the minimum at each 					block column will be uniform randomly selected from the range.
+                          array "max"[1,2] // Minimum distance. If two values are provided, the minimum at each      block column will be uniform randomly selected from the range.
                           {
                               int "[0..0]"
                               int "[1..1]" : opt
@@ -455,7 +457,7 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
               }
           }
       }
-      object "badger:visual_biome_attributes"[0,6] : opt // Client Side information for Map color, Grass color/noise, Water color/transparancy, and Sky parameters
+      object "badger:visual_biome_attributes"[0,6] : opt // Client Side information for Map color, Grass color/noise, Water color/transparency, and Sky parameters
       {
           object "map" : opt // World map settings for this biome
           {
@@ -484,10 +486,10 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
               }
               object "overlay" : opt
               {
-                  string "grass_overlay_surface_color" : opt // The secondary grass colour that can be blended in
+                  string "grass_overlay_surface_color" : opt // The secondary grass color that can be blended in
                   float "grass_overlay_noise_intensity"<0.000000-*> : opt // Noise strength; higher values means the noise is more broken up, low it's smoother
                   float "grass_overlay_noise_scale"<0.000000-5.000000> : opt // Horizontal scaling factor for the overlay color noise
-                  float "grass_overlay_noise_bias"<0.000000-1.000000> : opt // The blending bias between the 'normal' grass colour and the overlap grass colour
+                  float "grass_overlay_noise_bias"<0.000000-1.000000> : opt // The blending bias between the 'normal' grass color and the overlap grass color
               }
           }
           object "world" : opt // Sky and fog rendering settings for this biome
@@ -501,8 +503,8 @@ Biomes are read from JSON files in the biomes subfolders of behavior packs. Load
           }
           object "rain" : opt // Precipitation settings for this biome
           {
-              float "lower_limit"<-1.000000-1.000000> : opt // The lower bound for when rain should stop. 				This is sampled from a noise value in [-1, 1]; any time the value is below lower_limit, the rain stops.
-              float "upper_limit"<-1.000000-1.000000> : opt // The upper bound for when rain should be at maximum intensity. 				This is sampled from a noise value in [-1, 1]; any time the value is above upper_limit, the rain is set to the maximum level.
+              float "lower_limit"<-1.000000-1.000000> : opt // The lower bound for when rain should stop.     This is sampled from a noise value in [-1, 1]; any time the value is below lower_limit, the rain stops.
+              float "upper_limit"<-1.000000-1.000000> : opt // The upper bound for when rain should be at maximum intensity.     This is sampled from a noise value in [-1, 1]; any time the value is above upper_limit, the rain is set to the maximum level.
               int "rain_to_snow_height"<0-*> : opt // The world height at which rain transitions to snow
               float "downfall"<0.000000-60.000000> : opt // How much precipitation should be created at maximum levels
               float "snow_to_rain_density_ratio"<0.000000-2.000000> : opt // The ratio of snow to rain, used to dampen snow in heavy rain locations (or boost if desired)
